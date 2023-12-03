@@ -1,7 +1,6 @@
 import styled from "@emotion/styled";
 
 export const Container = styled.div`
-  label: container;
   width: 100%;
   height: 100vh;
   background-color: black;
@@ -16,33 +15,44 @@ export const Container = styled.div`
 `;
 
 export const Logo = styled.div`
-  label: logo;
   font-family: Bangers;
   color: #ff6f4f;
   font-size: 30px;
 `;
 
 export const InputContent = styled.div`
-  label: input-content;
   width: 100%;
   margin-top: 90px;
 `;
+
 export const InputBox = styled.div`
-  label: input-box;
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: start;
   margin-bottom: 20px;
+  position: relative;
+
+  .input-box__button {
+    width: 50px;
+    height: 20px;
+    border: 1px solid #ff6f4f;
+    color: #ff6f4f;
+    border-radius: 15px;
+    font-family: Noto Sans KR;
+    font-size: 12px;
+    position: absolute;
+    right: 0;
+    top: 15px;
+    text-align: center;
+  }
 `;
 
 export const InputText = styled.div`
-  label: input-text;
   color: white;
 `;
 
 export const Input = styled.input`
-  label: input;
   width: 100%;
   height: 30px;
   border: none;
@@ -60,7 +70,6 @@ export const Input = styled.input`
 `;
 
 export const Button = styled.div`
-  label: button;
   width: 75px;
   height: 30px;
   background-color: white;
@@ -70,14 +79,4 @@ export const Button = styled.div`
   align-items: center;
   justify-content: center;
   margin: 15px 0;
-`;
-
-export const BottomText = styled.div`
-  label: botton-text;
-  color: #ff6f4f;
-  font-family: Noto Sans KR;
-  font-weight: 100;
-  font-size: 12px;
-  display: flex;
-  margin-bottom: 35px;
 `;
