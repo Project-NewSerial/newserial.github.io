@@ -62,7 +62,9 @@ export const Input = styled.input`
   font-family: NanumSquareNeo;
   font-size: 14px;
   color: white;
-
+  &::placeholder {
+    font-size: 10px;
+  }
   &:focus {
     outline: none;
     border-bottom: 2px solid white;

@@ -35,17 +35,28 @@ const Signup = () => {
   const { email, code, password, checkPassword } = inputs;
 
   /**
-   * email 형식 확인 함수
+   * 입력이 올바른지 확인하는 함수
    * @author 신정은
-   * @return boolean 이메일 형식이 올바르면 true 아니면 false
+   * @return boolean 올바르면 true 아니면 false
    */
-  const emailFormatCheck = () => {
-    const exp =
-      /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
-    if (!exp.test(email)) setIsValid({ ...isValid, emailFormat: false });
-    else setIsValid({ ...isValid, emailFormat: true });
-  };
+  const inputCheck = (type: string, value: string) => {
+    console.log(type, value);
 
+    if (type === "email") {
+      const regExp =
+        /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
+      if (!regExp.test(value)) setIsValid({ ...isValid, emailFormat: false });
+      else setIsValid({ ...isValid, emailFormat: true });
+    } else if (type === "password") {
+      const regExp = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,20}$/;
+      if (!regExp.test(value))
+        setIsValid({ ...isValid, passwordFormat: false });
+      else setIsValid({ ...isValid, passwordFormat: true });
+    } else {
+      if (password !== value) setIsValid({ ...isValid, passwordCheck: false });
+      else setIsValid({ ...isValid, passwordCheck: true });
+    }
+  };
   /**
    * inputs 변경 함수
    * @author 신정은
@@ -54,6 +65,7 @@ const Signup = () => {
   const changeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setInputs({ ...inputs, [name]: value });
+    inputCheck(name, value);
   };
 
   /**
@@ -135,10 +147,7 @@ const Signup = () => {
             <Input
               name="email"
               value={email}
-              onChange={(e) => {
-                changeInput(e);
-                emailFormatCheck();
-              }}
+              onChange={(e) => changeInput(e)}
             />
             <div
               className="input-box__button"
@@ -149,8 +158,8 @@ const Signup = () => {
             >
               인증
             </div>
-            {email!==''&&!isValid.emailFormat && (
-              <WarningText>이메일 형식이 올바르지 않습니다</WarningText>
+            {email !== "" && !isValid.emailFormat && (
+              <WarningText>이메일 형식이 올바르지 않습니다.</WarningText>
             )}
           </InputBox>
           <InputBox>
@@ -159,8 +168,12 @@ const Signup = () => {
               type="password"
               name="password"
               value={password}
+              placeholder="영문, 숫자, 특수기호가 포함 8~20자"
               onChange={(e) => changeInput(e)}
             />
+            {password !== "" && !isValid.passwordFormat && (
+              <WarningText>비밀번호 형식이 올바르지 않습니다.</WarningText>
+            )}
           </InputBox>
           <InputBox>
             <InputText>비밀번호 확인</InputText>
@@ -170,6 +183,9 @@ const Signup = () => {
               value={checkPassword}
               onChange={(e) => changeInput(e)}
             />
+            {checkPassword !== "" && !isValid.passwordCheck && (
+              <WarningText>비밀번호가 일치하지 않습니다.</WarningText>
+            )}
           </InputBox>
         </InputContent>
         <Button>가입하기</Button>
