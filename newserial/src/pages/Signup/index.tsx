@@ -17,8 +17,10 @@ import {
 } from "./styles";
 
 import Modal from "../../components/Modal/index";
+import { useNavigate } from "react-router-dom";
 
 const Signup = () => {
+  const navigate = useNavigate();
   const [toggle, setToggle] = useState(false);
   const [inputs, setInputs] = useState({
     email: "",
@@ -28,12 +30,13 @@ const Signup = () => {
   });
   const [isValid, setIsValid] = useState({
     emailFormat: false,
+    emailDuplication: false,
     emailCode: false,
     passwordFormat: false,
     passwordCheck: false,
   });
   const [warningMessage, setWarningMessage] = useState({
-    email: "이메일 형식이 올바르지 않습니다.",
+    email: "",
     password: "비밀번호 형식이 올바르지 않습니다.",
     checkPassword: "비밀번호가 일치하지 않습니다.",
     code: "",
@@ -58,8 +61,19 @@ const Signup = () => {
     if (type === "email") {
       const regExp =
         /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
-      if (!regExp.test(value)) setIsValid({ ...isValid, emailFormat: false });
-      else setIsValid({ ...isValid, emailFormat: true, emailCode: false });
+      if (!regExp.test(value)) {
+        setIsValid({ ...isValid, emailFormat: false });
+        setWarningMessage({
+          ...warningMessage,
+          email: "이메일 형식이 올바르지 않습니다.",
+        });
+      } else {
+        setIsValid({ ...isValid, emailFormat: true, emailCode: false });
+        setWarningMessage({
+          ...warningMessage,
+          email: "",
+        });
+      }
     } else if (type === "password") {
       const regExp = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,20}$/;
       if (!regExp.test(value)) {
@@ -79,7 +93,6 @@ const Signup = () => {
     } else if (type === "checkPassword") {
       if (password !== value) setIsValid({ ...isValid, passwordCheck: false });
       else setIsValid({ ...isValid, passwordCheck: true });
-      console.log(isValid);
     }
   };
 
@@ -95,17 +108,22 @@ const Signup = () => {
   };
 
   /**
-   * 메일 전송 api 호출 함수
+   * 메일 전송 api 호출 함수(인증 버튼 클릭 시)
    * @author 신정은
    * @param {string} email 이메일
    */
   const sendMail = async () => {
     setInputs({ ...inputs, code: "" });
-    setWarningMessage({ ...warningMessage, code: "" });
     const { data } = await axios.post(`${process.env.REACT_APP_API}/email`, {
       email: email,
     });
-    return data;
+
+    if (data === "해당 이메일로 가입된 회원이 존재합니다.") {
+      setWarningMessage({ ...warningMessage, code: "", email: `${data}` });
+    } else {
+      setWarningMessage({ ...warningMessage, code: "" });
+      setToggle(true);
+    }
   };
 
   /**
@@ -143,7 +161,14 @@ const Signup = () => {
       email: email,
       password: password,
     });
-    return data;
+
+    if (data.message === "회원가입이 성공적으로 완료되었습니다") {
+      alert(`${data.message}`);
+      navigate("/login");
+    } else {
+      setWarningMessage({ ...warningMessage, email: `${data.message}` });
+      setIsValid({ ...isValid, emailFormat: false });
+    }
   };
 
   const { mutate: sendMailMutate } = useMutation({
@@ -195,17 +220,12 @@ const Signup = () => {
             />
             <button
               className="input-box__button"
-              onClick={() => {
-                setToggle(true);
-                sendMailMutate();
-              }}
+              onClick={() => sendMailMutate()}
               disabled={!isValid.emailFormat}
             >
               인증
             </button>
-            {email !== "" && !isValid.emailFormat && (
-              <WarningText>{warningMessage.email}</WarningText>
-            )}
+            {email !== "" && <WarningText>{warningMessage.email}</WarningText>}
           </InputBox>
           <InputBox>
             <InputText>비밀번호</InputText>
