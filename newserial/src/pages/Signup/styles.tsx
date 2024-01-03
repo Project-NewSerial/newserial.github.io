@@ -43,8 +43,13 @@ export const InputBox = styled.div`
     font-size: 12px;
     position: absolute;
     right: 0;
-    top: 15px;
-    text-align: center;
+    top: 17px;
+    line-height: 5px;
+    background-color: #000000;
+    &:disabled {
+      border-color: #a8a7a7;
+      color: #a8a7a7;
+    }
   }
 `;
 
@@ -54,7 +59,7 @@ export const InputText = styled.div`
 
 export const Input = styled.input`
   width: 100%;
-  height: 30px;
+  height: 32px;
   border: none;
   border-bottom: 1px solid white;
   background-color: black;
@@ -78,7 +83,8 @@ export const WarningText = styled.div`
   margin-top: 5px;
 `;
 
-export const Button = styled.div`
+export const Button = styled.button`
+  border: none;
   width: 75px;
   height: 30px;
   background-color: white;
@@ -88,6 +94,10 @@ export const Button = styled.div`
   align-items: center;
   justify-content: center;
   margin: 15px 0;
+  font-family: NanumSquareNeo;
+  &:disabled {
+    opacity: 50%;
+  }
 `;
 
 export const ModalText = styled.div`
@@ -101,10 +111,10 @@ export const ModalText = styled.div`
 export const ModalInput = styled.input`
   label: modal-input;
   height: 30px;
+  width: 60%;
   border: none;
   border-bottom: 1px solid black;
   font-family: Noto Sans KR;
-  margin-bottom: 10px;
   &:focus {
     outline: none;
     border-bottom: 2px solid black;
@@ -121,4 +131,5 @@ export const ModalButton = styled.div`
   font-family: Noto Sans KR;
   font-size: 12px;
   text-align: center;
+  margin-top: 10px;
 `;

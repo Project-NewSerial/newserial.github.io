@@ -28,39 +28,65 @@ const Signup = () => {
   });
   const [isValid, setIsValid] = useState({
     emailFormat: false,
-    emailConfirm: false,
+    emailCode: false,
     passwordFormat: false,
     passwordCheck: false,
   });
+  const [warningMessage, setWarningMessage] = useState({
+    email: "이메일 형식이 올바르지 않습니다.",
+    password: "비밀번호 형식이 올바르지 않습니다.",
+    checkPassword: "비밀번호가 일치하지 않습니다.",
+    code: "",
+  });
   const { email, code, password, checkPassword } = inputs;
+
+  const submitRequirements =
+    isValid.emailFormat &&
+    isValid.emailCode &&
+    isValid.passwordFormat &&
+    isValid.passwordCheck;
 
   /**
    * 입력이 올바른지 확인하는 함수
    * @author 신정은
-   * @return boolean 올바르면 true 아니면 false
+   * @param {string} type input name
+   * @param {string} value input value
+   *
+   * @return {boolean} 올바르면 true 아니면 false
    */
   const inputCheck = (type: string, value: string) => {
-    console.log(type, value);
-
     if (type === "email") {
       const regExp =
         /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
       if (!regExp.test(value)) setIsValid({ ...isValid, emailFormat: false });
-      else setIsValid({ ...isValid, emailFormat: true });
+      else setIsValid({ ...isValid, emailFormat: true, emailCode: false });
     } else if (type === "password") {
       const regExp = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,20}$/;
-      if (!regExp.test(value))
-        setIsValid({ ...isValid, passwordFormat: false });
-      else setIsValid({ ...isValid, passwordFormat: true });
-    } else {
+      if (!regExp.test(value)) {
+        setIsValid({
+          ...isValid,
+          passwordFormat: false,
+        });
+      } else {
+        if (checkPassword !== value)
+          setIsValid({
+            ...isValid,
+            passwordFormat: true,
+            passwordCheck: false,
+          });
+        else setIsValid({ ...isValid, passwordCheck: true });
+      }
+    } else if (type === "checkPassword") {
       if (password !== value) setIsValid({ ...isValid, passwordCheck: false });
       else setIsValid({ ...isValid, passwordCheck: true });
+      console.log(isValid);
     }
   };
+
   /**
    * inputs 변경 함수
    * @author 신정은
-   * @param e 이벤트
+   * @param {React.ChangeEvent<HTMLInputElement>} e 이벤트
    */
   const changeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -71,9 +97,11 @@ const Signup = () => {
   /**
    * 메일 전송 api 호출 함수
    * @author 신정은
-   * @param string email 이메일
+   * @param {string} email 이메일
    */
   const sendMail = async () => {
+    setInputs({ ...inputs, code: "" });
+    setWarningMessage({ ...warningMessage, code: "" });
     const { data } = await axios.post(`${process.env.REACT_APP_API}/email`, {
       email: email,
     });
@@ -81,10 +109,8 @@ const Signup = () => {
   };
 
   /**
-   * 인증번호 확인 api 호출 함수
+   * 인증번호 확인 함수
    * @author 신정은
-   * @param string email 이메일
-   * @param string code 인증번호
    */
   const checkNumber = async () => {
     const { data } = await axios.post(
@@ -94,19 +120,28 @@ const Signup = () => {
         code: code,
       }
     );
-    return data;
+    if (data === "인증되었습니다.") {
+      setIsValid({ ...isValid, emailCode: true });
+      setToggle(false);
+    } else {
+      setIsValid({ ...isValid, emailCode: false });
+      setWarningMessage({
+        ...warningMessage,
+        code: "인증번호가 올바르지 않습니다.",
+      });
+    }
   };
 
   /**
    * 회원가입 api 호출 함수
    * @author 신정은
-   * @param string email 이메일
-   * @param string password 비밀번호
+   * @param {string} email 이메일
+   * @param {string} password 비밀번호
    */
   const signup = async () => {
-    const { data } = await axios.post(`${process.env.REACT_APP_API}/signup`, {
+    const { data } = await axios.post(`${process.env.REACT_APP_API}/members`, {
       email: email,
-      password: code,
+      password: password,
     });
     return data;
   };
@@ -120,7 +155,7 @@ const Signup = () => {
   });
 
   const { mutate: signupMutate } = useMutation({
-    mutationFn: checkNumber,
+    mutationFn: signup,
   });
 
   return (
@@ -133,8 +168,17 @@ const Signup = () => {
               <ModalText>
                 입력한 이메일로 전송된 인증번호를 입력해주세요.
               </ModalText>
-              <ModalInput value={code} onChange={(e) => changeInput(e)} />
-              <ModalButton onClick={() => checkNumberMutate}>인증</ModalButton>
+              <ModalInput
+                name="code"
+                value={code}
+                onChange={(e) => changeInput(e)}
+              />
+              {!isValid.emailCode && (
+                <WarningText>{warningMessage.code}</WarningText>
+              )}
+              <ModalButton onClick={() => checkNumberMutate()}>
+                인증
+              </ModalButton>
             </>
           }
         />
@@ -149,17 +193,18 @@ const Signup = () => {
               value={email}
               onChange={(e) => changeInput(e)}
             />
-            <div
+            <button
               className="input-box__button"
               onClick={() => {
                 setToggle(true);
                 sendMailMutate();
               }}
+              disabled={!isValid.emailFormat}
             >
               인증
-            </div>
+            </button>
             {email !== "" && !isValid.emailFormat && (
-              <WarningText>이메일 형식이 올바르지 않습니다.</WarningText>
+              <WarningText>{warningMessage.email}</WarningText>
             )}
           </InputBox>
           <InputBox>
@@ -172,7 +217,7 @@ const Signup = () => {
               onChange={(e) => changeInput(e)}
             />
             {password !== "" && !isValid.passwordFormat && (
-              <WarningText>비밀번호 형식이 올바르지 않습니다.</WarningText>
+              <WarningText>{warningMessage.password}</WarningText>
             )}
           </InputBox>
           <InputBox>
@@ -184,11 +229,13 @@ const Signup = () => {
               onChange={(e) => changeInput(e)}
             />
             {checkPassword !== "" && !isValid.passwordCheck && (
-              <WarningText>비밀번호가 일치하지 않습니다.</WarningText>
+              <WarningText>{warningMessage.checkPassword}</WarningText>
             )}
           </InputBox>
         </InputContent>
-        <Button>가입하기</Button>
+        <Button disabled={!submitRequirements} onClick={() => signupMutate()}>
+          가입하기
+        </Button>
       </Container>
     </>
   );
