@@ -2,6 +2,19 @@ import styled from "@emotion/styled";
 
 export const Container = styled.div`
   label: container;
+  min-width: 360px;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const Content = styled.div`
+  label: content;
+  min-width: 360px;
+  max-width: 480px;
   width: 100%;
   height: 100vh;
   background-color: black;
@@ -12,7 +25,7 @@ export const Container = styled.div`
   padding: 0 30px;
   box-sizing: border-box;
   font-family: NanumSquareNeo;
-  font-size: 14px;
+  font-size: 1.4rem;
 `;
 
 export const Logo = styled.div`
@@ -50,7 +63,7 @@ export const Input = styled.input`
   background-color: black;
   color: white;
   font-family: NanumSquareNeo;
-  font-size: 14px;
+  font-size: 1.4rem;
   color: white;
 
   &:focus {
@@ -77,7 +90,7 @@ export const BottomText = styled.div`
   color: #ff6f4f;
   font-family: Noto Sans KR;
   font-weight: 100;
-  font-size: 12px;
+  font-size: 1.2rem;
   display: flex;
   margin-bottom: 35px;
 `;
