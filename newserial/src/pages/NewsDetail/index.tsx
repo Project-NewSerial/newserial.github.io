@@ -20,7 +20,7 @@ import axios from "axios";
 const NewsDetail = () => {
 
   const getQuiz = async () => {
-   await axios.get('http://localhost:8080/short-news/17',
+   await axios.get(`${process.env.REACT_APP_API}/short-news/17`,
    {headers:
     {'Content-Type':'application/json',
     Authorization:'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzcHJpbmdAbmF2ZXIuY29tIiwiaWF0IjoxNzAyNDc3MTU2LCJleHAiOjE3MDI0ODA3NTZ9.B6-pLecipEZcApxAQ9jR0A3Vnv8ny87Rq5mzifFAhRo',
