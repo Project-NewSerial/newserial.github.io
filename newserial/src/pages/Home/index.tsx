@@ -8,7 +8,6 @@ import DailyQuiz from "./components/DailyQuiz/index";
 import CustomNews from "./components/CustomNews/index";
 import NewSerial from "./components/NewSerial/index";
 import axios from "axios";
-import React from "react";
 
 const getQuiz = async () => {
 
