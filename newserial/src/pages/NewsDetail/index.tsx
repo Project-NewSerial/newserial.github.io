@@ -39,7 +39,7 @@ const NewsDetail = () => {
         headers:
         {withCredentials: true,
           'Content-Type': 'application/json',
-          Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzcHJpbmdAbmF2ZXIuY29tIiwiaWF0IjoxNzA1NTU0Njk3LCJleHAiOjE3MDU1NTgyOTd9.-8bJ2KQgK8YNuRYY7Ufds_g0timxJJXDX4Fm2YL3w3c',
+          Authorization: 'Bearer ',
           
         }
       })
