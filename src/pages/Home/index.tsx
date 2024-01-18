@@ -18,11 +18,9 @@ const getQuiz = async () => {
     },
   })
     .then(response => {
-      // 성공 시의 처리
       console.log('API 응답:', response.data);
     })
     .catch(error => {
-      // 실패 시의 처리
       console.error('API 호출 에러:', error);
     });
 };
