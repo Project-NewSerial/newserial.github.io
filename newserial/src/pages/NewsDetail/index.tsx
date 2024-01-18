@@ -1,10 +1,15 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
   Container,
   HeaderArea,
-  BookmarkButton,
+  HeaderBox,
+  Logo,
+  SearchButton,
+  MyPageButton,
+  NewsTitleArea,
   Genre,
   Title,
+  BookmarkIcon,
   NewsArea,
   MenuArea,
   Speaker,
@@ -14,45 +19,65 @@ import {
   NewsContent,
   Source,
   ClipButton,
+  QuizButton,
 } from "./styles";
 import axios from "axios";
+import ToggleSlide from "./components/ToggleSlide";
+
+
 
 const NewsDetail = () => {
+  const [isToggleOn, setIsToggleOn] = useState<boolean>(false);
 
-  const getQuiz = async () => {
-   await axios.get(`${process.env.REACT_APP_API}/short-news/17`,
-   {headers:
-    {'Content-Type':'application/json',
-    Authorization:'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzcHJpbmdAbmF2ZXIuY29tIiwiaWF0IjoxNzAyNDc3MTU2LCJleHAiOjE3MDI0ODA3NTZ9.B6-pLecipEZcApxAQ9jR0A3Vnv8ny87Rq5mzifFAhRo',
-  }})
-   .then((res)=>
-    console.log('res', res)
-   )
+  useEffect(()=>{
+    console.log(isToggleOn)
+  }, [isToggleOn])
+ 
+  const getShortNews = async () => {
+    await axios.get(`${process.env.REACT_APP_API}/short-news/2`,
+      {
+        headers:
+        {withCredentials: true,
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzcHJpbmdAbmF2ZXIuY29tIiwiaWF0IjoxNzA1NTU0Njk3LCJleHAiOjE3MDU1NTgyOTd9.-8bJ2KQgK8YNuRYY7Ufds_g0timxJJXDX4Fm2YL3w3c',
+          
+        }
+      })
+      .then((res) =>
+        console.log('res', res)
+      )
   };
 
-
-
   useEffect(() => {
-    getQuiz();
+    getShortNews();
   }, [])
+
 
   return (
     <Container>
       <HeaderArea>
-        <BookmarkButton src={"/assets/icons/icon_bookmark_N.svg"} />
-        <Genre>경제</Genre>
-        <Title>해외법인 망했는데 5300억 '세금 폭탄'... 골병드는 건설사</Title>
+        <HeaderBox>
+          <Logo>NEWSERIAL</Logo>
+          <SearchButton src="/assets/icons/icon_search.svg" />
+          <MyPageButton src="/assets/icons/icon_mypage.svg" />
+        </HeaderBox>
+
+
       </HeaderArea>
       <NewsArea>
+        <NewsTitleArea>
+          <Genre>경제</Genre>
+          <Title>해외법인 망했는데 5300억 '세금 폭탄'... 골병드는 건설사</Title>
+        </NewsTitleArea>
+        <BookmarkIcon src="/assets/icons/icon_bookmark_N.svg" />
         <MenuArea>
           <Speaker src={"/assets/icons/icon_speaker.svg"} />
           <ParaphraseArea>
             <Paraphrase>쉬운 설명</Paraphrase>
-            {/*
-             @todo
-            토글 버튼 추가
-            */}
-            <ParaphraseButton />
+            
+            <ToggleSlide setIsToggleOn={setIsToggleOn} isToggleOn={isToggleOn} />
+
+
           </ParaphraseArea>
         </MenuArea>
         <NewsContent>
@@ -67,6 +92,8 @@ const NewsDetail = () => {
           출처: [한국경제] 해외 법인 망했는데 5300억 '세금 폭탄'... 골병드는 건설사
           <ClipButton src={"/assets/icons/icon_clip.svg"} />
         </Source>
+
+        <QuizButton>QUIZ</QuizButton>
       </NewsArea>
 
     </Container>

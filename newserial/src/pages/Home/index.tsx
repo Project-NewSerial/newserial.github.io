@@ -10,12 +10,12 @@ import NewSerial from "./components/NewSerial/index";
 import axios from "axios";
 
 const getQuiz = async () => {
-
- await axios.post('http://localhost:8080/main-quiz', {}, {
+ await axios.post(`${process.env.REACT_APP_API}/main-quiz`, {}, {
     headers: {
       'Content-Type': 'application/json',
-      Authorization: 'Bearer ',
-    }
+      Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzcHJpbmdAbmF2ZXIuY29tIiwiaWF0IjoxNzA1NTU0Njk3LCJleHAiOjE3MDU1NTgyOTd9.-8bJ2KQgK8YNuRYY7Ufds_g0timxJJXDX4Fm2YL3w3c',
+      withCredentials:true
+    },
   })
     .then(response => {
       // 성공 시의 처리
@@ -25,25 +25,11 @@ const getQuiz = async () => {
       // 실패 시의 처리
       console.error('API 호출 에러:', error);
     });
-  // const { data } = await axios.post(`http://localhost:8080/main-quiz`,
-  // {},
-  //   {
-  //     headers:
-  //     {
-  //       'Content-Type': 'application/json',
-  //       Authorization: 'Bearer ',
-  //     }
-  //   });
-  // console.log('data', data)
-  // return data;
-
 };
+
 
 const Home = () => {
   const [question, setQuestion] = useState();
-
-
-
   useEffect(() => {
     getQuiz();
   }, [])
@@ -52,9 +38,9 @@ const Home = () => {
   return (
     <Container>
       <Header />
-      {/* <DailyQuiz />
+      <DailyQuiz />
       <CustomNews />
-      <NewSerial /> */}
+      <NewSerial />
 
     </Container>
   );

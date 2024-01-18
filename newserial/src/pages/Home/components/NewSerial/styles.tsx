@@ -6,11 +6,13 @@ const breakpoints = {
   // desktop: '951px',
 };
 
+const breakpoint="768px";
+
 // 타입 정의
 type Breakpoints = keyof typeof breakpoints;
 
 // 미디어 쿼리 유틸리티 함수 정의
-const mediaQuery = (breakpoint: Breakpoints) => `@media (min-width: ${breakpoints[breakpoint]})`;
+const mediaQuery = () => `@media (min-width: ${breakpoint})`;
 
 
 export const NewSerialArea = styled.div`
@@ -20,7 +22,7 @@ export const NewSerialArea = styled.div`
 
 
 
-  ${mediaQuery('desktop')}{
+  ${mediaQuery()}{
     display:flex;
     width:60.75%;
     flex-direction: column;
@@ -39,7 +41,7 @@ export const AreaTitleArea = styled.div`
   flex-direction: row;
   margin-bottom: 15px;
 
-  ${mediaQuery('desktop')}{
+  ${mediaQuery()}{
     margin-right: auto;
     marign-bottom: 17px;
   }
@@ -53,7 +55,7 @@ export const AreaTitle = styled.div`
   margin-right:auto;
   margin-left:20px;
 
-  ${mediaQuery('desktop')}{
+  ${mediaQuery()}{
     display:flex;
     font-size: 2.5rem;
     margin-left:23px;
@@ -70,7 +72,7 @@ export const TitleToolTip=styled.img`
   margin-top:auto;
   margin-bottom:auto;
 
-  ${mediaQuery('desktop')}{
+  ${mediaQuery()}{
 
   }
 `
@@ -83,7 +85,7 @@ export const CategoryArea = styled.div`
   margin-left:20px;
   margin-right:20px;
 
-  ${mediaQuery('desktop')}{
+  ${mediaQuery()}{
     margin-left:0px;
     margin-right:0px;
   }
@@ -96,7 +98,7 @@ export const CategoryButton = styled.div`
   color: #787878;
   padding: 4px 13px;
 
-  ${mediaQuery('desktop')}{
+  ${mediaQuery()}{
     font-size: 1.5rem;
     padding: 10px 15px;
   }
@@ -110,7 +112,7 @@ export const NewsList = styled.div`
   margin-right:20px;
   margin-top: 16px;
 
-  ${mediaQuery('desktop')}{
+  ${mediaQuery()}{
     width:100%;
     margin-top: 12px;
     margin-left:0px;
@@ -126,7 +128,7 @@ export const NewsRow = styled.div`
   border-radius: 10px;
   box-shadow: 0px 1px 1px 1px #E0E0E0;
 
-  ${mediaQuery('desktop')}{
+  ${mediaQuery()}{
     height: 109px;
     width:100%;
 
@@ -141,7 +143,7 @@ export const NewsPhoto = styled.img`
   border-top-left-radius: 10px;
   border-bottom-left-radius:10px;
 
-  ${mediaQuery('desktop')}{
+  ${mediaQuery()}{
     width: 25.84%;
     object-fit: cover;
   }
@@ -158,7 +160,7 @@ export const NewsDetailArea = styled.div`
   margin-bottom: 20px;
   text-align: left;
 
-  ${mediaQuery('desktop')}{
+  ${mediaQuery()}{
     margin: 20px;
   }
 `
@@ -170,7 +172,7 @@ export const NewsOrigin = styled.div`
   font-size: 1rem;
   margin-bottom: 4px;
 
-  ${mediaQuery('desktop')}{
+  ${mediaQuery()}{
     font-size: 1.3rem;
     margin-right:auto;
     margin-bottom: 10px;
@@ -184,7 +186,7 @@ export const NewsTitle = styled.div`
   font-family: Noto Sans KR;
   color: #000000;
 
-  ${mediaQuery('desktop')}{
+  ${mediaQuery()}{
     font-size: 1.6rem;
     margin-right:auto;
 
