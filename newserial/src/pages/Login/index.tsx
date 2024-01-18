@@ -56,7 +56,8 @@ const Login = () => {
         `${process.env.REACT_APP_API}/oauth2/authorization/naver`,
         {
           headers: {
-            withCredentials: true,
+            "Access-Control-Allow-Origin": "http://localhost:3000",
+            //withCredentials: true,
           },
         }
       );
