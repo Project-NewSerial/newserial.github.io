@@ -23,8 +23,8 @@ export const Overlay = styled.div`
   background-color: rgba(0, 0, 0, 0.8);
 `;
 
-export const Content = styled.div`
-  label: content;
+export const Box = styled.div`
+  label: box;
   width: 80%;
   height: 200px;
   background-color: white;
@@ -43,37 +43,4 @@ export const Content = styled.div`
     right: 10px;
     top: 10px;
   }
-`;
-
-export const Text = styled.div`
-  label: text;
-  width: 70%;
-  word-break: keep-all;
-  text-align: center;
-  margin-bottom: 10px;
-`;
-
-export const Input = styled.input`
-  label: input;
-  height: 30px;
-  border: none;
-  border-bottom: 1px solid black;
-  font-family: Noto Sans KR;
-  margin-bottom: 10px;
-  &:focus {
-    outline: none;
-    border-bottom: 2px solid black;
-  }
-`;
-
-export const Button = styled.div`
-  label: button;
-  width: 50px;
-  height: 20px;
-  border: 1px solid #ff6f4f;
-  color: #ff6f4f;
-  border-radius: 15px;
-  font-family: Noto Sans KR;
-  font-size: 12px;
-  text-align: center;
 `;
