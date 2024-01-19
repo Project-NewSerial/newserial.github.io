@@ -12,16 +12,31 @@ import {
   TabUnderline,
   Title,
   User,
+  ModalTitle,
+  ModalMain,
+  ModalMainText,
+  ModalBottom,
 } from "./sytles";
 import Header from "./components/Header";
+import Modal from "../../components/Modal";
 
 const Mypage = () => {
   const [selectedTab, setSelectedTab] = useState(0);
+  const [toggle, setToggle] = useState(false);
   const userInfo = [
     { title: "우유 돌보기", value: "노숙견" },
     { title: "퀴즈 기록", value: "39" },
     { title: "북마크한 기사", value: "39" },
   ];
+
+  const rank = [
+    "노숙견 : 0~5번",
+    "양반견 : 31~40번",
+    "흥부견 : 6~10번",
+    "황제견 : 41번~",
+    "평민견 : 11~30번",
+  ];
+
   const pet = {
     petImage:
       "https://png.pngtree.com/png-vector/20230221/ourmid/pngtree-cute-dog-illustration-png-image_6612076.png",
@@ -48,8 +63,26 @@ const Mypage = () => {
         ))}
       </TabBox>
       <Main>
+        {toggle && (
+          <Modal
+            setToggle={setToggle}
+            content={
+              <>
+                <ModalTitle>최근 30일 기준</ModalTitle>
+                <ModalMain>
+                  {rank.map((el) => (
+                    <ModalMainText>{el}</ModalMainText>
+                  ))}
+                </ModalMain>
+                <ModalBottom>
+                  퀴즈 정답을 맞히면 시리얼을 한 번 더 먹을 수 있어요
+                </ModalBottom>
+              </>
+            }
+          />
+        )}
         <MainTop>
-          <Info>i</Info>
+          <Info onClick={() => setToggle(!toggle)}>i</Info>
         </MainTop>
         <MainTitle>
           우유는 <span className="main--highlight">{pet.currentPet}</span>{" "}
