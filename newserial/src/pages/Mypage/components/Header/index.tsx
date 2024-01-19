@@ -3,31 +3,36 @@ import axios from "axios";
 import { useMutation } from "@tanstack/react-query";
 import { Container, Left, Right } from "./styles";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 /**
  * Mypage의 Header 컴포넌트
  * @author 신정은
  */
+
 const Header = () => {
-  interface authStateType {
-    accessToken: null | string;
+  const navigate = useNavigate();
+  interface RootState {
+    auth: {
+      accessToken: null | string;
+    };
   }
-  //const accessToken = useSelector((state: authStateType) => state.accessToken);
-  const accessToken =
-    "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ3amRkbXM5OTIxQGdtYWlsLmNvbSIsImlhdCI6MTcwNTY3NTA5NiwiZXhwIjoxNzA1Njc4Njk2fQ.gTh2XrmXW3uPQxKiF7CF39qFbND9ZwPkLS3Zts40KbM";
+
+  const accessToken = useSelector((state: RootState) => state.auth.accessToken);
+
   //logout api 호출
   const logout = async () => {
     const { data } = await axios.post(
       `${process.env.REACT_APP_API}/logout`,
+      {},
       {
-        header: {
-          Authorization: `Bearer ${accessToken}`,
+        headers: {
+          Authorization: `${accessToken}`,
         },
-      },
-      {
-        withCredentials: true,
       }
     );
+
+    if (data.message === "home") navigate("/login");
   };
 
   const { mutate: logoutMutate } = useMutation({
