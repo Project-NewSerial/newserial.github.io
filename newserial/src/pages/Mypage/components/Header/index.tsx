@@ -9,14 +9,14 @@ import { useNavigate } from "react-router-dom";
  * Mypage의 Header 컴포넌트
  * @author 신정은
  */
+interface RootState {
+  auth: {
+    accessToken: null | string;
+  };
+}
 
 const Header = () => {
   const navigate = useNavigate();
-  interface RootState {
-    auth: {
-      accessToken: null | string;
-    };
-  }
 
   const accessToken = useSelector((state: RootState) => state.auth.accessToken);
 

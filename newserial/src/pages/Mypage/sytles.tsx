@@ -112,7 +112,12 @@ export const MainTop = styled.div`
   display: flex;
   justify-content: end;
   align-items: center;
-  margin-bottom: 50px;
+  margin-bottom: 15px;
+
+  & > .main-top--small {
+    color: #ff6f4f;
+    font-size: 1.2rem;
+  }
 `;
 
 export const Info = styled.div`
@@ -126,6 +131,7 @@ export const Info = styled.div`
 export const MainTitle = styled.div`
   width: 100%;
   font-size: 2rem;
+  margin-top: 35px;
   span {
     font-size: 3.6rem;
   }
@@ -147,6 +153,67 @@ export const MainDetail = styled.div`
     bottom: -15px;
     right: -30px;
   }
+`;
+
+export const List = styled.div<{ border: boolean }>`
+  width: 100%;
+  height: 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid #e0e0e0;
+  font-family: Noto Sans KR;
+  padding: 10px;
+  box-sizing: border-box;
+  border-bottom: ${(props) => (props.border ? "1px solid #e0e0e0" : "none")};
+`;
+
+export const ListMid = styled.div`
+  width: 60%;
+  font-size: 1.4rem;
+
+  .list-mid__quiz {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: start;
+  }
+
+  .list-mid__bookmark {
+    width: 100%;
+    white-space: normal;
+    height: 40px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    text-overflow: ellipsis;
+    -webkit-box-orient: vertical;
+    text-align: start;
+  }
+`;
+
+export const ListMidQuiz = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: start;
+
+  div {
+    margin-right: 10px;
+  }
+`;
+
+export const ListRight = styled.div`
+  width: 20%;
+  color: #7f8386;
+  font-size: 1.3rem;
+`;
+
+export const NoData = styled.div`
+  height: 500px;
+  display: flex;
+  align-items: center;
+  color: #7f8386;
+  font-size: 2.5rem;
 `;
 
 export const ModalTitle = styled.div`
