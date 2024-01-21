@@ -5,15 +5,29 @@ const breakpoint = "768px";
 const mediaQuery = () => `@media(min-width:${breakpoint})`;
 
 export const Container = styled.div`
-  background-color: #ff6f4f;
   width: 100%;
   height: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
+  background-color: #ff6f4f;
 
   ${mediaQuery} {
-    background-color: #ffffff;
+    background-color: white;
+  }
+`;
+
+export const Top = styled.div`
+  label: top;
+  background-color: #ff6f4f;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  ${mediaQuery} {
+    padding-top: 30px;
   }
 `;
 
@@ -38,6 +52,7 @@ export const User = styled.div`
 `;
 
 export const TabBox = styled.div`
+  label: tab-box;
   width: 100%;
   padding: 0 2px;
   box-sizing: border-box;
@@ -45,9 +60,35 @@ export const TabBox = styled.div`
   justify-content: space-between;
   align-items: center;
   margin-bottom: 30px;
+
+  ${mediaQuery} {
+    width: 60%;
+    height: 80px;
+    background-color: white;
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+    margin-bottom: 0;
+    justify-content: center;
+  }
 `;
 
-export const Tab = styled.div<{ seleted: boolean }>`
+export const TabBoxUnderline = styled.div`
+  label: tab-box-underline;
+  display: none;
+
+  ${mediaQuery} {
+    display: block;
+    width: 50%;
+    height: 1px;
+    background-color: #d9d9d9;
+    position: absolute;
+    bottom: 0px;
+    left: 50%;
+    transform: translate(-50%, 0);
+  }
+`;
+
+export const Tab = styled.div<{ selected: boolean }>`
   label: tab;
   width: 32%;
   height: 45px;
@@ -58,9 +99,20 @@ export const Tab = styled.div<{ seleted: boolean }>`
   color: white;
   font-size: 1.5rem;
   font-family: Noto Sans KR;
-  font-weight: ${(props) => (props.seleted ? "700" : "400")};
-  opacity: ${(props) => (props.seleted ? "100%" : "50%")};
+  font-weight: ${(props) => (props.selected ? "700" : "400")};
+  opacity: ${(props) => (props.selected ? "100%" : "50%")};
   position: relative;
+
+  ${mediaQuery} {
+    width: 20%;
+    height: 100%;
+    justify-content: center;
+    color: ${(props) => (props.selected ? "#ff6f4f" : "#7f8386")};
+
+    .tab__text {
+      margin: 5px 0;
+    }
+  }
 `;
 
 export const TabLine = styled.div`
@@ -71,18 +123,26 @@ export const TabLine = styled.div`
 `;
 
 export const TabUnderline = styled.div`
+  label: tab-underline;
   width: 50%;
   height: 2px;
   background-color: white;
   position: absolute;
   bottom: -10px;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, 0);
+
+  ${mediaQuery} {
+    background-color: #ff6f4f;
+    bottom: 0;
+    z-index: 999;
+  }
 `;
 
 export const Main = styled.div`
+  label: main;
   width: 100%;
-  height: 100vh;
+  height: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -100,13 +160,20 @@ export const Main = styled.div`
   }
 
   & > img {
-    width: 60%;
-    height: auto;
+    width: 50%;
+    height: 200px;
     margin: 20px 0;
+  }
+
+  ${mediaQuery} {
+    width: 60%;
+    margin-top: 0;
+    border-radius: 0;
+    padding: 40px 25px;
   }
 `;
 
-export const MainTop = styled.div`
+export const MainTop = styled.div<{ selected: boolean }>`
   width: 100%;
   height: auto;
   display: flex;
@@ -117,6 +184,17 @@ export const MainTop = styled.div`
   & > .main-top--small {
     color: #ff6f4f;
     font-size: 1.2rem;
+    justify-content: center;
+  }
+
+  ${mediaQuery} {
+    width: ${(props) => (props.selected ? "60%" : "fit-content")};
+    margin-bottom: ${(props) => (props.selected ? 0 : "10px")};
+    background-color: ${(props) => (props.selected ? "none" : "#d9d9d9")};
+    justify-content: ${(props) => (props.selected ? "end" : "center")};
+    color: #ff6f4f;
+    border-radius: 20px;
+    padding: 2px 10px;
   }
 `;
 
@@ -135,9 +213,15 @@ export const MainTitle = styled.div`
   span {
     font-size: 3.6rem;
   }
+
+  ${mediaQuery} {
+    width: 55%;
+    margin-top: 0;
+  }
 `;
 
 export const MainDetail = styled.div`
+  label: main-detail;
   width: 70%;
   padding: 10px 20px;
   box-sizing: border-box;
@@ -147,11 +231,15 @@ export const MainDetail = styled.div`
   font-size: 1.5rem;
 
   img {
-    width: 70px;
+    width: 60px;
     height: auto;
     position: absolute;
     bottom: -15px;
     right: -30px;
+  }
+
+  ${mediaQuery} {
+    width: 50%;
   }
 `;
 
@@ -166,6 +254,11 @@ export const List = styled.div<{ border: boolean }>`
   padding: 10px;
   box-sizing: border-box;
   border-bottom: ${(props) => (props.border ? "1px solid #e0e0e0" : "none")};
+
+  ${mediaQuery} {
+    width: 92%;
+    border-top: none;
+  }
 `;
 
 export const ListMid = styled.div`

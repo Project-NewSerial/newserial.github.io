@@ -24,6 +24,8 @@ import {
   NoData,
   ListRight,
   ListMidQuiz,
+  Top,
+  TabBoxUnderline,
 } from "./sytles";
 import Header from "./components/Header";
 import Modal from "../../components/Modal";
@@ -217,23 +219,26 @@ const Mypage = () => {
   return (
     <Container>
       <Header />
-      <Title>MYPAGE</Title>
-      <User>{userInfo?.email}</User>
-      <TabBox>
-        {tabs.map((el, index) => (
-          <>
-            <Tab
-              seleted={selectedTab === index}
-              onClick={() => clickTab(index)}
-            >
-              <div>{el.title}</div>
-              <div>{el.value}</div>
-              {selectedTab === index && <TabUnderline />}
-            </Tab>
-            {index !== 2 && <TabLine />}
-          </>
-        ))}
-      </TabBox>
+      <Top>
+        <Title>MYPAGE</Title>
+        <User>{userInfo?.email}</User>
+        <TabBox>
+          {tabs.map((el, index) => (
+            <>
+              <Tab
+                selected={selectedTab === index}
+                onClick={() => clickTab(index)}
+              >
+                <div className="tab__text">{el.title}</div>
+                <div className="tab__text">{el.value}</div>
+                {selectedTab === index && <TabUnderline />}
+              </Tab>
+              {index !== 2 && <TabLine />}
+            </>
+          ))}
+          <TabBoxUnderline />
+        </TabBox>
+      </Top>
       {selectedTab === 0 ? (
         <Main>
           {toggle && (
@@ -254,7 +259,7 @@ const Mypage = () => {
               }
             />
           )}
-          <MainTop>
+          <MainTop selected={selectedTab===0}>
             <Info onClick={() => setToggle(!toggle)}>i</Info>
           </MainTop>
           <MainTitle>
@@ -274,7 +279,7 @@ const Mypage = () => {
         </Main>
       ) : (
         <Main>
-          <MainTop>
+          <MainTop selected={selectedTab===0}>
             <div className="main-top--small">{info[selectedTab - 1][0]}</div>
           </MainTop>
           {list[selectedTab - 1]?.length !== 0 ? (

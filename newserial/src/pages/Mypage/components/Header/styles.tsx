@@ -6,7 +6,7 @@ const mediaQuery = () => `@media(min-width:${breakpoint})`;
 export const Container = styled.div`
   background-color: #ff6f4f;
   width: 100%;
-  height: 70px;
+  height: 60px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -24,7 +24,7 @@ export const Left = styled.div`
     visibility: visible;
     color: #ff6f4f;
     font-family: Bangers;
-    font-size: 3rem;
+    font-size: 2.5rem;
   }
 `;
 
