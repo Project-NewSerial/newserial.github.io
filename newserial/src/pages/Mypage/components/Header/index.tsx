@@ -41,7 +41,7 @@ const Header = () => {
 
   return (
     <Container>
-      <Left>NEWSERIAL</Left>
+      <Left onClick={() => navigate("/")}>NEWSERIAL</Left>
       <Right onClick={() => logoutMutate()}>로그아웃</Right>
     </Container>
   );
