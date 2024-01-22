@@ -46,6 +46,7 @@ interface UserInfo {
 interface PetInfo {
   petImage: string;
   currentPet: string;
+  houseImage: string;
   nextPet: string;
   count: number;
 }
@@ -137,6 +138,7 @@ const Mypage = () => {
         petImage:
           "https://png.pngtree.com/png-vector/20230221/ourmid/pngtree-cute-dog-illustration-png-image_6612076.png",
         currentPet: "노숙견",
+        houseImage:"https://png.pngtree.com/png-vector/20220707/ourmid/pngtree-thatched-house-traditional-korea-seongeup-png-image_5630464.png",
         nextPet: "흥부견",
         count: 4,
       });
@@ -259,7 +261,7 @@ const Mypage = () => {
               }
             />
           )}
-          <MainTop selected={selectedTab===0}>
+          <MainTop selected={selectedTab === 0}>
             <Info onClick={() => setToggle(!toggle)}>i</Info>
           </MainTop>
           <MainTitle>
@@ -274,12 +276,12 @@ const Mypage = () => {
             <br />
             <span className="main--highlight">{petInfo?.nextPet}</span>이 될 수
             있어요.
-            <img src="https://png.pngtree.com/png-vector/20220707/ourmid/pngtree-thatched-house-traditional-korea-seongeup-png-image_5630464.png" />
+            <img src= {petInfo?.houseImage}/>
           </MainDetail>
         </Main>
       ) : (
         <Main>
-          <MainTop selected={selectedTab===0}>
+          <MainTop selected={selectedTab === 0}>
             <div className="main-top--small">{info[selectedTab - 1][0]}</div>
           </MainTop>
           {list[selectedTab - 1]?.length !== 0 ? (
