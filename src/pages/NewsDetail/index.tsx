@@ -23,24 +23,27 @@ import {
 } from "./styles";
 import axios from "axios";
 import ToggleSlide from "./components/ToggleSlide";
+import { useSelector } from "react-redux";
 
 
+interface RootState {
+  auth: {
+    accessToken: null | string;
+  };
+}
 
 const NewsDetail = () => {
+  const accessToken = useSelector((state: RootState) => state.auth.accessToken);
   const [isToggleOn, setIsToggleOn] = useState<boolean>(false);
 
-  useEffect(()=>{
-    console.log(isToggleOn)
-  }, [isToggleOn])
- 
   const getShortNews = async () => {
     await axios.get(`${process.env.REACT_APP_API}/short-news/2`,
       {
         headers:
-        {withCredentials: true,
+        {
+          withCredentials: true,
           'Content-Type': 'application/json',
-          Authorization: 'Bearer ',
-          
+          Authorization: accessToken,
         }
       })
       .then((res) =>
@@ -48,9 +51,26 @@ const NewsDetail = () => {
       )
   };
 
-  // useEffect(() => {
-  //   getShortNews();
-  // }, [])
+  const setBookmark = async () => {
+    await axios.post(`${process.env.REACT_APP_API}/bookmark/2`, {},
+      {
+        headers:
+        {
+          withCredentials: true,
+          'Content-Type': 'application/json',
+          Authorization: accessToken,
+        }
+      })
+      .then((res) => {
+        console.log("북마크 설정 완료")
+        console.log('res', res)
+      }
+      )
+  };
+
+  useEffect(() => {
+    getShortNews();
+  }, [])
 
 
   return (
@@ -63,18 +83,19 @@ const NewsDetail = () => {
         </HeaderBox>
 
 
+
       </HeaderArea>
       <NewsArea>
         <NewsTitleArea>
           <Genre>경제</Genre>
           <Title>해외법인 망했는데 5300억 '세금 폭탄'... 골병드는 건설사</Title>
         </NewsTitleArea>
-        <BookmarkIcon src="/assets/icons/icon_bookmark_N.svg" />
+        <BookmarkIcon onClick={setBookmark} src="/assets/icons/icon_bookmark_N.svg" />
         <MenuArea>
           <Speaker src={"/assets/icons/icon_speaker.svg"} />
           <ParaphraseArea>
             <Paraphrase>쉬운 설명</Paraphrase>
-            
+
             <ToggleSlide setIsToggleOn={setIsToggleOn} isToggleOn={isToggleOn} />
 
 

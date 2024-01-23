@@ -39,7 +39,7 @@ const Login = () => {
         password: password,
       });
       dispatch(setToken(data.accessToken));
-      navigate("/");
+      navigate("/", );
     } catch (error: any) {
       alert("입력하신 정보를 다시 확인해주세요.");
     }
