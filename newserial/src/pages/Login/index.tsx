@@ -53,13 +53,7 @@ const Login = () => {
   const naverLogin = async () => {
     try {
       const { data } = await axios.get(
-        `${process.env.REACT_APP_API}/oauth2/authorization/naver`,
-        {
-          headers: {
-            "Access-Control-Allow-Origin": "http://localhost:3000",
-            //withCredentials: true,
-          },
-        }
+        `${process.env.REACT_APP_API}/oauth2/authorization/naver`
       );
       dispatch(setToken(data.accessToken));
       navigate("/");
