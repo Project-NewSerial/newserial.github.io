@@ -16,14 +16,21 @@ import {
   ParaphraseArea,
   Paraphrase,
   ParaphraseButton,
+  ParaphraseQuestionSentence,
+  ParaphraseQuestionResult,
+  NewsSentence,
   NewsContent,
   Source,
   ClipButton,
-  QuizButton,
+  PCQuizButton,
+  MobileQuizButton,
+
 } from "./styles";
 import axios from "axios";
 import ToggleSlide from "./components/ToggleSlide";
 import { useSelector } from "react-redux";
+import Modal from "../../components/Modal";
+import QuizModal from "./components/QuizModal";
 
 
 interface RootState {
@@ -32,46 +39,206 @@ interface RootState {
   };
 }
 
+interface ShortNews {
+  id: number;
+  title: string;
+  body: string[];
+  category_name: string;
+  url: string;
+  bookmark: boolean;
+}
+
+interface NewSerialAnswered {
+  question: string,
+  userAnswer: string,
+  quizAnswer: string,
+  result: string,
+  explanation: string,
+}
+
+/**
+ * 뉴스 상세 페이지
+ * @author 김민지
+ */
 const NewsDetail = () => {
   const accessToken = useSelector((state: RootState) => state.auth.accessToken);
   const [isToggleOn, setIsToggleOn] = useState<boolean>(false);
+  const [shortNews, setShortNews] = useState<ShortNews>();
+  const [bookmark, setBookmark] = useState<boolean>();
+  const [paraphraseQuestion, setParaphraseQuestion] = useState<string>("");
+  const [paraphraseResult, setParaphraseResult] = useState<string>("");
+  const [newSerialAnswered, setNewSerialAnswered] = useState<NewSerialAnswered | undefined>();
+  const [newSerialNotAnswered, setNewSerialNotAnswered] = useState<string | undefined>("");
 
-  const getShortNews = async () => {
-    await axios.get(`${process.env.REACT_APP_API}/short-news/2`,
-      {
-        headers:
+  const [modalToggle, setModalToggle] = useState(false);
+  const [userQuizAnswer, setUserQuizAnswer] = useState<string | undefined>();
+
+
+  /**
+  * 뉴스 paraphase post 함수
+  * @param {string} question paraphrase하고자 하는 문장
+  * @returns {question: string}
+  */
+  const postParaphrase = async (paraphraseQuestion: string) => {
+    if (accessToken !== null && paraphraseQuestion) {
+      await axios.post(`${process.env.REACT_APP_API}/paraphrasing`, paraphraseQuestion,
         {
-          withCredentials: true,
-          'Content-Type': 'application/json',
-          Authorization: accessToken,
+          headers:
+          {
+            withCredentials: true,
+            'Content-Type': 'application/json',
+            Authorization: accessToken,
+          }
+        })
+        .then((res) => {
+          setParaphraseResult(res?.data)
         }
-      })
-      .then((res) =>
-        console.log('res', res)
-      )
+        )
+    }
   };
 
-  const setBookmark = async () => {
-    await axios.post(`${process.env.REACT_APP_API}/bookmark/2`, {},
-      {
-        headers:
+  /**
+  * 뉴스 북마크 등록 post 함수
+  */
+  const postBookmark = async () => {
+    if (accessToken !== null) {
+      await axios.post(`${process.env.REACT_APP_API}/bookmark/2`,
         {
-          withCredentials: true,
-          'Content-Type': 'application/json',
-          Authorization: accessToken,
+          headers:
+          {
+            withCredentials: true,
+            'Content-Type': 'application/json',
+            Authorization: accessToken,
+          }
+        })
+        .then((res) => {
+          setBookmark(true);
         }
-      })
-      .then((res) => {
-        console.log("북마크 설정 완료")
-        console.log('res', res)
+        )
+    }
+  };
+
+  /**
+* 뉴스 북마크 삭제 delete 함수
+*/
+  const deleteBookmark = async () => {
+    if (accessToken !== null) {
+      await axios.delete(`${process.env.REACT_APP_API}/bookmark/2`,
+        {
+          headers:
+          {
+            withCredentials: true,
+            'Content-Type': 'application/json',
+            Authorization: accessToken,
+          }
+        })
+        .then((res) => {
+          setBookmark(false);
+        }
+        )
+    }
+  };
+
+  /**
+  * 뉴시리얼 퀴즈 조회 및 생성 post 함수
+  * @returns {question: string, userAnswer:string, quizAnswer:string, result: string, explanation: string}
+  */
+  const postNewSerialQuiz = async () => {
+    setModalToggle(true);
+    if (accessToken !== null) {
+      await axios.post(`${process.env.REACT_APP_API}/newserial-quiz/2`, {},
+        {
+          headers:
+          {
+            withCredentials: true,
+            'Content-Type': 'application/json',
+            Authorization: accessToken,
+          }
+        })
+        .then((res) => {
+          if (res?.data?.userAnswer) {
+            setNewSerialAnswered(res.data);
+          } else {
+            setNewSerialNotAnswered(res.data.question);
+          }
+        }
+        )
+    }
+  };
+
+  /**
+* 뉴시리얼 퀴즈 정답 제출 post 함수
+* @param {number} newsId 뉴스 id
+* @param {string} userAnswer 사용자 답변
+* @returns {question: string, userAnswer:string, quizAnswer:string, result: string, explanation: string}
+*/
+  const postNewSerialQuizAnswer = async () => {
+    if (accessToken !== null && userQuizAnswer) {
+      let data = {
+        newsId: 2,
+        userAnswer: userQuizAnswer,
       }
-      )
+      await axios.post(`${process.env.REACT_APP_API}/newserial-quiz/answer`,
+        data,
+        {
+          headers:
+          {
+            withCredentials: true,
+            'Content-Type': 'application/json',
+            Authorization: accessToken,
+          }
+        })
+        .then((res) => {
+          setNewSerialNotAnswered("");
+          setNewSerialAnswered(res?.data);
+        }
+        )
+    }
   };
+
 
   useEffect(() => {
-    getShortNews();
-  }, [])
+    /**
+    * 뉴스 상세 get 함수
+    * @returns {id: number, title : string, body: string[], category_name:string, url: string}
+    */
+    if (accessToken !== null) {
+      axios.get(`${process.env.REACT_APP_API}/short-news/2`,
+        {
+          headers:
+          {
+            withCredentials: true,
+            'Content-Type': 'application/json',
+            Authorization: accessToken,
+          }
+        })
+        .then((res) => {
+          setShortNews(res.data);
+          setBookmark(res?.data?.bookmark)
+        }
+        )
+    }
+  }, [accessToken])
 
+  useEffect(() => {
+    if (paraphraseQuestion) {
+      postParaphrase(paraphraseQuestion);
+    }
+  }, [paraphraseQuestion])
+
+  useEffect(() => {
+    if (isToggleOn === false) {
+      setParaphraseQuestion("");
+      setParaphraseResult("");
+    }
+  }, [isToggleOn])
+
+
+  useEffect(() => {
+    if (userQuizAnswer) {
+      postNewSerialQuizAnswer();
+    }
+  }, [userQuizAnswer])
 
   return (
     <Container>
@@ -81,42 +248,56 @@ const NewsDetail = () => {
           <SearchButton src="/assets/icons/icon_search.svg" />
           <MyPageButton src="/assets/icons/icon_mypage.svg" />
         </HeaderBox>
-
-
-
       </HeaderArea>
+
+      {modalToggle && (
+        <Modal
+          setToggle={setModalToggle}
+          content={
+            <QuizModal
+              userQuizAnswer={userQuizAnswer}
+              setUserQuizAnswer={setUserQuizAnswer}
+              newSerialAnswered={newSerialAnswered}
+              newSerialNotAnswered={newSerialNotAnswered} />
+          }
+        />
+      )}
+
       <NewsArea>
         <NewsTitleArea>
-          <Genre>경제</Genre>
-          <Title>해외법인 망했는데 5300억 '세금 폭탄'... 골병드는 건설사</Title>
+          <Genre>{shortNews?.category_name}</Genre>
+          <Title>{shortNews?.title}</Title>
         </NewsTitleArea>
-        <BookmarkIcon onClick={setBookmark} src="/assets/icons/icon_bookmark_N.svg" />
+        <BookmarkIcon onClick={bookmark !== true ? postBookmark : deleteBookmark} src={bookmark !== true ? "/assets/icons/icon_bookmark_N.svg" : "/assets/icons/icon_bookmark_Y.svg"} />
         <MenuArea>
-          <Speaker src={"/assets/icons/icon_speaker.svg"} />
+          <Speaker src={"/assets/icons/icon_speaker_N.svg"} />
           <ParaphraseArea>
             <Paraphrase>쉬운 설명</Paraphrase>
-
             <ToggleSlide setIsToggleOn={setIsToggleOn} isToggleOn={isToggleOn} />
-
-
           </ParaphraseArea>
         </MenuArea>
         <NewsContent>
-          상당수 사업은 현지 법인이 있어야 참여할 수 있어 건설사들은 지사보다는 법인 설립을 선택했다.
-          사우디 상법상 증자 등의 절차가 복잡해 자본금 납입 대신 자금 대여 형식으로 법인 규모를 키웠다.
-          현지 법인과 자금 대여 계약만 체결하면 신속하게 자금을 수혈할 수 있다는 점도 건설사들이 자금 대여를 늘린 이유다.
-
-          하지만 유가가 급락하기 시작하면서 신규 수주는 뚝 끊겼다. 2014년부터 8년간 사우디 정부의 재정수지가 적자를 이어가며 발주 여력이 줄어든 데 따른 것이다.
-          2010년 470억달러에 이르던 국내 건설사들의 중동 수주 규모도 2019년에는 50억달러로 급감했다.
+          {shortNews?.body?.map((el, index) =>
+            el === paraphraseQuestion ?
+              <>
+                <ParaphraseQuestionSentence >{el}</ParaphraseQuestionSentence>
+                <ParaphraseQuestionResult>{paraphraseResult}</ParaphraseQuestionResult>
+              </>
+              : <NewsSentence key={index} isToggleOn={isToggleOn}
+                onClick={() => setParaphraseQuestion(el)}
+              >{el}
+              </NewsSentence>
+          )}
         </NewsContent>
         <Source>
-          출처: [한국경제] 해외 법인 망했는데 5300억 '세금 폭탄'... 골병드는 건설사
-          <ClipButton src={"/assets/icons/icon_clip.svg"} />
+          <a style={{ textDecoration: "none", color: "#979797" }} href={shortNews?.url} target="_blank">
+            출처: {shortNews?.title}
+            <ClipButton />
+          </a>
         </Source>
-
-        <QuizButton>QUIZ</QuizButton>
+        <PCQuizButton onClick={postNewSerialQuiz}>QUIZ</PCQuizButton>
       </NewsArea>
-
+      <MobileQuizButton onClick={postNewSerialQuiz}>QUIZ</MobileQuizButton>
     </Container>
   );
 };

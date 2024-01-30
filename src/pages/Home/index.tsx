@@ -38,7 +38,7 @@ const Home = () => {
 
     /**
    * 한 입 퀴즈 get 하는 함수
-   * @return {Array.<{wordIs: number, question : string}>}
+   * @returns {Array.<{wordIs: number, question : string}>}
    */
   const getQuiz = async () => {
     await axios.post(`${process.env.REACT_APP_API}/main-quiz`, {}, {
@@ -60,7 +60,7 @@ const Home = () => {
 
     /**
    * 한 입 퀴즈 맞춤 기사 get 함수
-   * @return {Array.<{id: number, title : string}>}
+   * @returns {Array.<{id: number, title : string}>}
    */
     const getMainQuizNews = async () => {
       await axios.get(`${process.env.REACT_APP_API}/main-quiz/news`, {
@@ -81,7 +81,7 @@ const Home = () => {
 
     /**
    * 뉴-시리얼 기사 get 함수
-   * @return {Array.<{id: number, title : string}>}
+   * @returns {Array.<{id: number, title : string}>}
    */
     const getNews = async () => {
       await axios.get(`${process.env.REACT_APP_API}/main-quiz/news`, {

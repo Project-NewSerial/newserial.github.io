@@ -26,7 +26,7 @@ export const Overlay = styled.div`
 export const Box = styled.div`
   label: box;
   width: 80%;
-  height: 200px;
+  height: auto;
   background-color: white;
   font-family: Noto Sans KR;
   font-size: 14px;
