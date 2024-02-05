@@ -7,6 +7,7 @@ import Signup from "./pages/Signup/index";
 import Mypage from "./pages/Mypage/index";
 import SocialLoginCallback from "./pages/SocialLoginCallback";
 
+
 function App() {
   const queryClient = new QueryClient();
   return (
@@ -18,7 +19,6 @@ function App() {
             <Route path="/signup" element={<Signup />} />
             <Route path="/mypage" element={<Mypage />} />
             <Route path="/social-login-callback" element={<SocialLoginCallback/>}/>
-
           </Routes>
         </BrowserRouter>
       </div>
