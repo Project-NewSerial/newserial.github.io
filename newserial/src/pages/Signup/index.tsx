@@ -14,6 +14,7 @@ import {
   ModalInput,
   ModalButton,
   WarningText,
+  Content,
 } from "./styles";
 
 import Modal from "../../components/Modal/index";
@@ -209,53 +210,57 @@ const Signup = () => {
         />
       )}
       <Container>
-        <Logo>NEWSERIAL</Logo>
-        <InputContent>
-          <InputBox>
-            <InputText>이메일</InputText>
-            <Input
-              name="email"
-              value={email}
-              onChange={(e) => changeInput(e)}
-            />
-            <button
-              className="input-box__button"
-              onClick={() => sendMailMutate()}
-              disabled={!isValid.emailFormat}
-            >
-              인증
-            </button>
-            {email !== "" && <WarningText>{warningMessage.email}</WarningText>}
-          </InputBox>
-          <InputBox>
-            <InputText>비밀번호</InputText>
-            <Input
-              type="password"
-              name="password"
-              value={password}
-              placeholder="영문, 숫자, 특수기호가 포함 8~20자"
-              onChange={(e) => changeInput(e)}
-            />
-            {password !== "" && !isValid.passwordFormat && (
-              <WarningText>{warningMessage.password}</WarningText>
-            )}
-          </InputBox>
-          <InputBox>
-            <InputText>비밀번호 확인</InputText>
-            <Input
-              type="password"
-              name="checkPassword"
-              value={checkPassword}
-              onChange={(e) => changeInput(e)}
-            />
-            {checkPassword !== "" && !isValid.passwordCheck && (
-              <WarningText>{warningMessage.checkPassword}</WarningText>
-            )}
-          </InputBox>
-        </InputContent>
-        <Button disabled={!submitRequirements} onClick={() => signupMutate()}>
-          가입하기
-        </Button>
+        <Content>
+          <Logo>NEWSERIAL</Logo>
+          <InputContent>
+            <InputBox>
+              <InputText>이메일</InputText>
+              <Input
+                name="email"
+                value={email}
+                onChange={(e) => changeInput(e)}
+              />
+              <button
+                className="input-box__button"
+                onClick={() => sendMailMutate()}
+                disabled={!isValid.emailFormat}
+              >
+                인증
+              </button>
+              {email !== "" && (
+                <WarningText>{warningMessage.email}</WarningText>
+              )}
+            </InputBox>
+            <InputBox>
+              <InputText>비밀번호</InputText>
+              <Input
+                type="password"
+                name="password"
+                value={password}
+                placeholder="영문, 숫자, 특수기호가 포함 8~20자"
+                onChange={(e) => changeInput(e)}
+              />
+              {password !== "" && !isValid.passwordFormat && (
+                <WarningText>{warningMessage.password}</WarningText>
+              )}
+            </InputBox>
+            <InputBox>
+              <InputText>비밀번호 확인</InputText>
+              <Input
+                type="password"
+                name="checkPassword"
+                value={checkPassword}
+                onChange={(e) => changeInput(e)}
+              />
+              {checkPassword !== "" && !isValid.passwordCheck && (
+                <WarningText>{warningMessage.checkPassword}</WarningText>
+              )}
+            </InputBox>
+          </InputContent>
+          <Button disabled={!submitRequirements} onClick={() => signupMutate()}>
+            가입하기
+          </Button>
+        </Content>
       </Container>
     </>
   );

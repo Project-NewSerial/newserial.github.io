@@ -3,6 +3,16 @@ import styled from "@emotion/styled";
 export const Container = styled.div`
   width: 100%;
   height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const Content = styled.div`
+  width: 100%;
+  height: 100vh;
+  max-width: 480px;
   background-color: black;
   display: flex;
   flex-direction: column;
@@ -11,13 +21,13 @@ export const Container = styled.div`
   padding: 0 30px;
   box-sizing: border-box;
   font-family: NanumSquareNeo;
-  font-size: 14px;
+  font-size: 1.4rem;
 `;
 
 export const Logo = styled.div`
   font-family: Bangers;
   color: #ff6f4f;
-  font-size: 30px;
+  font-size: 3rem;
 `;
 
 export const InputContent = styled.div`
@@ -40,7 +50,7 @@ export const InputBox = styled.div`
     color: #ff6f4f;
     border-radius: 15px;
     font-family: Noto Sans KR;
-    font-size: 12px;
+    font-size: 1.2rem;
     position: absolute;
     right: 0;
     top: 17px;
@@ -65,10 +75,10 @@ export const Input = styled.input`
   background-color: black;
   color: white;
   font-family: NanumSquareNeo;
-  font-size: 14px;
+  font-size: 1.4rem;
   color: white;
   &::placeholder {
-    font-size: 10px;
+    font-size: 1rem;
   }
   &:focus {
     outline: none;
@@ -79,7 +89,7 @@ export const Input = styled.input`
 export const WarningText = styled.div`
   label: warning-text;
   color: red;
-  font-size: 10px;
+  font-size: 1rem;
   margin-top: 5px;
 `;
 
@@ -129,7 +139,7 @@ export const ModalButton = styled.div`
   color: #ff6f4f;
   border-radius: 15px;
   font-family: Noto Sans KR;
-  font-size: 12px;
+  font-size: 1.2rem;
   text-align: center;
   margin-top: 10px;
 `;
