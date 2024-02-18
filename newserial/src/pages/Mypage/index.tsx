@@ -15,10 +15,6 @@ import {
   TabUnderline,
   Title,
   User,
-  ModalTitle,
-  ModalMain,
-  ModalMainText,
-  ModalBottom,
   List,
   ListMid,
   NoData,
@@ -26,9 +22,11 @@ import {
   ListMidQuiz,
   Top,
   TabBoxUnderline,
+  Underline,
 } from "./sytles";
 import Header from "./components/Header";
-import Modal from "../../components/Modal";
+import InfoModal from "./components/InfoModal";
+import PasswordModal from "./components/PasswordModal";
 
 interface RootState {
   auth: {
@@ -69,7 +67,8 @@ interface BookmarkList {
 const Mypage = () => {
   const accessToken = useSelector((state: RootState) => state.auth.accessToken);
   const [selectedTab, setSelectedTab] = useState(0);
-  const [toggle, setToggle] = useState(false);
+  const [infoToggle, setInfoToggle] = useState(false);
+  const [passwordToggle, setPasswordToggle] = useState(true);
   const [list, setList] = useState<
     Array<Array<QuizList> | Array<BookmarkList> | null>
   >([null, null]);
@@ -79,14 +78,6 @@ const Mypage = () => {
     { title: "우유 돌보기", value: userInfo?.currentPet },
     { title: "퀴즈 기록", value: userInfo?.quizCount },
     { title: "북마크한 기사", value: userInfo?.bookmarkCount },
-  ];
-
-  const rank = [
-    "노숙견 : 0~5번",
-    "양반견 : 31~40번",
-    "흥부견 : 6~10번",
-    "황제견 : 41번~",
-    "평민견 : 11~30번",
   ];
 
   const info = [
@@ -138,7 +129,8 @@ const Mypage = () => {
         petImage:
           "https://png.pngtree.com/png-vector/20230221/ourmid/pngtree-cute-dog-illustration-png-image_6612076.png",
         currentPet: "노숙견",
-        houseImage:"https://png.pngtree.com/png-vector/20220707/ourmid/pngtree-thatched-house-traditional-korea-seongeup-png-image_5630464.png",
+        houseImage:
+          "https://png.pngtree.com/png-vector/20220707/ourmid/pngtree-thatched-house-traditional-korea-seongeup-png-image_5630464.png",
         nextPet: "흥부견",
         count: 4,
       });
@@ -220,10 +212,14 @@ const Mypage = () => {
 
   return (
     <Container>
+      {passwordToggle && <PasswordModal setToggle={setPasswordToggle} />}
       <Header />
       <Top>
         <Title>MYPAGE</Title>
         <User>{userInfo?.email}</User>
+        <Underline onClick={() => setPasswordToggle(!passwordToggle)}>
+          비밀번호 재설정
+        </Underline>
         <TabBox>
           {tabs.map((el, index) => (
             <>
@@ -243,26 +239,9 @@ const Mypage = () => {
       </Top>
       {selectedTab === 0 ? (
         <Main>
-          {toggle && (
-            <Modal
-              setToggle={setToggle}
-              content={
-                <>
-                  <ModalTitle>최근 30일 기준</ModalTitle>
-                  <ModalMain>
-                    {rank.map((el) => (
-                      <ModalMainText>{el}</ModalMainText>
-                    ))}
-                  </ModalMain>
-                  <ModalBottom>
-                    퀴즈 정답을 맞히면 시리얼을 한 번 더 먹을 수 있어요
-                  </ModalBottom>
-                </>
-              }
-            />
-          )}
+          {infoToggle && <InfoModal setToggle={setInfoToggle} />}
           <MainTop selected={selectedTab === 0}>
-            <Info onClick={() => setToggle(!toggle)}>i</Info>
+            <Info onClick={() => setInfoToggle(!infoToggle)}>i</Info>
           </MainTop>
           <MainTitle>
             우유는{" "}
@@ -276,7 +255,7 @@ const Mypage = () => {
             <br />
             <span className="main--highlight">{petInfo?.nextPet}</span>이 될 수
             있어요.
-            <img src= {petInfo?.houseImage}/>
+            <img src={petInfo?.houseImage} />
           </MainDetail>
         </Main>
       ) : (
