@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router";
 import { useDispatch } from "react-redux";
 import { setToken } from "../../modules/auth";
@@ -14,6 +14,7 @@ import {
   Button,
   BottomText,
   Content,
+  ColorText,
 } from "./styles";
 import { useMutation } from '@tanstack/react-query';
 
@@ -95,11 +96,11 @@ const Login = () => {
             />
           </InputBox>
         </InputContent>
-        <Button onClick={() => loginMutate()}>로그인</Button>
+        <ColorText onClick={()=>navigate('/temp-password')}>비밀번호를 잊어버리셨나요?</ColorText>
+        <Button onClick={() => login()}>로그인</Button>
         <BottomText>
-          <div onClick={() => navigate("/signup")}>회원가입</div>
-          <div>&nbsp; | &nbsp;</div>
-          <div>비밀번호 재설정</div>
+          Newserial 회원이 아니신가요? &nbsp;
+          <span onClick={() => navigate("/signup")}>회원가입 하기</span>
         </BottomText>
         <img
           src="/assets/images/btnD_완성형.png"

@@ -46,7 +46,7 @@ export const InputBox = styled.div`
   display: flex;
   flex-direction: column;
   align-items: start;
-  margin-bottom: 20px;
+  margin-top: 20px;
 `;
 
 export const InputText = styled.div`
@@ -72,6 +72,17 @@ export const Input = styled.input`
   }
 `;
 
+export const ColorText = styled.div`
+  label: color-text;
+  width: 100%;
+  color: #ff6f4f;
+  font-family: Noto Sans KR;
+  font-weight: 100;
+  font-size: 1.2rem;
+  display: flex;
+  justify-content: end;
+  margin-top: 5px;
+`;
 export const Button = styled.div`
   label: button;
   width: 75px;
@@ -82,7 +93,7 @@ export const Button = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 15px 0;
+  margin: 30px 0;
 `;
 
 export const BottomText = styled.div`
@@ -92,5 +103,8 @@ export const BottomText = styled.div`
   font-weight: 100;
   font-size: 1.2rem;
   display: flex;
-  margin-bottom: 35px;
+  margin-bottom: 30px;
+  span{
+    text-decoration: underline;
+  }
 `;
