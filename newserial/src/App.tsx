@@ -6,6 +6,7 @@ import Login from "./pages/Login/index";
 import Signup from "./pages/Signup/index";
 import Mypage from "./pages/Mypage/index";
 import TempPassword from "./pages/TempPassword";
+import SocialLoginCallback from "./pages/SocialLoginCallback";
 
 function App() {
   const queryClient = new QueryClient();
@@ -18,6 +19,7 @@ function App() {
             <Route path="/signup" element={<Signup />} />
             <Route path="/mypage" element={<Mypage />} />
             <Route path="/temp-password" element={<TempPassword />} />
+            <Route path="/social-login-callback" element={<SocialLoginCallback/>}/>
           </Routes>
         </BrowserRouter>
       </div>

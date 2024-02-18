@@ -32,6 +32,7 @@ export const Top = styled.div`
 `;
 
 export const Title = styled.div`
+  label: title;
   width: 100px;
   height: 35px;
   background-color: white;
@@ -45,10 +46,19 @@ export const Title = styled.div`
 `;
 
 export const User = styled.div`
+  label: user;
   font-family: Bangers;
   color: white;
   font-size: 2rem;
-  margin: 20px 0;
+  margin: 20px 0 0 0;
+`;
+
+export const Underline = styled.div`
+  font-family: Noto Sans Kr;
+  text-decoration: underline;
+  font-size: 1.2rem;
+  color: white;
+  margin-bottom: 20px;
 `;
 
 export const TabBox = styled.div`
@@ -309,29 +319,3 @@ export const NoData = styled.div`
   font-size: 2.5rem;
 `;
 
-export const ModalTitle = styled.div`
-  font-family: Noto Sans KR;
-  font-size: 1.6rem;
-  font-weight: 600;
-`;
-
-export const ModalMain = styled.div`
-  display: grid;
-  grid-template-columns: repeat(2, 50%);
-  gap: 5px 20px;
-  margin: 20px 0;
-`;
-
-export const ModalMainText = styled.div`
-  font-family: Noto Sans KR;
-  font-size: 1.4rem;
-  display: flex;
-  justify-content: start;
-`;
-
-export const ModalBottom = styled.div`
-  font-family: Noto Sans KR;
-  font-size: 1.4rem;
-  color: #ff6f4f;
-  font-weight: 700;
-`;
