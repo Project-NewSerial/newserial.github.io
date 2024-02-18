@@ -16,6 +16,7 @@ import {
   Content,
   ColorText,
 } from "./styles";
+import { useMutation } from '@tanstack/react-query';
 
 /**
  * 로그인 페이지
@@ -46,26 +47,22 @@ const Login = () => {
     }
   };
 
-  /**
-   * 소셜 로그인하는 함수
-   * @param {string} email 이메일
-   * @param {string} password 비밀전호
-   */
+  //소셜로그인 함수
   const naverLogin = async () => {
+    const url = `${process.env.REACT_APP_API}/oauth2/authorization/naver`;
     try {
-      const { data } = await axios.get(
-        `${process.env.REACT_APP_API}/oauth2/authorization/naver`,
-        {
-          headers: {
-            "Access-Control-Allow-Origin": "http://localhost:3000",
-            //withCredentials: true,
-          },
-        }
-      );
-      dispatch(setToken(data.accessToken));
-      navigate("/");
-    } catch (error: any) {}
+      window.location.href = new URL(url, window.location.origin).href;
+    } catch (error: any) {
+      console.log(error);
+    }
   };
+
+  const { mutate: loginMutate } = useMutation({
+    mutationFn: login,
+  });
+  const { mutate: naverLoginMutate } = useMutation({
+    mutationFn: naverLogin,
+  });
 
   /**
    * inputs 변경 함수
@@ -108,7 +105,7 @@ const Login = () => {
         <img
           src="/assets/images/btnD_완성형.png"
           width={150}
-          onClick={() => naverLogin()}
+          onClick={() => naverLoginMutate()}
         />
       </Content>
     </Container>

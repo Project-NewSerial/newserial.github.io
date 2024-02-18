@@ -5,6 +5,8 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Login from "./pages/Login/index";
 import Signup from "./pages/Signup/index";
 import Mypage from "./pages/Mypage/index";
+import SocialLoginCallback from "./pages/SocialLoginCallback";
+
 
 function App() {
   const queryClient = new QueryClient();
@@ -16,6 +18,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/mypage" element={<Mypage />} />
+            <Route path="/social-login-callback" element={<SocialLoginCallback/>}/>
           </Routes>
         </BrowserRouter>
       </div>
