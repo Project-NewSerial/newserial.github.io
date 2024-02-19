@@ -97,7 +97,7 @@ const Login = () => {
           </InputBox>
         </InputContent>
         <ColorText onClick={()=>navigate('/temp-password')}>비밀번호를 잊어버리셨나요?</ColorText>
-        <Button onClick={() => login()}>로그인</Button>
+        <Button onClick={() => loginMutate()}>로그인</Button>
         <BottomText>
           Newserial 회원이 아니신가요? &nbsp;
           <span onClick={() => navigate("/signup")}>회원가입 하기</span>
