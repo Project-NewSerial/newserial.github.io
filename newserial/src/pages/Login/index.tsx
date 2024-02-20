@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router";
 import { useDispatch } from "react-redux";
-import { setToken } from "../../modules/auth";
+import { setToken } from "../../redux/modules/auth";
 import { useState } from "react";
 import axios from "axios";
 import {
@@ -16,7 +16,7 @@ import {
   Content,
   ColorText,
 } from "./styles";
-import { useMutation } from '@tanstack/react-query';
+import { useMutation } from "@tanstack/react-query";
 
 /**
  * 로그인 페이지
@@ -36,10 +36,16 @@ const Login = () => {
    */
   const login = async () => {
     try {
-      const { data } = await axios.post(`${process.env.REACT_APP_API}/login`, {
-        email: email,
-        password: password,
-      });
+      const { data } = await axios.post(
+        `${process.env.REACT_APP_API}/login`,
+        {
+          email: email,
+          password: password,
+        },
+        {
+          withCredentials: true,
+        }
+      );
       dispatch(setToken(data.accessToken));
       navigate("/");
     } catch (error: any) {
@@ -96,7 +102,9 @@ const Login = () => {
             />
           </InputBox>
         </InputContent>
-        <ColorText onClick={()=>navigate('/temp-password')}>비밀번호를 잊어버리셨나요?</ColorText>
+        <ColorText onClick={() => navigate("/temp-password")}>
+          비밀번호를 잊어버리셨나요?
+        </ColorText>
         <Button onClick={() => loginMutate()}>로그인</Button>
         <BottomText>
           Newserial 회원이 아니신가요? &nbsp;
