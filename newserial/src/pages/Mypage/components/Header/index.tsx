@@ -29,10 +29,11 @@ const Header = () => {
         headers: {
           Authorization: `${accessToken}`,
         },
+        withCredentials: true,
       }
     );
 
-    if (data.message === "home") navigate("/login");
+    if (data.message === "home") navigate("/");
   };
 
   const { mutate: logoutMutate } = useMutation({

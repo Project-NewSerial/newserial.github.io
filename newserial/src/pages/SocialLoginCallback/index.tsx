@@ -3,7 +3,7 @@ import { Container, Loading } from "./styles";
 import axios from "axios";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { setToken } from "../../modules/auth";
+import { setToken } from "../../redux/modules/auth";
 import { useMutation } from "@tanstack/react-query";
 
 /**
@@ -28,8 +28,9 @@ const SocialLoginCallback = () => {
         headers: {
           Authorization: `Bearer ${token}`,
         },
+        withCredentials: true
       });
-      //navigate("/");
+      navigate("/");
     } catch (error: any) {
       console.log(error);
     }
