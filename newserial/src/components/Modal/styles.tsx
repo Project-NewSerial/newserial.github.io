@@ -17,9 +17,6 @@ export const Overlay = styled.div`
   label: overlay;
   width: 100%;
   height: 100vh;
-  top: 0;
-  left: 0;
-  position: fixed;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -28,10 +25,8 @@ export const Overlay = styled.div`
 
 export const Box = styled.div`
   label: box;
-  width: fit-content;
+  width: 80%;
   height: 200px;
-  padding: 10px 30px;
-  box-sizing: border-box;
   background-color: white;
   font-family: Noto Sans KR;
   font-size: 14px;
