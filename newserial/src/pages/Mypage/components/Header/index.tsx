@@ -22,18 +22,21 @@ const Header = () => {
 
   //logout api 호출
   const logout = async () => {
-    const { data } = await axios.post(
-      `${process.env.REACT_APP_API}/logout`,
-      {},
-      {
-        headers: {
-          Authorization: `${accessToken}`,
-        },
-        withCredentials: true,
-      }
-    );
-
-    if (data.message === "home") navigate("/");
+    try {
+      const { data } = await axios.post(
+        `${process.env.REACT_APP_API}/logout`,
+        {},
+        {
+          headers: {
+            Authorization: `${accessToken}`,
+          },
+          withCredentials: true,
+        }
+      );
+      if (data === "logout success\r\n") navigate("/");
+    } catch (error: any) {
+      console.log(error);
+    }
   };
 
   const { mutate: logoutMutate } = useMutation({
