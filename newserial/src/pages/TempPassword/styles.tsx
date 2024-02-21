@@ -1,8 +1,6 @@
 import styled from "@emotion/styled";
 
 export const Container = styled.div`
-  label: container;
-  min-width: 360px;
   width: 100%;
   height: 100vh;
   display: flex;
@@ -12,52 +10,54 @@ export const Container = styled.div`
 `;
 
 export const Content = styled.div`
-  label: content;
-  min-width: 360px;
-  max-width: 480px;
   width: 100%;
   height: 100vh;
+  max-width: 480px;
   background-color: black;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   padding: 0 30px;
   box-sizing: border-box;
   font-family: NanumSquareNeo;
-  font-size: 1.4rem;
+  font-size: 14px;
 `;
 
 export const Logo = styled.div`
-  label: logo;
   font-family: Bangers;
   color: #ff6f4f;
   font-size: 30px;
+  margin-top: 100px;
 `;
 
-export const InputContent = styled.div`
-  label: input-content;
-  width: 100%;
-  margin-top: 90px;
+export const Text = styled.div`
+  color: white;
+  font-family: Noto Sans Kr;
+  margin-top: 50px;
+  font-weight: 300;
+  font-size: 1.2rem;
 `;
+export const InputContent = styled.div`
+  width: 100%;
+  margin-top: 50px;
+`;
+
 export const InputBox = styled.div`
-  label: input-box;
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: start;
-  margin-top: 20px;
+  margin-bottom: 20px;
+  position: relative;
 `;
 
 export const InputText = styled.div`
-  label: input-text;
   color: white;
 `;
 
 export const Input = styled.input`
-  label: input;
   width: 100%;
-  height: 30px;
+  height: 32px;
   border: none;
   border-bottom: 1px solid white;
   background-color: black;
@@ -65,26 +65,24 @@ export const Input = styled.input`
   font-family: NanumSquareNeo;
   font-size: 1.4rem;
   color: white;
-
+  &::placeholder {
+    font-size: 1rem;
+  }
   &:focus {
     outline: none;
     border-bottom: 2px solid white;
   }
 `;
 
-export const ColorText = styled.div`
-  label: color-text;
-  width: 100%;
-  color: #ff6f4f;
-  font-family: Noto Sans KR;
-  font-weight: 100;
-  font-size: 1.2rem;
-  display: flex;
-  justify-content: end;
+export const WarningText = styled.div`
+  label: warning-text;
+  color: red;
+  font-size: 1rem;
   margin-top: 5px;
 `;
-export const Button = styled.div`
-  label: button;
+
+export const Button = styled.button`
+  border: none;
   width: 75px;
   height: 30px;
   background-color: white;
@@ -93,18 +91,9 @@ export const Button = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 30px 0;
-`;
-
-export const BottomText = styled.div`
-  label: botton-text;
-  color: #ff6f4f;
-  font-family: Noto Sans KR;
-  font-weight: 100;
-  font-size: 1.2rem;
-  display: flex;
-  margin-bottom: 30px;
-  span{
-    text-decoration: underline;
+  margin: 15px 0;
+  font-family: NanumSquareNeo;
+  &:disabled {
+    opacity: 50%;
   }
 `;

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import { useSelector } from "react-redux";
 import { useMutation } from "@tanstack/react-query";
+import api from "../../api";
 import {
   Container,
   Info,
@@ -68,7 +68,7 @@ const Mypage = () => {
   const accessToken = useSelector((state: RootState) => state.auth.accessToken);
   const [selectedTab, setSelectedTab] = useState(0);
   const [infoToggle, setInfoToggle] = useState(false);
-  const [passwordToggle, setPasswordToggle] = useState(true);
+  const [passwordToggle, setPasswordToggle] = useState(false);
   const [list, setList] = useState<
     Array<Array<QuizList> | Array<BookmarkList> | null>
   >([null, null]);
@@ -96,15 +96,13 @@ const Mypage = () => {
   const [petInfo, setPetInfo] = useState<PetInfo | null>(null);
 
   useEffect(() => {
-    if (accessToken) {
-      getUserInfoMutate();
-      getPetInfo();
-    }
+    getUserInfoMutate();
+    getPetInfoMutate();
   }, [accessToken]);
 
   //유저 정보 조회
   const getUserInfo = async () => {
-    const { data } = await axios.get(`${process.env.REACT_APP_API}/mypage`, {
+    const { data } = await api.get(`/mypage`, {
       headers: {
         Authorization: `${accessToken}`,
       },
@@ -115,14 +113,11 @@ const Mypage = () => {
 
   //펫 상태 조회
   const getPetInfo = async () => {
-    const { data } = await axios.get(
-      `${process.env.REACT_APP_API}/mypage/pet`,
-      {
-        headers: {
-          Authorization: `${accessToken}`,
-        },
-      }
-    );
+    const { data } = await api.get(`/mypage/pet`, {
+      headers: {
+        Authorization: `${accessToken}`,
+      },
+    });
 
     if (data)
       setPetInfo({
@@ -138,14 +133,11 @@ const Mypage = () => {
 
   //퀴즈 목록
   const getQuizList = async () => {
-    const { data } = await axios.get(
-      `${process.env.REACT_APP_API}/mypage/quiz`,
-      {
-        headers: {
-          Authorization: `${accessToken}`,
-        },
-      }
-    );
+    const { data } = await api.get(`/mypage/quiz`, {
+      headers: {
+        Authorization: `${accessToken}`,
+      },
+    });
 
     if (data) {
       setList([
@@ -164,14 +156,11 @@ const Mypage = () => {
 
   //북마크 기사 목록
   const getBookmarkList = async () => {
-    const { data } = await axios.get(
-      `${process.env.REACT_APP_API}/mypage/bookmark`,
-      {
-        headers: {
-          Authorization: `${accessToken}`,
-        },
-      }
-    );
+    const { data } = await api.get(`/mypage/bookmark`, {
+      headers: {
+        Authorization: `${accessToken}`,
+      },
+    });
 
     if (data) {
       setList([
