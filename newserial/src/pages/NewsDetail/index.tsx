@@ -15,7 +15,6 @@ import {
   Speaker,
   ParaphraseArea,
   Paraphrase,
-  ParaphraseButton,
   ParaphraseQuestionSentence,
   ParaphraseQuestionResult,
   NewsSentence,
