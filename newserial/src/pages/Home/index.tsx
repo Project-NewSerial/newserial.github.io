@@ -7,9 +7,10 @@ import Header from "./components/Header/index";
 import DailyQuiz from "./components/DailyQuiz/index";
 import CustomNews from "./components/CustomNews/index";
 import NewSerial from "./components/NewSerial/index";
-import axios from "axios";
 import { useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
+import api from "../../api";
+
 
 interface RootState {
   auth: {
@@ -41,7 +42,7 @@ const Home = () => {
    * @return {Array.<{wordIs: number, question : string}>}
    */
   const getQuiz = async () => {
-    await axios.post(`${process.env.REACT_APP_API}/main-quiz`, {}, {
+    await api.post(`/main-quiz`, {}, {
       headers: {
         'Content-Type': 'application/json',
         Authorization: accessToken,
@@ -63,7 +64,7 @@ const Home = () => {
    * @return {Array.<{id: number, title : string}>}
    */
     const getMainQuizNews = async () => {
-      await axios.get(`${process.env.REACT_APP_API}/main-quiz/news`, {
+      await api.get(`/main-quiz/news`, {
         headers: {
           'Content-Type': 'application/json',
           Authorization: accessToken,
@@ -84,7 +85,7 @@ const Home = () => {
    * @return {Array.<{id: number, title : string}>}
    */
     const getNews = async () => {
-      await axios.get(`${process.env.REACT_APP_API}/main-quiz/news`, {
+      await api.get(`/main-quiz/news`, {
         headers: {
           'Content-Type': 'application/json',
           Authorization: accessToken,
@@ -112,7 +113,6 @@ const Home = () => {
       <DailyQuiz />
       <CustomNews />
       <NewSerial />
-
     </Container>
   );
 };

@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
 import { Container, Loading } from "./styles";
-import axios from "axios";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import api from "../../api";
+import { Navigate, useSearchParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setToken } from "../../redux/modules/auth";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 
 /**
  * 소셜로그인 콜백 페이지
@@ -12,37 +12,33 @@ import { useMutation } from "@tanstack/react-query";
  */
 const SocialLoginCallback = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const token = searchParams.get("token");
   dispatch(setToken(JSON.stringify(token)));
 
-  useEffect(() => {
-    getCookieMutate();
-  }, []);
-
   //쿠키 가져오는 함수
   const getCookie = async () => {
     try {
-      await axios.get(`${process.env.REACT_APP_API}/cookie`, {
+      await api.get(`/cookie`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-        withCredentials: true
+        withCredentials: true,
       });
-      navigate("/");
+      return true;
     } catch (error: any) {
       console.log(error);
     }
   };
 
-  const { mutate: getCookieMutate } = useMutation({
-    mutationFn: getCookie,
+  const { isLoading, data } = useQuery({
+    queryKey: ["cookie"],
+    queryFn: getCookie,
   });
 
   return (
     <Container>
-      <Loading>LOADING...</Loading>
+      {!isLoading && data ? <Loading>LOADING...</Loading> : <Navigate to="/" />}
     </Container>
   );
 };

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { useMutation } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import api from "../../api";
 import {
   Container,
@@ -34,20 +34,6 @@ interface RootState {
   };
 }
 
-interface UserInfo {
-  email: string;
-  currentPet: string;
-  quizCount: number;
-  bookmarkCount: number;
-}
-
-interface PetInfo {
-  petImage: string;
-  currentPet: string;
-  houseImage: string;
-  nextPet: string;
-  count: number;
-}
 interface QuizList {
   quizQuestion: string;
   quizAnswer: string;
@@ -73,13 +59,6 @@ const Mypage = () => {
     Array<Array<QuizList> | Array<BookmarkList> | null>
   >([null, null]);
 
-  const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
-  const tabs = [
-    { title: "우유 돌보기", value: userInfo?.currentPet },
-    { title: "퀴즈 기록", value: userInfo?.quizCount },
-    { title: "북마크한 기사", value: userInfo?.bookmarkCount },
-  ];
-
   const info = [
     [
       "퀴즈 기록은 30일 동안 저장됩니다.",
@@ -93,13 +72,6 @@ const Mypage = () => {
     ],
   ];
 
-  const [petInfo, setPetInfo] = useState<PetInfo | null>(null);
-
-  useEffect(() => {
-    getUserInfoMutate();
-    getPetInfoMutate();
-  }, [accessToken]);
-
   //유저 정보 조회
   const getUserInfo = async () => {
     const { data } = await api.get(`/mypage`, {
@@ -108,96 +80,96 @@ const Mypage = () => {
       },
     });
 
-    if (data) setUserInfo(data);
+    return data;
   };
 
   //펫 상태 조회
   const getPetInfo = async () => {
-    const { data } = await api.get(`/mypage/pet`, {
-      headers: {
-        Authorization: `${accessToken}`,
-      },
-    });
-
-    if (data)
-      setPetInfo({
-        petImage:
-          "https://png.pngtree.com/png-vector/20230221/ourmid/pngtree-cute-dog-illustration-png-image_6612076.png",
-        currentPet: "노숙견",
-        houseImage:
-          "https://png.pngtree.com/png-vector/20220707/ourmid/pngtree-thatched-house-traditional-korea-seongeup-png-image_5630464.png",
-        nextPet: "흥부견",
-        count: 4,
+    if (selectedTab === 0) {
+      const { data } = await api.get(`/mypage/pet`, {
+        headers: {
+          Authorization: `${accessToken}`,
+        },
       });
+
+      return data;
+    }
   };
 
   //퀴즈 목록
   const getQuizList = async () => {
-    const { data } = await api.get(`/mypage/quiz`, {
-      headers: {
-        Authorization: `${accessToken}`,
-      },
-    });
+    if (selectedTab === 1) {
+      const { data } = await api.get(`/mypage/quiz`, {
+        headers: {
+          Authorization: `${accessToken}`,
+        },
+      });
 
-    if (data) {
-      setList([
-        [
-          {
-            quizQuestion: "공매도 전면 허용 vs. 전면 금지gdrgdrg",
-            quizAnswer: "O",
-            userAnswer: "X",
-            createdTime: "2023/11/01",
-          },
-        ],
-        null,
-      ]);
+      if (data) {
+        setList([
+          [
+            {
+              quizQuestion: "공매도 전면 허용 vs. 전면 금지gdrgdrg",
+              quizAnswer: "O",
+              userAnswer: "X",
+              createdTime: "2023/11/01",
+            },
+          ],
+          null,
+        ]);
+      }
     }
   };
 
   //북마크 기사 목록
   const getBookmarkList = async () => {
-    const { data } = await api.get(`/mypage/bookmark`, {
-      headers: {
-        Authorization: `${accessToken}`,
-      },
-    });
+    if (selectedTab === 2) {
+      const { data } = await api.get(`/mypage/bookmark`, {
+        headers: {
+          Authorization: `${accessToken}`,
+        },
+      });
 
-    if (data) {
-      setList([
-        null,
-        [
-          {
-            title:
-              "해외 법인 망했는데 5300억 '세금 폭탄' 골병드는 건설사ddddddddd",
-            createdTime: "2023/11/01",
-          },
-        ],
-      ]);
+      if (data) {
+        setList([
+          null,
+          [
+            {
+              title:
+                "해외 법인 망했는데 5300억 '세금 폭탄' 골병드는 건설사ddddddddd",
+              createdTime: "2023/11/01",
+            },
+          ],
+        ]);
+      }
     }
   };
 
-  const { mutate: getUserInfoMutate } = useMutation({
-    mutationFn: getUserInfo,
+  const { isLoading: userIsLoading, data: userInfo } = useQuery({
+    queryKey: ["user", accessToken, selectedTab],
+    queryFn: getUserInfo,
   });
 
-  const { mutate: getPetInfoMutate } = useMutation({
-    mutationFn: getPetInfo,
+  const { isLoading: petIsLoading, data: petInfo } = useQuery({
+    queryKey: ["pet", accessToken, selectedTab],
+    queryFn: getPetInfo,
   });
 
-  const { mutate: getQuizListMutate } = useMutation({
-    mutationFn: getQuizList,
+  const { isLoading: quizIsLoading, data: quizData } = useQuery({
+    queryKey: ["quiz", selectedTab],
+    queryFn: getQuizList,
   });
 
-  const { mutate: getBookmarkListMutate } = useMutation({
-    mutationFn: getBookmarkList,
+  const { isLoading: bookmarkIsLoading, data: bookmarkData } = useQuery({
+    queryKey: ["bookmark", selectedTab],
+    queryFn: getBookmarkList,
   });
 
-  const clickTab = (selected: number) => {
-    setSelectedTab(selected);
-    if (selected === 0) getPetInfoMutate();
-    else if (selected === 1) getQuizListMutate();
-    else getBookmarkListMutate();
-  };
+  const tabs = [
+    { title: "우유 돌보기", value: userInfo?.currentPet },
+    { title: "퀴즈 기록", value: userInfo?.quizCount },
+    { title: "북마크한 기사", value: userInfo?.bookmarkCount },
+  ];
 
   return (
     <Container>
@@ -214,7 +186,7 @@ const Mypage = () => {
             <>
               <Tab
                 selected={selectedTab === index}
-                onClick={() => clickTab(index)}
+                onClick={() => setSelectedTab(index)}
               >
                 <div className="tab__text">{el.title}</div>
                 <div className="tab__text">{el.value}</div>
