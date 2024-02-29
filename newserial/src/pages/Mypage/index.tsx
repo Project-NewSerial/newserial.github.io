@@ -9,10 +9,6 @@ import {
   MainDetail,
   MainTitle,
   MainTop,
-  Tab,
-  TabBox,
-  TabLine,
-  TabUnderline,
   Title,
   User,
   List,
@@ -21,12 +17,12 @@ import {
   ListRight,
   ListMidQuiz,
   Top,
-  TabBoxUnderline,
   Underline,
-} from "./sytles";
+} from "./styles";
 import Header from "./components/Header";
 import InfoModal from "./components/InfoModal";
 import PasswordModal from "./components/PasswordModal";
+import Tabs from "./components/Tabs";
 
 interface RootState {
   auth: {
@@ -165,12 +161,6 @@ const Mypage = () => {
     queryFn: getBookmarkList,
   });
 
-  const tabs = [
-    { title: "우유 돌보기", value: userInfo?.currentPet },
-    { title: "퀴즈 기록", value: userInfo?.quizCount },
-    { title: "북마크한 기사", value: userInfo?.bookmarkCount },
-  ];
-
   return (
     <Container>
       {passwordToggle && <PasswordModal setToggle={setPasswordToggle} />}
@@ -181,22 +171,11 @@ const Mypage = () => {
         <Underline onClick={() => setPasswordToggle(!passwordToggle)}>
           비밀번호 재설정
         </Underline>
-        <TabBox>
-          {tabs.map((el, index) => (
-            <>
-              <Tab
-                selected={selectedTab === index}
-                onClick={() => setSelectedTab(index)}
-              >
-                <div className="tab__text">{el.title}</div>
-                <div className="tab__text">{el.value}</div>
-                {selectedTab === index && <TabUnderline />}
-              </Tab>
-              {index !== 2 && <TabLine />}
-            </>
-          ))}
-          <TabBoxUnderline />
-        </TabBox>
+        <Tabs
+          userInfo={userInfo}
+          selectedTab={selectedTab}
+          setSelectedTab={setSelectedTab}
+        />
       </Top>
       {selectedTab === 0 ? (
         <Main>
