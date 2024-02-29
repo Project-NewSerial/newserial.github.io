@@ -4,10 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import api from "../../api";
 import {
   Container,
-  Info,
   Main,
-  MainDetail,
-  MainTitle,
   MainTop,
   Title,
   User,
@@ -20,9 +17,9 @@ import {
   Underline,
 } from "./styles";
 import Header from "./components/Header";
-import InfoModal from "./components/InfoModal";
 import PasswordModal from "./components/PasswordModal";
 import Tabs from "./components/Tabs";
+import PetContent from "./components/PetContent";
 
 interface RootState {
   auth: {
@@ -49,7 +46,6 @@ interface BookmarkList {
 const Mypage = () => {
   const accessToken = useSelector((state: RootState) => state.auth.accessToken);
   const [selectedTab, setSelectedTab] = useState(0);
-  const [infoToggle, setInfoToggle] = useState(false);
   const [passwordToggle, setPasswordToggle] = useState(false);
   const [list, setList] = useState<
     Array<Array<QuizList> | Array<BookmarkList> | null>
@@ -77,19 +73,6 @@ const Mypage = () => {
     });
 
     return data;
-  };
-
-  //펫 상태 조회
-  const getPetInfo = async () => {
-    if (selectedTab === 0) {
-      const { data } = await api.get(`/mypage/pet`, {
-        headers: {
-          Authorization: `${accessToken}`,
-        },
-      });
-
-      return data;
-    }
   };
 
   //퀴즈 목록
@@ -146,11 +129,6 @@ const Mypage = () => {
     queryFn: getUserInfo,
   });
 
-  const { isLoading: petIsLoading, data: petInfo } = useQuery({
-    queryKey: ["pet", accessToken, selectedTab],
-    queryFn: getPetInfo,
-  });
-
   const { isLoading: quizIsLoading, data: quizData } = useQuery({
     queryKey: ["quiz", selectedTab],
     queryFn: getQuizList,
@@ -178,26 +156,7 @@ const Mypage = () => {
         />
       </Top>
       {selectedTab === 0 ? (
-        <Main>
-          {infoToggle && <InfoModal setToggle={setInfoToggle} />}
-          <MainTop selected={selectedTab === 0}>
-            <Info onClick={() => setInfoToggle(!infoToggle)}>i</Info>
-          </MainTop>
-          <MainTitle>
-            우유는{" "}
-            <span className="main--highlight">{petInfo?.currentPet}</span>{" "}
-            이에요
-          </MainTitle>
-          <img src={petInfo?.petImage} />
-          <MainDetail>
-            시리얼을 <span className="main--highlight">{petInfo?.count}</span>번
-            더 먹으면
-            <br />
-            <span className="main--highlight">{petInfo?.nextPet}</span>이 될 수
-            있어요.
-            <img src={petInfo?.houseImage} />
-          </MainDetail>
-        </Main>
+        <PetContent />
       ) : (
         <Main>
           <MainTop selected={selectedTab === 0}>
