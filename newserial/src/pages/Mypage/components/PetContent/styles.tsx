@@ -47,10 +47,10 @@ export const Top = styled.div`
   margin-bottom: 15px;
 
   ${mediaQuery} {
-    width: "60%";
+    width: 60%;
     margin-bottom: 0;
-    background-color: "none";
-    justify-content: "end";
+    background-color: none;
+    justify-content: end;
     color: #ff6f4f;
     border-radius: 20px;
     padding: 2px 10px;
