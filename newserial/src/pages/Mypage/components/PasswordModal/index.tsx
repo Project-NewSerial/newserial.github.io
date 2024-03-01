@@ -10,9 +10,9 @@ import {
   InputContent,
   Button,
 } from "./styles";
-import axios from "axios";
 import { useSelector } from "react-redux";
 import { useMutation } from "@tanstack/react-query";
+import api from '../../../../api';
 
 interface propsType {
   setToggle: React.Dispatch<React.SetStateAction<boolean>>;
@@ -97,8 +97,8 @@ const PasswordModal = ({ setToggle }: propsType) => {
    */
   const resetPassword = async () => {
     try {
-      const { data } = await axios.post(
-        `${process.env.REACT_APP_API}/password`,
+      const { data } = await api.post(
+        `/password`,
         { newPassword: password, passwordCheck: checkPassword },
         {
           headers: {

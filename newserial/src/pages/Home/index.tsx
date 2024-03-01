@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import {
   Container,
   DailyQuizTitle,
-
 } from "./styles";
 import Header from "./components/Header/index";
 import DailyQuiz from "./components/DailyQuiz/index";
@@ -64,18 +63,17 @@ const Home = () => {
             Authorization: accessToken,
           },
         })
-        console.log('data',data)
         if (data!==undefined && data.length>0) {
           setQuestion(data);
         }
       } 
       catch (error) {
-        console.log('에러가 발생했습니다.', error);
+        
+        
+        ('에러가 발생했습니다.', error);
       }
     }
   };
-
-
 
   /**
  * 한 입 퀴즈 맞춤 기사 get 함수
@@ -118,20 +116,6 @@ const Home = () => {
         console.log('에러가 발생했습니다.', error)
       }
     }
-
-    // await axios.get(`${process.env.REACT_APP_API}/main-quiz/news`, {
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //     Authorization: accessToken,
-    //     withCredentials: true
-    //   },
-    // })
-    //   .then(response => {
-    //     setMainQuizNews(response.data)
-    //   })
-    //   .catch(error => {
-    //     console.error('API 호출 에러:', error);
-    //   });
   };
 
 
