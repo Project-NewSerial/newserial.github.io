@@ -29,6 +29,8 @@ import { useSelector } from "react-redux";
 import Modal from "../../components/Modal";
 import QuizModal from "./components/QuizModal";
 import api from "../../api";
+import axios from "axios";
+import { useLocation } from "react-router-dom";
 
 interface RootState {
   auth: {
@@ -74,6 +76,12 @@ const NewsDetail = () => {
   const [modalToggle, setModalToggle] = useState(false);
   const [userQuizAnswer, setUserQuizAnswer] = useState<string | undefined>();
 
+  const location=useLocation();
+  const newsId = location.state.newsId;
+  const newsCategoryId=location.state.newsCategoryId;
+
+  console.log('newsId', newsId, 'newsCategoryId', newsCategoryId)
+
   /**
    * 뉴스 paraphase post 함수
    * @param {string} question paraphrase하고자 하는 문장
@@ -81,17 +89,16 @@ const NewsDetail = () => {
    */
   const postParaphrase = async (paraphraseQuestion: string) => {
     if (accessToken !== null && paraphraseQuestion) {
-      await api
-        .post(`/paraphrasing`, paraphraseQuestion, {
-          headers: {
-            withCredentials: true,
-            "Content-Type": "application/json",
-            Authorization: accessToken,
-          },
-        })
-        .then((res) => {
-          setParaphraseResult(res?.data);
-        });
+      const { data } = await api.post(`/paraphrasing`, paraphraseQuestion, {
+        headers: {
+          withCredentials: true,
+          "Content-Type": "application/json",
+          Authorization: accessToken,
+        },
+      })
+      if (data !== undefined) {
+        setParaphraseResult(data);
+      }
     }
   };
 
@@ -100,17 +107,18 @@ const NewsDetail = () => {
    */
   const postBookmark = async () => {
     if (accessToken !== null) {
-      await api
-        .post(`/bookmark/2`, {
+      try {
+        const { data } = await api.post(`/bookmark/`+newsId, {}, {
           headers: {
-            withCredentials: true,
-            "Content-Type": "application/json",
             Authorization: accessToken,
           },
         })
-        .then((res) => {
+        if (data !== undefined) {
           setBookmark(true);
-        });
+        }
+      } catch (error) {
+        console.log('error가 발생했습니다', error)
+      }
     }
   };
 
@@ -119,17 +127,18 @@ const NewsDetail = () => {
    */
   const deleteBookmark = async () => {
     if (accessToken !== null) {
-      await api
-        .delete(`/bookmark/2`, {
+      try {
+        const { data } = await api.delete(`/bookmark/`+newsId, {
           headers: {
-            withCredentials: true,
-            "Content-Type": "application/json",
             Authorization: accessToken,
           },
         })
-        .then((res) => {
+        if (data !== undefined) {
           setBookmark(false);
-        });
+        }
+      } catch (error) {
+        console.log('error가 발생했습니다.', error)
+      }
     }
   };
 
@@ -140,25 +149,22 @@ const NewsDetail = () => {
   const postNewSerialQuiz = async () => {
     setModalToggle(true);
     if (accessToken !== null) {
-      await api
-        .post(
-          `/newserial-quiz/2`,
-          {},
-          {
-            headers: {
-              withCredentials: true,
-              "Content-Type": "application/json",
-              Authorization: accessToken,
-            },
+      try {
+        const { data } = await api.post(`/newserial-quiz/`+newsId, {}, {
+          headers: {
+            Authorization: accessToken,
+          },
+        })
+        if (data !== undefined) {
+          if (data.userAnswer) {
+            setNewSerialAnswered(data);
+          } else if (data?.question) {
+            setNewSerialNotAnswered(data.question)
           }
-        )
-        .then((res) => {
-          if (res?.data?.userAnswer) {
-            setNewSerialAnswered(res.data);
-          } else {
-            setNewSerialNotAnswered(res.data.question);
-          }
-        });
+        }
+      } catch (error) {
+        console.log('에러가 발생했습니다.', error);
+      }
     }
   };
 
@@ -170,44 +176,53 @@ const NewsDetail = () => {
    */
   const postNewSerialQuizAnswer = async () => {
     if (accessToken !== null && userQuizAnswer) {
-      let data = {
-        newsId: 2,
+      let sendData = {
+        newsId: newsId,
         userAnswer: userQuizAnswer,
       };
-      await api
-        .post(`/newserial-quiz/answer`, data, {
+
+      try {
+        const { data } = await api.post(`/newserial-quiz/answer`, sendData, {
           headers: {
-            withCredentials: true,
-            "Content-Type": "application/json",
             Authorization: accessToken,
           },
         })
-        .then((res) => {
+        if (data !== undefined) {
           setNewSerialNotAnswered("");
-          setNewSerialAnswered(res?.data);
-        });
+          setNewSerialAnswered(data);
+        }
+      } catch (error) {
+        console.log('에러가 발생했습니다.', error);
+      }
     }
   };
 
-  useEffect(() => {
-    /**
-     * 뉴스 상세 get 함수
-     * @returns {id: number, title : string, body: string[], category_name:string, url: string}
-     */
-    if (accessToken !== null) {
-      api
-        .get(`/short-news/2`, {
-          headers: {
-            withCredentials: true,
-            "Content-Type": "application/json",
-            Authorization: accessToken,
-          },
-        })
-        .then((res) => {
-          setShortNews(res.data);
-          setBookmark(res?.data?.bookmark);
-        });
+
+  /**
+ * 뉴스 상세 get 함수
+ * @returns {id: number, title : string, body: string[], category_name:string, url: string}
+ */
+  const getNewsDetail = async () => {
+    try {
+      const { data } = await api.get(`/short-news/`+newsId, {
+        headers: {
+          Authorization: `${accessToken}`,
+        },
+      });
+
+      if (data) {
+        setShortNews(data);
+        setBookmark(data?.bookmark);
+      } else {
+        console.error("API 응답에 데이터가 없습니다.");
+      }
+    } catch (error) {
+      console.error("API 요청 중 오류가 발생했습니다:", error);
     }
+  }
+
+  useEffect(() => {
+    getNewsDetail();
   }, [accessToken]);
 
   useEffect(() => {
@@ -280,7 +295,7 @@ const NewsDetail = () => {
           {shortNews?.body?.map((el, index) =>
             el === paraphraseQuestion ? (
               <>
-                <ParaphraseQuestionSentence>{el}</ParaphraseQuestionSentence>
+                <ParaphraseQuestionSentence key={index}>{el}</ParaphraseQuestionSentence>
                 <ParaphraseQuestionResult>
                   {paraphraseResult}
                 </ParaphraseQuestionResult>
@@ -299,7 +314,7 @@ const NewsDetail = () => {
         <Source>
           <a
             style={{ textDecoration: "none", color: "#979797" }}
-            href={shortNews?.url}
+            href={'https://www.'+shortNews?.url}
             target="_blank"
           >
             출처: {shortNews?.title}
