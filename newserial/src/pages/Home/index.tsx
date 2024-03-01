@@ -11,13 +11,6 @@ import axios from "axios";
 import { useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import api from "../../api";
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-
->>>>>>> 4cd876ad7ff4c086fabfa61d02860d40cad6ee44
-=======
->>>>>>> 1239ee637e82f4f002e7311d56c5c44418f70ded
 
 interface RootState {
   auth: {
@@ -63,10 +56,6 @@ const Home = () => {
  * @return {Array.<{wordIs: number, question : string}>}
  */
   const getQuiz = async () => {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 1239ee637e82f4f002e7311d56c5c44418f70ded
     if (accessToken !== undefined) {
       try {
         const { data } = await api.post(`/main-quiz`, {}, {
@@ -81,34 +70,11 @@ const Home = () => {
       catch (error) {
         
         
-        ('에러가 발생했습니다.', error);
+        console.log('에러가 발생했습니다.', error);
       }
     }
-<<<<<<< HEAD
-=======
-    await api.post(`/main-quiz`, {}, {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: accessToken,
-        withCredentials: true
-      },
-    })
-      .then(response => {
-        setQuestion(response.data)
-      })
-      .catch(error => {
-        console.error('API 호출 에러:', error);
-      });
->>>>>>> 4cd876ad7ff4c086fabfa61d02860d40cad6ee44
   };
 
-
-
-<<<<<<< HEAD
-=======
-  };
-
->>>>>>> 1239ee637e82f4f002e7311d56c5c44418f70ded
   /**
  * 한 입 퀴즈 맞춤 기사 get 함수
  * @return {Array.<{id: number, title : string}>}
@@ -120,25 +86,6 @@ const Home = () => {
           headers: {
             Authorization: accessToken,
           },
-<<<<<<< HEAD
-=======
-    /**
-   * 한 입 퀴즈 맞춤 기사 get 함수
-   * @return {Array.<{id: number, title : string}>}
-   */
-    const getMainQuizNews = async () => {
-      await api.get(`/main-quiz/news`, {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: accessToken,
-          withCredentials: true
-        },
-      })
-        .then(response => {
-          setMainQuizNews(response.data)
->>>>>>> 4cd876ad7ff4c086fabfa61d02860d40cad6ee44
-=======
->>>>>>> 1239ee637e82f4f002e7311d56c5c44418f70ded
         })
         if (data !== undefined) {
           setMainQuizNews(data)
@@ -150,10 +97,6 @@ const Home = () => {
   };
 
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 1239ee637e82f4f002e7311d56c5c44418f70ded
   /**
  * 뉴-시리얼 기사 get 함수
  * @return {Array.<{id: number, title : string}>}
@@ -165,25 +108,6 @@ const Home = () => {
           headers: {
             Authorization: accessToken,
           },
-<<<<<<< HEAD
-=======
-    /**
-   * 뉴-시리얼 기사 get 함수
-   * @return {Array.<{id: number, title : string}>}
-   */
-    const getNews = async () => {
-      await api.get(`/main-quiz/news`, {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: accessToken,
-          withCredentials: true
-        },
-      })
-        .then(response => {
-          setMainQuizNews(response.data)
->>>>>>> 4cd876ad7ff4c086fabfa61d02860d40cad6ee44
-=======
->>>>>>> 1239ee637e82f4f002e7311d56c5c44418f70ded
         })
         if (data !== undefined) {
           setNewSerialNews(data)
@@ -205,10 +129,6 @@ const Home = () => {
   return (
     <Container>
       <Header />
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 1239ee637e82f4f002e7311d56c5c44418f70ded
       <DailyQuizTitle>한 입 퀴즈</DailyQuizTitle>
 
       {question !== undefined && question !== null && <DailyQuiz question={question} />}
@@ -218,14 +138,6 @@ const Home = () => {
         newSerialNewsCategory={newSerialNewsCategory}
         setNewSerialNewsCategory={setNewSerialNewsCategory} />
 
-<<<<<<< HEAD
-=======
-      <DailyQuiz />
-      <CustomNews />
-      <NewSerial />
->>>>>>> 4cd876ad7ff4c086fabfa61d02860d40cad6ee44
-=======
->>>>>>> 1239ee637e82f4f002e7311d56c5c44418f70ded
     </Container>
   );
 };
