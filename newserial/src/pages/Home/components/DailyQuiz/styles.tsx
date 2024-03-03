@@ -65,7 +65,7 @@ export const DailyQuizTitle = styled.div`
   ${mediaQuery('desktop')}{
     display: block;
     color:#FFFFFF;
-    font-size:3rem;
+    font-size:2.5rem;
     font-family:Noto Sans KR;
     margin-top: auto;
   }
@@ -75,7 +75,7 @@ export const QuestionRow = styled.div`
   label: question-row;
   width: 81.48%;
   color: #FFFFFF;
-  font-size: 1.8rem;
+  font-size: 1.4rem;
   font-family: Noto Sans KR;
   margin-top: auto;
   margin-left:auto;
@@ -84,26 +84,95 @@ export const QuestionRow = styled.div`
 
   ${mediaQuery('desktop')}{
     color: #FFFFFF;
-    font-size:2.4rem;
+    font-size:1.5rem;
+    margin-top: auto;
     font-family:Noto Sans KR;
     
   }
 
 `
 
+export const AnsweredQuizAnswer = styled.div`
+  label: answered-quiz-answer;
+  width: 81.48%;
+  color: ##060000;
+  font-size: 1.4rem;
+  font-family: Noto Sans KR;
+  margin-top: 12px;
+  margin-left:auto;
+  margin-right:auto;
+  text-align: left;
+
+  ${mediaQuery('desktop')}{
+    color: ##060000;
+    font-size:1.5rem;
+    font-family:Noto Sans KR;
+    
+  }
+`
+
+export const AnsweredExplanation = styled.div`
+  label: answered-explanation;
+  width: 81.48%;
+  color: #060000;
+  font-size: 1.2rem;
+  font-family: Noto Sans KR;
+  margin-left:auto;
+  margin-right:auto;
+  text-align: left;
+
+  ${mediaQuery('desktop')}{
+    color: ##060000;
+    font-size:1.5rem;
+    font-family:Noto Sans KR;
+    
+  }
+`
+
+export const AnsweredAnswerRow = styled.div`
+  label: answered-answer-row;
+  display:flex;
+  width: 100%;
+  height: 35px;
+  color: #D9D9D9;
+  font-size: 2rem;
+  background-color:#FFFFFF;
+  border: 1px solid #E3E3E3;
+  border-radius:10px;
+  align-items:center;
+  justify-content:center;
+
+    
+  ${mediaQuery('desktop')}{
+    display:flex;
+    width: auto;
+    color: #D9D9D9;
+    font-size: 2rem;
+    height: 35px;
+    background-color:#FFFFFF;
+    margin-bottom:11px;
+    border: 1px solid #D3D3D3;
+    border-radius:10px;
+    align-items:center;
+    justify-content:center;
+  }
+`
+
+
+
 export const AnswerRow = styled.div`
   label: answer-row;
   display:flex;
   width: 81.48%;
   flex-direction:column;
-  margin-top: 20px;
+  margin-top: 15px;
   margin-left:auto;
   margin-right:auto;
   margin-bottom:auto;
   
   ${mediaQuery('desktop')}{
     width: 74.42%;
-    margin-top:33px;
+    margin-top:15px;
   }
 `
 
@@ -119,6 +188,7 @@ export const AnswerButton=styled.div`
   border-radius:10px;
   align-items:center;
   justify-content:center;
+  cursor:pointer;
 
   ${mediaQuery('desktop')}{
     display:flex;

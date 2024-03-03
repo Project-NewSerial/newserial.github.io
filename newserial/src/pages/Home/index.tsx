@@ -21,11 +21,25 @@ interface RootState {
 interface Quiz {
   wordsId: number,
   question: string,
+
+  userAnswer: string;
+  quizAnswer: string;
+  result: string;
+  explanation: string;
 }
 
 interface MainQuizNews {
   id: number,
   title: string,
+}
+
+interface MainQuizAnswered {
+  wordsId: number;
+  question: string;
+  userAnswer: string;
+  quizAnswer: string;
+  result: string;
+  explanation: string;
 }
 
 interface NewSerialNews {
@@ -48,6 +62,10 @@ const Home = () => {
   const accessToken = useSelector((state: RootState) => state.auth.accessToken);
   const [question, setQuestion] = useState<Quiz[]>();
   const [mainQuizNews, setMainQuizNews] = useState<MainQuizNews>();
+
+  const [userAnswerWordsId, setUserAnswerWordsId] = useState<number | undefined>();
+  const [userAnswer, setUserAnswer] = useState<string | undefined>();
+
   const [newSerialNews, setNewSerialNews] = useState<NewSerialNews>();
   const [newSerialNewsCategory, setNewSerialNewsCategory] = useState<number>(0);
 
@@ -63,13 +81,21 @@ const Home = () => {
             Authorization: accessToken,
           },
         })
-        if (data!==undefined && data.length>0) {
+        if (data !== undefined && data.length > 0) {
+          data.map((el: { userAnswer: string; quizAnswer: string; result: string; explanation: string; }) => {
+            if (!userAnswer) {
+              el.userAnswer = "";
+              el.quizAnswer = "";
+              el.result = "";
+              el.explanation = "";
+            }
+
+          })
           setQuestion(data);
         }
-      } 
+      }
       catch (error) {
-        
-        
+
         console.log('에러가 발생했습니다.', error);
       }
     }
@@ -118,6 +144,47 @@ const Home = () => {
     }
   };
 
+  /**
+   * 한입 퀴즈 정답 제출 post 함수
+   * @param {number} wordsId 한입퀴즈 id
+   * @param {string} userAnswer 사용자 답변
+   * @returns {wordsId: number, question: string, userAnswer:string, quizAnswer:string, result: string, explanation: string}
+   */
+  const postMainQuizAnswer = async () => {
+    if (accessToken !== null && userAnswer && userAnswerWordsId) {
+      let sendData = {
+        wordsId: userAnswerWordsId,
+        userAnswer: userAnswer,
+      };
+      console.log('send', sendData)
+
+      try {
+        const { data } = await api.post(`/main-quiz/answer`, sendData, {
+          headers: {
+            Authorization: accessToken,
+          },
+        })
+        if (data !== undefined) {
+            setQuestion(prevState => {
+              return prevState?.map(question => {
+                if (question.wordsId === userAnswerWordsId) {
+                  return { ...question, ...data };
+                }
+                return question;
+              });
+
+            })
+
+        }
+      } catch (error) {
+        console.log('에러가 발생했습니다.', error);
+      }
+    }
+  };
+
+
+
+  console.log('question', question)
 
   useEffect(() => {
     getQuiz();
@@ -125,13 +192,27 @@ const Home = () => {
     getNews();
   }, [accessToken])
 
+  useEffect(() => {
+    if (userAnswer !== "") {
+      postMainQuizAnswer();
+    }
+  }, [userAnswer])
+
 
   return (
     <Container>
       <Header />
       <DailyQuizTitle>한 입 퀴즈</DailyQuizTitle>
 
-      {question !== undefined && question !== null && <DailyQuiz question={question} />}
+      {question !== undefined && question !== null
+        && <DailyQuiz question={question}
+          userAnswerWordsId={userAnswerWordsId}
+          setUserAnswerWordsId={setUserAnswerWordsId}
+          userAnswer={userAnswer}
+          setUserAnswer={setUserAnswer}
+        />}
+
+
       {mainQuizNews ? <CustomNews mainQuizNews={mainQuizNews} /> : null}
       <NewSerial
         newSerialNews={newSerialNews}

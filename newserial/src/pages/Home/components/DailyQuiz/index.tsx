@@ -4,6 +4,9 @@ import {
   DailyQuizCard,
   DailyQuizTitle,
   QuestionRow,
+  AnsweredQuizAnswer,
+  AnsweredExplanation,
+  AnsweredAnswerRow,
   AnswerRow,
   AnswerButton,
 } from "./styles";
@@ -15,10 +18,22 @@ import 'slick-carousel/slick/slick-theme.css';
 interface Quiz {
   wordsId: number,
   question: string,
+
+
+  userAnswer: string;
+  quizAnswer: string;
+  result: string;
+  explanation: string;
 }
 
 
-const DailyQuiz = (props: { question: Quiz[] | undefined }) => {
+const DailyQuiz = (props: {
+  question: Quiz[] | undefined,
+  userAnswerWordsId: number | undefined,
+  setUserAnswerWordsId: React.Dispatch<React.SetStateAction<number | undefined>>,
+  userAnswer: string | undefined,
+  setUserAnswer: React.Dispatch<React.SetStateAction<string | undefined>>,
+}) => {
 
 
   const settings = {
@@ -35,26 +50,79 @@ const DailyQuiz = (props: { question: Quiz[] | undefined }) => {
 
   return (
     <DailyQuizArea  >
-      {/* <div style={{ width: "100%", }}> */}
-        <Slider {...settings} >
-          {props?.question && props?.question.map((el) => (
-            <div  key={el?.wordsId} style={{ width: "100%",  padding: "auto" }}>
+      <Slider {...settings} >
+        {props?.question && props?.question.map((el) => {
 
-              <DailyQuizCard>
-                <DailyQuizTitle>한 입 퀴즈</DailyQuizTitle>
-                <QuestionRow>{el.question}</QuestionRow>
-                <AnswerRow>
-                  <AnswerButton style={{
-                    marginBottom: "13px"
-                  }}>O</AnswerButton>
-                  <AnswerButton>X</AnswerButton>
-                </AnswerRow>
+          if (el?.userAnswer !== "") {
+            return (
+              <div key={el?.wordsId} style={{ width: "100%", padding: "auto" }}>
+                <DailyQuizCard>
+                  <QuestionRow style={{fontSize:"1.2rem"}}>Q. {el.question}</QuestionRow>
+                  <AnsweredQuizAnswer>A. {el?.quizAnswer}</AnsweredQuizAnswer>
+                  <AnsweredExplanation>{el?.explanation}</AnsweredExplanation>
 
-              </DailyQuizCard>
-            </div>
-          ))}
-        </Slider>
-      </DailyQuizArea>
+                  <AnswerRow>
+                    <AnsweredAnswerRow
+                      style={{
+                        backgroundColor: el?.userAnswer === "O"
+                          ? el?.quizAnswer === "O"
+                            ? "#3AB93F" : "#F85252" : "#FFFFFF",
+                            marginBottom: "10px"
+
+                      }}
+                    >O</AnsweredAnswerRow>
+                    <AnsweredAnswerRow
+                      style={{
+                        backgroundColor: el?.userAnswer === "X"
+                          ? el?.quizAnswer === "X"
+                            ? "#3AB93F" : "#F85252" : "#FFFFFF",
+                            marginBottom: 'auto',
+                      }}
+                    >
+                      X</AnsweredAnswerRow>
+                  </AnswerRow>
+                </DailyQuizCard>
+              </div>
+
+            );
+          } else {
+            return (  
+              <div key={el?.wordsId} style={{ width: "100%", padding: "auto" }}>
+                <DailyQuizCard>
+                  <DailyQuizTitle>한 입 퀴즈</DailyQuizTitle>
+                  <QuestionRow>{el.question}</QuestionRow>
+
+                  <AnswerRow>
+                    <AnswerButton
+                      onClick={() => {
+                        if (el?.wordsId) {
+                          props?.setUserAnswerWordsId(el?.wordsId)
+                          props?.setUserAnswer('O')
+                        }
+
+                      }}
+                      style={{
+                        marginBottom: "13px"
+                      }}>O</AnswerButton>
+                    <AnswerButton
+                      onClick={() => {
+                        if (el?.wordsId) {
+                          props?.setUserAnswerWordsId(el?.wordsId)
+                          props?.setUserAnswer('X')
+                        }
+                      }}
+                    >X</AnswerButton>
+                  </AnswerRow>
+
+                </DailyQuizCard>
+              </div>
+            )
+          }
+
+
+        })}
+      </Slider >
+    </DailyQuizArea >
 
     // </div>
 
