@@ -58,7 +58,7 @@ interface NewSerialNews {
  * 홈 페이지
  * @author 김민지
  */
-const Home = () => {
+const Home = () => { 
   const accessToken = useSelector((state: RootState) => state.auth.accessToken);
   const [question, setQuestion] = useState<Quiz[]>();
   const [mainQuizNews, setMainQuizNews] = useState<MainQuizNews>();
@@ -124,7 +124,7 @@ const Home = () => {
 
 
   /**
- * 뉴-시리얼 기사 get 함수
+ * 뉴-시리얼 기사 전체 get 함수
  * @return {Array.<{id: number, title : string}>}
  */
   const getNews = async () => {
@@ -143,6 +143,27 @@ const Home = () => {
       }
     }
   };
+
+    /**
+ * 뉴-시리얼 기사 카테고리별 get 함수
+ * @return {Array.<{id: number, title : string}>}
+ */
+    const getCategoryNews = async () => {
+      if (accessToken !== undefined) {
+        try {
+          const { data } = await api.get(`/newserial/${newSerialNewsCategory}?page=0`, {
+            headers: {
+              Authorization: accessToken,
+            },
+          })
+          if (data !== undefined) {
+            setNewSerialNews(data)
+          }
+        } catch (error) {
+          console.log('에러가 발생했습니다.', error)
+        }
+      }
+    };
 
   /**
    * 한입 퀴즈 정답 제출 post 함수
@@ -184,7 +205,6 @@ const Home = () => {
 
 
 
-  console.log('question', question)
 
   useEffect(() => {
     getQuiz();
@@ -197,6 +217,15 @@ const Home = () => {
       postMainQuizAnswer();
     }
   }, [userAnswer])
+
+
+  useEffect(()=>{
+    if (newSerialNewsCategory===0){
+      getNews();
+    }else{
+      getCategoryNews();
+    }
+  },[newSerialNewsCategory])
 
 
   return (
