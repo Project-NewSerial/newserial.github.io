@@ -24,6 +24,8 @@ interface NewSerialNews {
       category_id: number,
       title: string,
       body: string,
+      image: string | null,
+      
     }
   ]
 }
@@ -74,7 +76,7 @@ const NewSerial = (props: {
         {props?.newSerialNews !== undefined && props?.newSerialNews?.totalNewsCount > 0
           ? props?.newSerialNews.newsListResponseDtos.map((el) => (
             <NewsRow key={el.id} onClick={() => navigate('/newsdetail', { state: { newsId: el.id, newsCategoryId: el.category_id } })}>
-              <NewsPhoto src="/assets/dummyImages/dummyImage.jpg" />
+              <NewsPhoto src={el.image ? el.image : "/assets/images/image_no_image.svg"} />
               <NewsDetailArea>
                 <NewsOrigin>
                   [ {el.title} ]

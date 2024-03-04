@@ -50,6 +50,8 @@ interface NewSerialNews {
       category_id: number,
       title: string,
       body: string,
+      image: string | null,
+      
     }
   ]
 }
@@ -136,6 +138,7 @@ const Home = () => {
           },
         })
         if (data !== undefined) {
+          console.log('data', data)
           setNewSerialNews(data)
         }
       } catch (error) {
