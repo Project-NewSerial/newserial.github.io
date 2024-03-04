@@ -25,7 +25,7 @@ interface NewSerialNews {
       title: string,
       body: string,
       image: string | null,
-      
+      press: string,
     }
   ]
 }
@@ -79,10 +79,10 @@ const NewSerial = (props: {
               <NewsPhoto src={el.image ? el.image : "/assets/images/image_no_image.svg"} />
               <NewsDetailArea>
                 <NewsOrigin>
-                  [ {el.title} ]
+                  [ {el.press} ]
                 </NewsOrigin>
                 <NewsTitle>
-                  {el.body}
+                  {el.title}
                 </NewsTitle>
               </NewsDetailArea>
             </NewsRow>

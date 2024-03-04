@@ -51,7 +51,7 @@ interface NewSerialNews {
       title: string,
       body: string,
       image: string | null,
-      
+      press: string,
     }
   ]
 }

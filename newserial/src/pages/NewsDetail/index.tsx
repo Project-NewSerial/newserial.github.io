@@ -31,6 +31,7 @@ import QuizModal from "./components/QuizModal";
 import api from "../../api";
 import axios from "axios";
 import { useLocation } from "react-router-dom";
+import { getSpeech } from "./utils/getSpeech";
 
 interface RootState {
   auth: {
@@ -64,6 +65,11 @@ const NewsDetail = () => {
   const [isToggleOn, setIsToggleOn] = useState<boolean>(false);
   const [shortNews, setShortNews] = useState<ShortNews>();
   const [bookmark, setBookmark] = useState<boolean>();
+
+  const [TTStext, setTTStext] = useState<string[]>();
+  const [isSpeakerOn, setIsSpeakerOn] = useState<boolean>(false);
+  const [isTTSOn, setIsTTSOn] = useState<boolean>(false);
+
   const [paraphraseQuestion, setParaphraseQuestion] = useState<string>("");
   const [paraphraseResult, setParaphraseResult] = useState<string>("");
   const [newSerialAnswered, setNewSerialAnswered] = useState<
@@ -76,11 +82,10 @@ const NewsDetail = () => {
   const [modalToggle, setModalToggle] = useState(false);
   const [userQuizAnswer, setUserQuizAnswer] = useState<string | undefined>();
 
-  const location=useLocation();
+  const location = useLocation();
   const newsId = location.state.newsId;
-  const newsCategoryId=location.state.newsCategoryId;
+  const newsCategoryId = location.state.newsCategoryId;
 
-  console.log('newsId', newsId, 'newsCategoryId', newsCategoryId)
 
   /**
    * 뉴스 paraphase post 함수
@@ -108,7 +113,7 @@ const NewsDetail = () => {
   const postBookmark = async () => {
     if (accessToken !== null) {
       try {
-        const { data } = await api.post(`/bookmark/`+newsId, {}, {
+        const { data } = await api.post(`/bookmark/` + newsId, {}, {
           headers: {
             Authorization: accessToken,
           },
@@ -128,7 +133,7 @@ const NewsDetail = () => {
   const deleteBookmark = async () => {
     if (accessToken !== null) {
       try {
-        const { data } = await api.delete(`/bookmark/`+newsId, {
+        const { data } = await api.delete(`/bookmark/` + newsId, {
           headers: {
             Authorization: accessToken,
           },
@@ -150,7 +155,7 @@ const NewsDetail = () => {
     setModalToggle(true);
     if (accessToken !== null) {
       try {
-        const { data } = await api.post(`/newserial-quiz/`+newsId, {}, {
+        const { data } = await api.post(`/newserial-quiz/` + newsId, {}, {
           headers: {
             Authorization: accessToken,
           },
@@ -204,7 +209,7 @@ const NewsDetail = () => {
  */
   const getNewsDetail = async () => {
     try {
-      const { data } = await api.get(`/short-news/`+newsId, {
+      const { data } = await api.get(`/short-news/` + newsId, {
         headers: {
           Authorization: `${accessToken}`,
         },
@@ -223,6 +228,7 @@ const NewsDetail = () => {
 
   useEffect(() => {
     getNewsDetail();
+    window.speechSynthesis.getVoices()
   }, [accessToken]);
 
   useEffect(() => {
@@ -243,6 +249,35 @@ const NewsDetail = () => {
       postNewSerialQuizAnswer();
     }
   }, [userQuizAnswer]);
+
+  
+  useEffect(() => {
+    if (TTStext !== undefined && TTStext.length > 0) {
+      setIsTTSOn(true);
+      getSpeech("")
+      TTStext.map((el, index) => {
+        setIsTTSOn(true);
+        getSpeech(el);
+      })
+      setTTStext(undefined);
+    }
+
+
+
+
+  }, [TTStext])
+
+  console.log('isTTSOn', isTTSOn)
+
+useEffect(()=>{
+
+  setTimeout(() => {
+    if (TTStext === undefined) {
+      setIsTTSOn(false);
+    }
+  }, 3000);
+},[isSpeakerOn])
+
 
   return (
     <Container>
@@ -282,7 +317,14 @@ const NewsDetail = () => {
           }
         />
         <MenuArea>
-          <Speaker src={"/assets/icons/icon_speaker_N.svg"} />
+          <Speaker onClick={() => {
+            if (shortNews?.body !== undefined) {
+              setIsSpeakerOn(true);
+              setIsTTSOn(true); 
+              setTTStext(shortNews?.body);
+            }
+          }}
+            src={isTTSOn === true ? "/assets/icons/icon_speaker_Y.svg" : "/assets/icons/icon_speaker_N.svg"} />
           <ParaphraseArea>
             <Paraphrase>쉬운 설명</Paraphrase>
             <ToggleSlide
@@ -314,7 +356,7 @@ const NewsDetail = () => {
         <Source>
           <a
             style={{ textDecoration: "none", color: "#979797" }}
-            href={'https://www.'+shortNews?.url}
+            href={'https://www.' + shortNews?.url}
             target="_blank"
           >
             출처: {shortNews?.title}
