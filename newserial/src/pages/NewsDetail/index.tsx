@@ -250,34 +250,26 @@ const NewsDetail = () => {
     }
   }, [userQuizAnswer]);
 
-  
-  useEffect(() => {
-    if (TTStext !== undefined && TTStext.length > 0) {
-      setIsTTSOn(true);
-      getSpeech("")
-      TTStext.map((el, index) => {
-        setIsTTSOn(true);
-        getSpeech(el);
-      })
-      setTTStext(undefined);
-    }
 
-
-
-
-  }, [TTStext])
-
-  console.log('isTTSOn', isTTSOn)
-
-useEffect(()=>{
-
-  setTimeout(() => {
-    if (TTStext === undefined) {
+  function stopSpeech() {
+    if (window.speechSynthesis.speaking) {
+      window.speechSynthesis.cancel();
       setIsTTSOn(false);
     }
-  }, 3000);
-},[isSpeakerOn])
+  }
 
+  useEffect(() => {
+    if (TTStext !== undefined && TTStext.length > 0) {
+      const newsBody = TTStext.join(' ');
+      const noSpace = newsBody.split(' ').join('');
+      getSpeech(newsBody);
+      setTimeout(() => {
+        setIsTTSOn(false);
+      }, (noSpace.length) * 206)
+
+      setTTStext(undefined);
+    }
+  }, [TTStext])
 
   return (
     <Container>
@@ -318,10 +310,13 @@ useEffect(()=>{
         />
         <MenuArea>
           <Speaker onClick={() => {
-            if (shortNews?.body !== undefined) {
-              setIsSpeakerOn(true);
-              setIsTTSOn(true); 
-              setTTStext(shortNews?.body);
+            if (isTTSOn === true) {
+              stopSpeech();
+            } else {
+              if (shortNews?.body !== undefined) {
+                setIsTTSOn(true);
+                setTTStext(shortNews?.body);
+              }
             }
           }}
             src={isTTSOn === true ? "/assets/icons/icon_speaker_Y.svg" : "/assets/icons/icon_speaker_N.svg"} />
