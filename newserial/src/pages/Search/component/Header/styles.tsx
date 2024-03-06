@@ -16,20 +16,21 @@ const mediaQuery = (breakpoint: Breakpoints) => `@media (min-width: ${breakpoint
 export const HeaderArea = styled.div`
   label: header-area;
   background-color:#000000;
-  padding-top:61px;
+  padding-top:31px;
   padding-left:20px;
   padding-right:20px;
   height: 51px;
   display: flex;
   flex-direction:row;
+  border-bottom: 1.5px solid #FF6F4F;
 
   ${mediaQuery('desktop')}{
-    height: 165px;
-    padding-top: 152px;
+    padding-top: 20px;
+    padding-bottom: 20px;
   }
 `;
 
-export const Logo=styled.div`
+export const Logo = styled.div`
   label: logo;
   width:fit-content;
   color:#FF6F4F;
@@ -37,12 +38,34 @@ export const Logo=styled.div`
   font-family: Bangers;
 
   ${mediaQuery('desktop')}{
-    font-size: 55px;
-    margin-left:auto;
-    margin-right:auto;
-    border-bottom: 4px solid #FFCD29;
+    font-size: 4rem;
+    margin : auto;
   }
 `
+
+export const SearchArea = styled.input`
+  label: searach-area;
+  width: 60%;
+  height: 2.5rem;
+  color: #D9D9D9;
+  font-size: 1.8rem;
+  font-family: Noto Sans KR;
+  background-color: transparent;
+  border: none;
+  margin-left: 50px;
+  resize:none;
+  overflow: hidden;
+  
+
+  :focus {
+    outline:none;
+  }
+
+  ${mediaQuery('desktop')}{
+    margin: auto;
+  }
+`
+
 
 export const SearchIcon = styled.img`
   label: search-icon;
@@ -50,26 +73,9 @@ export const SearchIcon = styled.img`
   height: 20px;
   margin-left:auto;
   cursor: pointer;
-
+  
   ${mediaQuery('desktop')}{
-    position: absolute;
-    top: 26px;
-    right: 50px;
-
-  }
-    
-`
-
-export const MyPageIcon = styled.img`
-  label: mypage-icon;
-  width: 20px;
-  height: 20px;
-  margin-left:20px;
-  cursor: pointer;
-
-  ${mediaQuery('desktop')}{
-    position: absolute;
-    top: 26px;
-    right: 90px;
+    margin: auto;
   }
 `
+
