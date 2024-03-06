@@ -14,8 +14,28 @@ import {
   NewsTitle,
 } from "./styles";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
-const NewSerial = () => {
+interface NewSerialNews {
+  totalNewsCount: number,
+  newsListResponseDtos: [
+    {
+      id: number,
+      category_id: number,
+      title: string,
+      body: string,
+      image: string | null,
+      press: string,
+    }
+  ]
+}
+
+const NewSerial = (props: {
+  newSerialNews: NewSerialNews | undefined,
+  newSerialNewsCategory: number,
+  setNewSerialNewsCategory: React.Dispatch<React.SetStateAction<number>>
+}) => {
+  const navigate = useNavigate();
 
 
 
@@ -26,26 +46,48 @@ const NewSerial = () => {
         <TitleToolTip src="/assets/icons/icon_tooltip.svg" />
       </AreaTitleArea>
       <CategoryArea>
-        <CategoryButton style={{borderBottom:"4px solid #FF6F4F", fontSize:"2rem", color: "#2E2E2E"}}>전체</CategoryButton>
-        <CategoryButton>금융</CategoryButton>
-        <CategoryButton>증권</CategoryButton>
-        <CategoryButton>산업/재계</CategoryButton>
-        <CategoryButton>중기/벤처</CategoryButton>
-        <CategoryButton>부동산</CategoryButton>
+        <CategoryButton onClick={() => props?.setNewSerialNewsCategory(0)} 
+        style={props?.newSerialNewsCategory === 0 ?
+          { borderBottom: "4px solid #FF6F4F", fontSize: "2rem", color: "#2E2E2E" }
+          : {}}>전체</CategoryButton>
+        <CategoryButton onClick={() => props?.setNewSerialNewsCategory(259)} 
+        style={props?.newSerialNewsCategory === 259 ?
+          { borderBottom: "4px solid #FF6F4F", fontSize: "2rem", color: "#2E2E2E" }
+          : {}}>금융</CategoryButton>
+        <CategoryButton onClick={() => props?.setNewSerialNewsCategory(258)} 
+        style={props?.newSerialNewsCategory === 258 ?
+          { borderBottom: "4px solid #FF6F4F", fontSize: "2rem", color: "#2E2E2E" }
+          : {}}>증권</CategoryButton>
+        <CategoryButton onClick={() => props?.setNewSerialNewsCategory(261)} 
+        style={props?.newSerialNewsCategory === 261 ?
+          { borderBottom: "4px solid #FF6F4F", fontSize: "2rem", color: "#2E2E2E" }
+          : {}}>산업/재계</CategoryButton>
+        <CategoryButton onClick={() => props?.setNewSerialNewsCategory(771)} 
+        style={props?.newSerialNewsCategory === 771 ?
+          { borderBottom: "4px solid #FF6F4F", fontSize: "2rem", color: "#2E2E2E" }
+          : {}}>중기/벤처</CategoryButton>
+        <CategoryButton onClick={() => props?.setNewSerialNewsCategory(260)} 
+        style={props?.newSerialNewsCategory === 260 ?
+          { borderBottom: "4px solid #FF6F4F", fontSize: "2rem", color: "#2E2E2E" }
+          : {}}>부동산</CategoryButton>
       </CategoryArea>
-      
+
       <NewsList>
-        <NewsRow>
-          <NewsPhoto src="/assets/dummyImages/dummyImage.jpg"/>
-          <NewsDetailArea>
-            <NewsOrigin>
-              [ 조선비즈 ]
-            </NewsOrigin>
-            <NewsTitle>
-            당정, R&D 예산 정책적 보완 공감대 형성…
-            </NewsTitle>
-          </NewsDetailArea>
-        </NewsRow>
+        {props?.newSerialNews !== undefined && props?.newSerialNews?.totalNewsCount > 0
+          ? props?.newSerialNews.newsListResponseDtos.map((el) => (
+            <NewsRow key={el.id} onClick={() => navigate('/newsdetail', { state: { newsId: el.id, newsCategoryId: el.category_id } })}>
+              <NewsPhoto src={el.image ? el.image : "/assets/images/image_no_image.svg"} />
+              <NewsDetailArea>
+                <NewsOrigin>
+                  [ {el.press} ]
+                </NewsOrigin>
+                <NewsTitle>
+                  {el.title}
+                </NewsTitle>
+              </NewsDetailArea>
+            </NewsRow>
+          )) : <></>}
+
       </NewsList>
 
     </NewSerialArea>

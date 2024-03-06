@@ -6,7 +6,7 @@ const breakpoints = {
   // desktop: '951px',
 };
 
-const breakpoint="768px";
+const breakpoint = "768px";
 
 // 타입 정의
 type Breakpoints = keyof typeof breakpoints;
@@ -27,7 +27,7 @@ export const NewSerialArea = styled.div`
     width:60.75%;
     flex-direction: column;
     height: 104px;
-    margin-top: 22px;
+    margin-top: 330px;
     margin-left:auto;
     margin-right:auto;
     margin-bottom: 200px;
@@ -64,7 +64,7 @@ export const AreaTitle = styled.div`
   }
 `
 
-export const TitleToolTip=styled.img`
+export const TitleToolTip = styled.img`
   label: title-tooltip
   width: 15px;
   height: 15px;
@@ -97,6 +97,7 @@ export const CategoryButton = styled.div`
   font-family: Noto Sans KR;
   color: #787878;
   padding: 4px 13px;
+  cursor: pointer;
 
   ${mediaQuery()}{
     font-size: 1.5rem;
@@ -127,6 +128,8 @@ export const NewsRow = styled.div`
   height: 89px;
   border-radius: 10px;
   box-shadow: 0px 1px 1px 1px #E0E0E0;
+  cursor: pointer;
+  margin-bottom: 10px;
 
   ${mediaQuery()}{
     height: 109px;
@@ -153,28 +156,31 @@ export const NewsDetailArea = styled.div`
   label: news-detail-area;
   display:flex;
   flex-direction:column;
-  width:100%;
-  margin-top: 20px;
+  width:calc(70% - 20px);
+  margin-top: auto;
+  margin-bottom: auto;
   margin-left: 2.8%;
   margin-right: 2.8%;
-  margin-bottom: 20px;
   text-align: left;
 
   ${mediaQuery()}{
-    margin: 20px;
   }
 `
 
 export const NewsOrigin = styled.div`
   label: news-origin;
+  width: 100%;
   font-family: Noto Sans KR;
   color: #575757;
   font-size: 1rem;
   margin-bottom: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: start;
 
   ${mediaQuery()}{
     font-size: 1.3rem;
-    margin-right:auto;
     margin-bottom: 10px;
 
   }
@@ -182,13 +188,17 @@ export const NewsOrigin = styled.div`
 
 export const NewsTitle = styled.div`
   label: news-title;
-  font-size: 1.6rem;
+  width: 100%;
+  font-size: 1.4rem;
   font-family: Noto Sans KR;
   color: #000000;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: start;
 
   ${mediaQuery()}{
     font-size: 1.6rem;
-    margin-right:auto;
 
   }
 `

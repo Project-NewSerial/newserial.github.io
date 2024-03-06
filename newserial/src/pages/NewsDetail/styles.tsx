@@ -188,6 +188,7 @@ export const Speaker=styled.img`
   margin-right:2%;
   margin-top: auto;
   margin-bottom: auto;
+  cursor:pointer;
 `
 
 export const ParaphraseArea=styled.div`

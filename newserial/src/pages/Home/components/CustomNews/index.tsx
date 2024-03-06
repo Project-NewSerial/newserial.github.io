@@ -5,13 +5,18 @@ import {
 } from "./styles";
 import axios from "axios";
 
-const CustomNews = () => {
+interface MainQuizNews {
+  id: number,
+  title: string,
+}
+
+const CustomNews = (props:{mainQuizNews : MainQuizNews}) => {
 
 
 
   return (
     <CustomNewsArea>
-      <NewsTitle>맞춤 기사</NewsTitle>
+      <NewsTitle>{props?.mainQuizNews.title}</NewsTitle>
     </CustomNewsArea>
   );
 };
