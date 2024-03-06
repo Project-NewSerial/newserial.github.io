@@ -9,6 +9,8 @@ import TempPassword from "./pages/TempPassword";
 import SocialLoginCallback from "./pages/SocialLoginCallback";
 import NewsDetail from "./pages/NewsDetail";
 import Home from "./pages/Home";
+import Search from "./pages/Search";
+import SearchResult from "./pages/SearchResult";
 
 function App() {
   const queryClient = new QueryClient();
@@ -20,6 +22,8 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/" element={<Home/>}/>
+            <Route path="/search" element={<Search/>}/>
+            <Route path="/search-result" element={<SearchResult/>}/>
             <Route path="/mypage" element={<Mypage />} />
             <Route path="/temp-password" element={<TempPassword />} />
             <Route
