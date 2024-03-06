@@ -36,6 +36,7 @@ export const Logo = styled.div`
   color:#FF6F4F;
   font-size:30px;
   font-family: Bangers;
+  cursor: pointer;
 
   ${mediaQuery('desktop')}{
     font-size: 4rem;

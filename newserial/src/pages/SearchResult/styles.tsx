@@ -44,6 +44,7 @@ export const ResultWord = styled.span`
 
 export const ResultRowArea = styled.div`
   label: result-row-area;
+  margin-top: 20px;
 `
 
 export const ResultRow = styled.div`

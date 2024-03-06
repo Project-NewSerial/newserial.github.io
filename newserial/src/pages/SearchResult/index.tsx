@@ -17,7 +17,7 @@ import {
 import Header from "./component/Header";
 import NewSerial from "./component/NewSerial/index";
 import axios from "axios";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import api from "../../api";
 
@@ -71,11 +71,13 @@ interface Result {
  * @author 김민지
  */
 const SearchResult = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { oldSearchWord, oldSearchResult } = location.state;
   const accessToken = useSelector((state: RootState) => state.auth.accessToken);
   const [searchWord, setSearchWord] = useState<string>('');
   const [searchResult, setSearchResult] = useState<Result>();
-  const location = useLocation();
-  const { oldSearchWord, oldSearchResult } = location.state;
+
 
 
 
@@ -121,7 +123,7 @@ const SearchResult = () => {
         <ResultRowArea>
           {/* {searchResult?.content.map((el, index) => ( */}
             {/* <ResultRow key={el.id}> */}
-            <ResultRow>
+            <ResultRow onClick={()=>navigate('/news-detail')}>
               <NewsImage src="/assets/dummyImages/dummyImage.jpg"/>
               <NewsInformation>
                 <NewsPress>[조선비즈]</NewsPress>

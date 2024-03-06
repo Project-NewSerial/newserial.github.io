@@ -18,7 +18,7 @@ const Header = (props:{searchWord:string, setSearchWord:React.Dispatch<React.Set
   
   return (
     <HeaderArea>
-      <Logo>NEWSERIAL</Logo>
+      <Logo onClick={()=>navigate('/')}>NEWSERIAL</Logo>
       <SearchArea onChange={(e)=>props?.setSearchWord(e.target.value)}placeholder="검색어를 입력해주세요"/>
       <SearchIcon 
        onClick={()=>props?.getSearchResultNews()}
