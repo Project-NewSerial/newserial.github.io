@@ -2,8 +2,9 @@ import React from "react";
 import axios from "axios";
 import { useMutation } from "@tanstack/react-query";
 import { Container, Left, Right } from "./styles";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { setToken } from "../../../../redux/modules/auth";
 
 /**
  * Mypage의 Header 컴포넌트
@@ -17,7 +18,7 @@ interface RootState {
 
 const Header = () => {
   const navigate = useNavigate();
-
+  const dispatch = useDispatch();
   const accessToken = useSelector((state: RootState) => state.auth.accessToken);
 
   //logout api 호출
@@ -33,7 +34,11 @@ const Header = () => {
           withCredentials: true,
         }
       );
-      if (data === "logout success\r\n") navigate("/");
+      if (data === "logout success\r\n") {
+        dispatch(setToken(null));
+        alert("로그아웃 되었습니다.");
+        return navigate("/");
+      }
     } catch (error: any) {
       console.log(error);
     }
