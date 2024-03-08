@@ -57,7 +57,6 @@ export const SearchIcon = styled.img`
     right: 50px;
 
   }
-    
 `
 
 export const MyPageIcon = styled.img`
@@ -73,3 +72,24 @@ export const MyPageIcon = styled.img`
     right: 90px;
   }
 `
+
+export const LoginButton = styled.div`
+  label: login-button;
+  color: #FF6F4F;
+  font-size: 1.4rem;
+  margin-left: auto;
+  margin-right: 10px;
+  ${mediaQuery('desktop')}{
+    
+  }
+`
+
+export const SignupButton= styled.div`
+  label: signup-button;
+  color: #FF6F4F;
+  font-size: 1.4rem;
+  ${mediaQuery('desktop')}{
+    
+  }
+`
+
