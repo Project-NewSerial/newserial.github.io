@@ -32,16 +32,25 @@ export const HeaderArea = styled.div`
 
 export const Logo = styled.div`
   label: logo;
-  width:fit-content;
+  width:106.35px;
+  height: 51px;
   color:#FF6F4F;
   font-size:30px;
   font-family: Bangers;
   cursor: pointer;
 
   ${mediaQuery('desktop')}{
+    width: 141.8px;
+    height: 40px;
     font-size: 4rem;
     margin : auto;
   }
+`
+
+export const SearchSection = styled.div`
+  label: search-section;
+  display: flex;
+  flex-direction: column;
 `
 
 export const SearchArea = styled.input`
@@ -66,6 +75,46 @@ export const SearchArea = styled.input`
   }
 `
 
+export const RelatedWordsArea = styled.div`
+  label: related-words-area;
+  width: 60%;
+  margin-left: 25px;
+  position: absolute;
+  top:82px;
+  background-color: #000000;
+  opacity: 80%;
+  padding-top: 16px;
+  padding-bottom: 14px;
+  padding-left: 10px;
+  padding-right: 10px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  border-top: 1.5px solid black;
+  
+`
+
+export const RelatedWordRow = styled.div`
+  label: related-word-row;
+  with: -webkit-fill-available;
+  color: white;
+  font-family: Noto Sans KR;
+  font-size: 1.4rem;
+  margin-left: 15px;
+  margin-right: 15px;
+  margin-bottom: 6px;
+  text-align: left;
+  white-space: nowrap;
+  ovrflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+`
+
+export const RelatedWordSearch = styled.img`
+  label: related-word-search;
+  width: 12px;
+  height: 12px;
+  margin-right: 10px;
+`
 
 export const SearchIcon = styled.img`
   label: search-icon;
