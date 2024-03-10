@@ -138,7 +138,6 @@ const Home = () => {
           },
         })
         if (data !== undefined) {
-          console.log('data', data)
           setNewSerialNews(data)
         }
       } catch (error) {
@@ -180,7 +179,6 @@ const Home = () => {
         wordsId: userAnswerWordsId,
         userAnswer: userAnswer,
       };
-      console.log('send', sendData)
 
       try {
         const { data } = await api.post(`/main-quiz/answer`, sendData, {
