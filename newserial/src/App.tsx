@@ -10,9 +10,10 @@ import SocialLoginCallback from "./pages/SocialLoginCallback";
 import NewsDetail from "./pages/NewsDetail";
 import Home from "./pages/Home";
 import Search from "./pages/Search";
+import NotFound from "./pages/NotFound";
 import SearchResult from "./pages/SearchResult";
 import PrivateRoute from "./Routes/PrivateRoute";
-import PublicRoute from './Routes/PublicRoute';
+import PublicRoute from "./Routes/PublicRoute";
 
 function App() {
   const queryClient = new QueryClient();
@@ -37,6 +38,7 @@ function App() {
                 element={<SocialLoginCallback />}
               />
             </Route>
+            <Route path="/not-found" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
       </div>
