@@ -15,7 +15,7 @@ const Header = () => {
   return (
     <HeaderArea>
       <Logo>NEWSERIAL</Logo>
-      <SearchIcon onClick={()=>navigate("/search")} src={"/assets/icons/icon_search.svg"}/>
+      <SearchIcon onClick={()=>navigate("/search-result")} src={"/assets/icons/icon_search.svg"}/>
       <MyPageIcon onClick={()=>navigate("/mypage")} src={"/assets/icons/icon_mypage.svg"}/>
     </HeaderArea>
   );

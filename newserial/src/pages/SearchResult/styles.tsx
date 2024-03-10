@@ -14,9 +14,27 @@ const mediaQuery = (breakpoint: Breakpoints) => `@media (min-width: ${breakpoint
 
 export const Container = styled.div`
   label: container;
-
-
 `;
+
+export const RelatedWordsArea = styled.div`
+  label: related-words-area;
+  width: 60%;
+  margin-left: 176.340px;
+  position: absolute;
+  top:83.3px;
+  background-color: #000000;
+  opacity: 70%;
+  padding-top: 10px;
+  padding-bottom: 20px;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  
+`
+
+export const RelatedWordRow = styled.div`
+  label: related-word-row;
+  
+`
 
 export const ResultArea = styled.div`
   label: result-area;
@@ -39,7 +57,8 @@ export const ResultTitle = styled.div`
 export const ResultWord = styled.span`
   label: result-word;
   font-family: Bangers;
-  font-size: 2.5rem;
+  font-size: 2.7rem;
+  margin-right: 13px;
 `
 
 export const ResultRowArea = styled.div`
@@ -55,6 +74,7 @@ export const ResultRow = styled.div`
   border-bottom: 0.5px solid #DCDCDC;
   padding-top: 10px;
   padding-bottom: 10px;
+  text-align: left;
 
 `
 
@@ -67,6 +87,7 @@ export const NewsImage = styled.img`
 
 export const NewsInformation = styled.div`
   label: news-information;
+  width: calc( 100% - 110px );
   display: flex;
   flex-direction: column;
   margin-top: 10px;
@@ -83,7 +104,11 @@ export const NewsPress = styled.div`
 
 export const NewsTitle = styled.div`
   label: news-title;
+  width: -webkit-fill-available;
   color: #000000;
   font-size: 1.4rem;
   font-family: Noto Sans KR;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `
