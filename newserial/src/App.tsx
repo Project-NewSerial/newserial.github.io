@@ -10,7 +10,10 @@ import SocialLoginCallback from "./pages/SocialLoginCallback";
 import NewsDetail from "./pages/NewsDetail";
 import Home from "./pages/Home";
 import Search from "./pages/Search";
+import NotFound from "./pages/NotFound";
 import SearchResult from "./pages/SearchResult";
+import PrivateRoute from "./Routes/PrivateRoute";
+import PublicRoute from "./Routes/PublicRoute";
 
 function App() {
   const queryClient = new QueryClient();
@@ -19,18 +22,23 @@ function App() {
       <div className="App">
         <BrowserRouter>
           <Routes>
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/" element={<Home/>}/>
-            <Route path="/search" element={<Search/>}/>
-            <Route path="/search-result" element={<SearchResult/>}/>
-            <Route path="/mypage" element={<Mypage />} />
-            <Route path="/temp-password" element={<TempPassword />} />
-            <Route
-              path="/social-login-callback"
-              element={<SocialLoginCallback />}
-            />
-            <Route path="/newsdetail" element={<NewsDetail />} />
+            <Route path="/" element={<Home />} />
+            <Route path="/not-found" element={<NotFound />} />
+            <Route element={<PublicRoute />}>
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<Signup />} />
+              <Route path="/temp-password" element={<TempPassword />} />
+              <Route
+                path="/social-login-callback"
+                element={<SocialLoginCallback />}
+              />
+            </Route>
+            <Route element={<PrivateRoute />}>
+              <Route path="/search" element={<Search />} />
+              <Route path="/search-result" element={<SearchResult />} />
+              <Route path="/mypage" element={<Mypage />} />
+              <Route path="/newsdetail" element={<NewsDetail />} />
+            </Route>
           </Routes>
         </BrowserRouter>
       </div>
