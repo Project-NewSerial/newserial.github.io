@@ -142,8 +142,7 @@ const Home = () => {
           },
         });
         if (data !== undefined) {
-          console.log("data", data);
-          setNewSerialNews(data);
+          setNewSerialNews(data)
         }
       } catch (error) {
         console.log("에러가 발생했습니다.", error);
@@ -187,7 +186,6 @@ const Home = () => {
         wordsId: userAnswerWordsId,
         userAnswer: userAnswer,
       };
-      console.log("send", sendData);
 
       try {
         const { data } = await api.post(`/main-quiz/answer`, sendData, {

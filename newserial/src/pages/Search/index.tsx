@@ -89,6 +89,7 @@ const Search = () => {
     }
   };
 
+
   return (
     <Container>
       <Header searchWord={searchWord}
