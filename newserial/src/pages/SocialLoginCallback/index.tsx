@@ -17,7 +17,7 @@ const SocialLoginCallback = () => {
   const token = searchParams.get("token");
 
   useEffect(() => {
-    if (token) dispatch(setToken(JSON.stringify(token)));
+    if (token) dispatch(setToken(JSON.stringify(token).split('"')[1]));
     else navigate("/not-found");
   }, []);
   /**
@@ -28,7 +28,7 @@ const SocialLoginCallback = () => {
     try {
       await api.get(`/cookie`, {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `${token}`,
         },
         withCredentials: true,
       });
@@ -42,7 +42,7 @@ const SocialLoginCallback = () => {
   const { isLoading, data } = useQuery({
     queryKey: ["cookie"],
     queryFn: getCookie,
-    enabled: token!==null,
+    enabled: token !== null,
   });
 
   if (isLoading)

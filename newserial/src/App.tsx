@@ -23,12 +23,7 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route element={<PrivateRoute />}>
-              <Route path="/search" element={<Search />} />
-              <Route path="/search-result" element={<SearchResult />} />
-              <Route path="/mypage" element={<Mypage />} />
-              <Route path="/newsdetail" element={<NewsDetail />} />
-            </Route>
+            <Route path="/not-found" element={<NotFound />} />
             <Route element={<PublicRoute />}>
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
@@ -38,7 +33,12 @@ function App() {
                 element={<SocialLoginCallback />}
               />
             </Route>
-            <Route path="/not-found" element={<NotFound />} />
+            <Route element={<PrivateRoute />}>
+              <Route path="/search" element={<Search />} />
+              <Route path="/search-result" element={<SearchResult />} />
+              <Route path="/mypage" element={<Mypage />} />
+              <Route path="/newsdetail" element={<NewsDetail />} />
+            </Route>
           </Routes>
         </BrowserRouter>
       </div>

@@ -1,10 +1,10 @@
 import React from "react";
-import axios from "axios";
 import { useMutation } from "@tanstack/react-query";
 import { Container, Left, Right } from "./styles";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setToken } from "../../../../redux/modules/auth";
+import api from "../../../../api";
 
 /**
  * Mypage의 Header 컴포넌트
@@ -24,8 +24,8 @@ const Header = () => {
   //logout api 호출
   const logout = async () => {
     try {
-      const { data } = await axios.post(
-        `${process.env.REACT_APP_API}/logout`,
+      const { data } = await api.post(
+        `/logout`,
         {},
         {
           headers: {
@@ -35,9 +35,9 @@ const Header = () => {
         }
       );
       if (data === "logout success\r\n") {
-        dispatch(setToken(null));
+        dispatch(setToken(''));
+        navigate("/");
         alert("로그아웃 되었습니다.");
-        return navigate("/");
       }
     } catch (error: any) {
       console.log(error);

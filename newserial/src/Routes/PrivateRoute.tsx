@@ -18,6 +18,11 @@ interface RootState {
 const PrivateRoute = () => {
   const dispatch = useDispatch();
   const accessToken = useSelector((state: RootState) => state.auth.accessToken);
+  
+  useEffect(() => {
+    if (accessToken === "") dispatch(setToken(null));
+  }, []);
+
   /**
    * refresh Token이 유효하면 accessToken 발급하는 api 호출
    */
