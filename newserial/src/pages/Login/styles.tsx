@@ -4,6 +4,18 @@ export const Container = styled.div`
   label: container;
   width: 100%;
   height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: black;
+`;
+
+export const Content = styled.div`
+  label: content;
+  max-width: 480px;
+  width: 100%;
+  height: 100vh;
   background-color: black;
   display: flex;
   flex-direction: column;
