@@ -56,7 +56,7 @@ const TempPassword = () => {
 
       if (data) {
         alert(data);
-        navigate('/login')
+        navigate("/login");
       }
     } catch (error: any) {
       alert("회원정보가 존재하지 않습니다.");
