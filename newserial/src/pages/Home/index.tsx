@@ -143,12 +143,15 @@ const Home = () => {
         });
         if (data !== undefined) {
           setNewSerialNews(data)
+        } else {
+          return
         }
       } catch (error) {
         console.log("에러가 발생했습니다.", error);
       }
     }
   };
+
 
   /**
    * 뉴-시리얼 기사 카테고리별 get 함수
@@ -210,9 +213,11 @@ const Home = () => {
   };
 
   useEffect(() => {
-    getQuiz();
-    getMainQuizNews();
-    getNews();
+    if (accessToken!==null && accessToken.length > 0) {
+      getQuiz();
+      getMainQuizNews();
+      getNews();
+    }
   }, [accessToken]);
 
   useEffect(() => {
@@ -222,7 +227,7 @@ const Home = () => {
   }, [userAnswer]);
 
   useEffect(() => {
-    if (newSerialNewsCategory === 0) {
+    if (accessToken!==null && accessToken.length > 0 &&newSerialNewsCategory === 0) {
       getNews();
     } else {
       getCategoryNews();
@@ -246,6 +251,7 @@ const Home = () => {
 
       {mainQuizNews ? <CustomNews mainQuizNews={mainQuizNews} /> : null}
       <NewSerial
+        question={question}
         newSerialNews={newSerialNews}
         newSerialNewsCategory={newSerialNewsCategory}
         setNewSerialNewsCategory={setNewSerialNewsCategory}

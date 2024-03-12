@@ -31,6 +31,7 @@ export const HeaderArea = styled.div`
 
 export const Logo = styled.div`
   label: logo;
+  height:fit-content;
   width:fit-content;
   color:#FF6F4F;
   font-size:30px;

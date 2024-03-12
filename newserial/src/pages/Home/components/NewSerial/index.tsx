@@ -15,7 +15,14 @@ import {
 } from "./styles";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 import ToolTip from "../ToolTip";
+
+interface RootState {
+  auth: {
+    accessToken: null | string;
+  };
+}
 
 interface NewSerialNews {
   totalNewsCount: number,
@@ -31,17 +38,29 @@ interface NewSerialNews {
   ]
 }
 
+
+interface Quiz {
+  wordsId: number;
+  question: string;
+  userAnswer: string;
+  quizAnswer: string;
+  result: string;
+  explanation: string;
+}
+
 const NewSerial = (props: {
+  question: Quiz[] | undefined,
   newSerialNews: NewSerialNews | undefined,
   newSerialNewsCategory: number,
   setNewSerialNewsCategory: React.Dispatch<React.SetStateAction<number>>
 }) => {
   const navigate = useNavigate();
+  const accessToken = useSelector((state: RootState) => state.auth.accessToken);
 
 
 
   return (
-    <NewSerialArea>
+    <NewSerialArea style={{marginTop: (accessToken!==null && accessToken?.length>0) ?"340px":"0px"}}>
       <AreaTitleArea>
         <AreaTitle>뉴-시리얼</AreaTitle>
         <ToolTip message={"뉴-시리얼은 하루에 ~~~~~~~~~~~~~~~~~~~~~~~~~~~"} />

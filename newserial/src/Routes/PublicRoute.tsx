@@ -33,14 +33,14 @@ const PublicRoute = () => {
   const { isLoading } = useQuery({
     queryKey: ["refresh-login"],
     queryFn: refreshLogin,
-    enabled: accessToken === null,
+    enabled: accessToken === null || accessToken==='',
   });
 
 
-  if (accessToken !== null) return <Navigate to={"/"} />;
+  if (accessToken !== null && accessToken!=='') return <Navigate to={"/"} />;
   if (isLoading) return null;
 
-  return accessToken!==null ? <Navigate to={"/"} /> : <Outlet />;
+  return accessToken!==null && accessToken!==''? <Navigate to={"/"} /> : <Outlet />;
 };
 
 export default PublicRoute;
