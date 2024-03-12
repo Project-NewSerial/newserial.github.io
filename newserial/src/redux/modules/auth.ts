@@ -16,7 +16,7 @@ interface authActionType {
 const SET_TOKEN = "auth/SET_TOKEN";
 
 //액션 생성 함수
-export const setToken = (token: string|null) => ({
+export const setToken = (token: string | null) => ({
   type: SET_TOKEN,
   token,
 });
