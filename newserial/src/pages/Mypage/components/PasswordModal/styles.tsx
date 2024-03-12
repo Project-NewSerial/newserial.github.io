@@ -1,12 +1,14 @@
 import styled from "@emotion/styled";
 
 export const Title = styled.div`
+  label: title;
   font-family: Noto Sans KR;
   font-size: 1.6rem;
   font-weight: 600;
 `;
 
 export const Main = styled.div`
+  label: main;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -16,10 +18,12 @@ export const Main = styled.div`
 `;
 
 export const InputContent = styled.div`
+  label: input-content;
   width: 100%;
 `;
 
 export const InputBox = styled.div`
+  label: input-box;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -29,10 +33,12 @@ export const InputBox = styled.div`
 `;
 
 export const InputText = styled.div`
+  label: input-text;
   color: #242424;
 `;
 
 export const Input = styled.input`
+  label: input;
   width: 100%;
   height: 20px;
   border: none;
@@ -51,10 +57,10 @@ export const WarningText = styled.div`
   label: warning-text;
   color: red;
   font-size: 1rem;
-  //margin-top: 2px;
 `;
 
 export const Button = styled.button`
+  label: button;
   border: none;
   width: 50px;
   height: 25px;

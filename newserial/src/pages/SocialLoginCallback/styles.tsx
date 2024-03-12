@@ -14,6 +14,7 @@ const fade = keyframes`
   `;
 
 export const Container = styled.div`
+  label: container;
   width: 100%;
   height: 100vh;
   display: flex;
@@ -22,6 +23,7 @@ export const Container = styled.div`
 `;
 
 export const Loading = styled.div`
+  label: loading;
   font-family: Noto Sans Kr;
   font-size: 2rem;
   animation: ${fade} 2s ease-in-out infinite;

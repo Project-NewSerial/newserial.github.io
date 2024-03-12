@@ -1,3 +1,6 @@
+/**
+ * @author 신정은
+ */
 import { createStore } from "redux";
 import rootReducer from "./modules";
 

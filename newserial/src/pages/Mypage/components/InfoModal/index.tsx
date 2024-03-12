@@ -6,7 +6,10 @@ interface propsType {
   setToggle: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const InfoModal = ({ setToggle }:propsType) => {
+/**
+ * @author 신정은
+ */
+const InfoModal = ({ setToggle }: propsType) => {
   const rank = [
     "노숙견 : 0~5번",
     "양반견 : 31~40번",

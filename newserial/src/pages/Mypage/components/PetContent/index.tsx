@@ -26,14 +26,14 @@ const PetContent = () => {
     return data;
   };
 
-  const {data: petInfo } = useQuery({
+  const { data: petInfo } = useQuery({
     queryKey: ["pet", accessToken],
     queryFn: getPetInfo,
   });
 
   return (
     <Container>
-      {toggle && <InfoModal setToggle={setToggle} />}
+      {/* {toggle && <InfoModal setToggle={setToggle} />} */}
       <Top>
         <Info onClick={() => setToggle(!toggle)}>i</Info>
       </Top>

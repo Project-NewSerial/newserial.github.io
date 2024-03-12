@@ -16,7 +16,7 @@ import PasswordModal from "./components/PasswordModal";
 import Tabs from "./components/Tabs";
 import PetContent from "./components/PetContent";
 import QuizList from "./components/QuizList";
-import BookmarkList from './components/BookmarkList';
+import BookmarkList from "./components/BookmarkList";
 
 interface RootState {
   auth: {
