@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/newserial.github.io/static/css/main.5bca69a7.css",
-    "main.js": "/newserial.github.io/static/js/main.07c63e28.js",
+    "main.js": "/newserial.github.io/static/js/main.190afb1c.js",
     "static/js/787.49932c10.chunk.js": "/newserial.github.io/static/js/787.49932c10.chunk.js",
     "static/media/slick.svg": "/newserial.github.io/static/media/slick.2630a3e3eab21c607e21.svg",
     "static/media/slick.eot": "/newserial.github.io/static/media/slick.a4e97f5a2a64f0ab1323.eot",
@@ -9,11 +9,11 @@
     "static/media/slick.woff": "/newserial.github.io/static/media/slick.295183786cd8a1389865.woff",
     "index.html": "/newserial.github.io/index.html",
     "main.5bca69a7.css.map": "/newserial.github.io/static/css/main.5bca69a7.css.map",
-    "main.07c63e28.js.map": "/newserial.github.io/static/js/main.07c63e28.js.map",
+    "main.190afb1c.js.map": "/newserial.github.io/static/js/main.190afb1c.js.map",
     "787.49932c10.chunk.js.map": "/newserial.github.io/static/js/787.49932c10.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.5bca69a7.css",
-    "static/js/main.07c63e28.js"
+    "static/js/main.190afb1c.js"
   ]
 }
