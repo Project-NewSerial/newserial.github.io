@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, HashRouter, Route, Routes } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Login from "./pages/Login/index";
 import Signup from "./pages/Signup/index";
@@ -20,7 +20,7 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <div className="App">
-        <BrowserRouter>
+        <BrowserRouter basename={process.env.PUBLIC_URL}>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/not-found" element={<NotFound />} />
