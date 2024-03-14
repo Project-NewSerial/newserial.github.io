@@ -20,7 +20,7 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <div className="App">
-        <BrowserRouter basename={process.env.PUBLIC_URL}>
+        {/* <BrowserRouter basename={process.env.PUBLIC_URL}> */}
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/not-found" element={<NotFound />} />
@@ -40,7 +40,7 @@ function App() {
               <Route path="/newsdetail" element={<NewsDetail />} />
             </Route>
           </Routes>
-        </BrowserRouter>
+        {/* </BrowserRouter> */}
       </div>
     </QueryClientProvider>
   );
