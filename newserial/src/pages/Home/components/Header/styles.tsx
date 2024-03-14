@@ -29,8 +29,9 @@ export const HeaderArea = styled.div`
   }
 `;
 
-export const Logo=styled.div`
+export const Logo = styled.div`
   label: logo;
+  height:fit-content;
   width:fit-content;
   color:#FF6F4F;
   font-size:30px;
@@ -55,7 +56,6 @@ export const SearchIcon = styled.img`
     position: absolute;
     top: 26px;
     right: 50px;
-
   }
 `
 
@@ -73,23 +73,42 @@ export const MyPageIcon = styled.img`
   }
 `
 
+export const LoginSignup = styled.div`
+  label: login-signup;
+  margin-left: auto;
+  display:flex;
+  flex-direction:row;
+
+  ${mediaQuery('desktop')}{
+    display:flex;
+    flex-direction:row;
+    position: absolute;
+    top: 26px;
+    right: 50px;
+  }
+`
+
 export const LoginButton = styled.div`
   label: login-button;
   color: #FF6F4F;
   font-size: 1.4rem;
   margin-left: auto;
   margin-right: 10px;
+  cursor:pointer;
+
   ${mediaQuery('desktop')}{
-    
+
   }
 `
 
-export const SignupButton= styled.div`
+export const SignupButton = styled.div`
   label: signup-button;
   color: #FF6F4F;
   font-size: 1.4rem;
+  cursor:pointer;
+
   ${mediaQuery('desktop')}{
-    
+  
   }
 `
 

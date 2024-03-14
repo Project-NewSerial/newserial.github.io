@@ -42,6 +42,8 @@ export const AreaTitleArea = styled.div`
   margin-bottom: 15px;
 
   ${mediaQuery()}{
+    display:flex;
+    flex-direction: row;
     margin-right: auto;
     marign-bottom: 17px;
   }

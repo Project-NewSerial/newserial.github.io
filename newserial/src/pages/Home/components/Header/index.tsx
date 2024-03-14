@@ -4,6 +4,7 @@ import {
   Logo,
   SearchIcon,
   MyPageIcon,
+  LoginSignup,
   LoginButton,
   SignupButton,
 } from "./styles";
@@ -30,10 +31,10 @@ const Header = () => {
           <SearchIcon onClick={() => navigate("/search-result")} src={"/assets/icons/icon_search.svg"} />
           <MyPageIcon onClick={() => navigate("/mypage")} src={"/assets/icons/icon_mypage.svg"} />
         </>
-        : <>
-          <LoginButton>로그인</LoginButton>
-          <SignupButton>회원가입</SignupButton>
-        </>}
+        : <LoginSignup>
+          <LoginButton onClick={() => navigate("/login")}>로그인</LoginButton>
+          <SignupButton onClick={() => navigate("/signup")}>회원가입</SignupButton>
+        </LoginSignup>}
     </HeaderArea>
   );
 };

@@ -17,9 +17,12 @@ export const ToolTipContainer = styled.div`
   label: tooltip-container;
   display: inline-block;
   position: relative;
+  margin-top: auto;
+  margin-bottom: auto;
 
   >img{
     margin-right: 20px;
+    vertical-align: middle;
   }
 
   &:hover > .tooltip,
@@ -71,7 +74,6 @@ export const ToolTipContainer = styled.div`
   }
 
   ${mediaQuery('desktop')}{
-    height: 165px;
-    padding-top: 152px;
+
   }
 `;
