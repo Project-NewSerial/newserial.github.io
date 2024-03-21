@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useQuery } from "@tanstack/react-query";
 import api from "../../../../api";
-import { List, ListMid, ListRight, NoData } from "./styles";
+import { List, ListLeft, ListRight, NoData } from "./styles";
 
 interface RootState {
   auth: {
@@ -45,12 +45,12 @@ const BookmarkList = () => {
       <>
         {bookmarkData?.map((el, index) => (
           <List border={bookmarkData.length === index + 1}>
-            <img src="/assets/icons/icon_bookmark.svg" />
-            <ListMid>
-              <div className="list-mid__bookmark">
+            <ListLeft>
+            <img src="/assets/icons/icon_bookmark_Y.svg" />
+              <div className="list-left__bookmark">
                 {(el as BookmarkList).title}
               </div>
-            </ListMid>
+            </ListLeft>
             <ListRight>{el.createdTime}</ListRight>
           </List>
         ))}

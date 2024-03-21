@@ -2,7 +2,15 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useQuery } from "@tanstack/react-query";
 import api from "../../../../api";
-import { List, ListMid, ListMidQuiz, ListRight, NoData } from "./styles";
+import {
+  List,
+  ListLeft,
+  ListText,
+  ListTextQuiz,
+  ListTextAnswer,
+  ListRight,
+  NoData,
+} from "./styles";
 
 interface RootState {
   auth: {
@@ -28,6 +36,7 @@ const QuizList = () => {
       },
     });
 
+    //return data;
     return [
       {
         quizQuestion: "공매도 전면 허용 vs. 전면 금지gdrgdrg",
@@ -36,8 +45,6 @@ const QuizList = () => {
         createdTime: "2023/11/01",
       },
     ];
-
-    //return data;
   };
 
   const { data: quizData } = useQuery({
@@ -50,16 +57,16 @@ const QuizList = () => {
       <>
         {quizData?.map((el, index) => (
           <List border={quizData.length === index + 1}>
-            <img src="/assets/icons/icon_Q.svg" />
-            <ListMid>
-              <div className="list-mid__quiz">
-                {(el as QuizList).quizQuestion}
-              </div>
-              <ListMidQuiz>
-                <div>나의 답 : {(el as QuizList).userAnswer}</div>
-                <div>질문 답 : {(el as QuizList).quizAnswer}</div>
-              </ListMidQuiz>
-            </ListMid>
+            <ListLeft>
+              <img src="/assets/icons/icon_Q.svg" />
+              <ListText>
+                <ListTextQuiz>{(el as QuizList).quizQuestion}</ListTextQuiz>
+                <ListTextAnswer>
+                  <div>나의 답 : {(el as QuizList).userAnswer}</div>
+                  <div>질문 답 : {(el as QuizList).quizAnswer}</div>
+                </ListTextAnswer>
+              </ListText>
+            </ListLeft>
             <ListRight>{el.createdTime}</ListRight>
           </List>
         ))}

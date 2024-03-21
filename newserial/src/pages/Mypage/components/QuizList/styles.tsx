@@ -22,19 +22,33 @@ export const List = styled.div<{ border: boolean }>`
   }
 `;
 
-export const ListMid = styled.div`
-  width: 60%;
+export const ListLeft = styled.div`
+  width: 80%;
+  display: flex;
+  justify-content: start;
+  align-items: center;
   font-size: 1.4rem;
 
-  .list-mid__quiz {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    text-align: start;
+  img {
+    margin-right: 10px;
   }
 `;
 
-export const ListMidQuiz = styled.div`
+export const ListText = styled.div`
+  label: list-text;
+  width: calc(100% - 50px);
+`;
+
+export const ListTextQuiz = styled.div`
+  label: list-text-quiz;
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: start;
+`;
+
+export const ListTextAnswer = styled.div`
   width: 100%;
   display: flex;
   justify-content: start;
@@ -51,7 +65,7 @@ export const ListRight = styled.div`
 `;
 
 export const NoData = styled.div`
-  height: 500px;
+  height: 200px;
   display: flex;
   align-items: center;
   color: #7f8386;
