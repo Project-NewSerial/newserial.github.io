@@ -33,14 +33,19 @@ const PublicRoute = () => {
   const { isLoading } = useQuery({
     queryKey: ["refresh-login"],
     queryFn: refreshLogin,
-    enabled: accessToken === null || accessToken==='',
+    enabled: accessToken === null,
   });
 
-
-  if (accessToken !== null && accessToken!=='') return <Navigate to={"/"} />;
+  //logout한 상태
+  if (accessToken === "") return <Outlet />;
+  else if (accessToken !== null) return <Navigate to={"/"} />;
   if (isLoading) return null;
 
-  return accessToken!==null && accessToken!==''? <Navigate to={"/"} /> : <Outlet />;
+  return accessToken !== null ? (
+    <Navigate to={"/"} />
+  ) : (
+    <Outlet />
+  );
 };
 
 export default PublicRoute;

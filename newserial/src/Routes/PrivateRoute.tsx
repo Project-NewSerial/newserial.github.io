@@ -18,10 +18,6 @@ interface RootState {
 const PrivateRoute = () => {
   const dispatch = useDispatch();
   const accessToken = useSelector((state: RootState) => state.auth.accessToken);
-  
-  useEffect(() => {
-    if (accessToken === "") dispatch(setToken(null));
-  }, []);
 
   /**
    * refresh Token이 유효하면 accessToken 발급하는 api 호출
@@ -41,7 +37,8 @@ const PrivateRoute = () => {
     enabled: accessToken === null,
   });
 
-  if (accessToken !== null) return <Outlet />;
+  if (accessToken === "") return null;
+  else if (accessToken !== null && accessToken !== "") return <Outlet />;
   if (isLoading) return null;
 
   return accessToken ? <Outlet /> : <Navigate to={"/login"} />;

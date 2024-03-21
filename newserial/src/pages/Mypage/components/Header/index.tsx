@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { Container, Left, Right } from "./styles";
 import { useDispatch, useSelector } from "react-redux";
@@ -34,10 +34,10 @@ const Header = () => {
           withCredentials: true,
         }
       );
-      if (data === "logout success\r\n") {
+      if (data === "logout success\n") {
         dispatch(setToken(""));
-        navigate("/");
         alert("로그아웃 되었습니다.");
+        navigate("/");
       }
     } catch (error: any) {
       console.log(error);
