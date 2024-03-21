@@ -29,8 +29,8 @@ export const Overlay = styled.div`
 export const Box = styled.div`
   label: box;
   width: fit-content;
-  height: 200px;
-  padding: 10px 30px;
+  height: fit-content;
+  padding: 30px 30px;
   box-sizing: border-box;
   background-color: white;
   font-family: Noto Sans KR;
@@ -45,7 +45,8 @@ export const Box = styled.div`
 
   img {
     position: absolute;
-    right: 10px;
-    top: 10px;
+    right: 15px;
+    top: 15px;
+    cursor: pointer;
   }
 `;

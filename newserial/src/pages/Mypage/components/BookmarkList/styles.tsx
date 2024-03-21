@@ -5,6 +5,7 @@ const breakpoint = "768px";
 const mediaQuery = () => `@media(min-width:${breakpoint})`;
 
 export const List = styled.div<{ border: boolean }>`
+  label: list;
   width: 100%;
   height: 60px;
   display: flex;
@@ -22,23 +23,32 @@ export const List = styled.div<{ border: boolean }>`
   }
 `;
 
-export const ListMid = styled.div`
-  width: 60%;
+export const ListLeft = styled.div`
+  label: list-left;
+  width: 80%;
   font-size: 1.4rem;
+  display: flex;
+  justify-content: start;
+  align-items: center;
 
-  .list-mid__bookmark {
+  img {
+    width: 20px;
+    margin-right: 10px;
+  }
+
+  .list-left__bookmark {
     width: 100%;
     white-space: normal;
-    height: 40px;
+    height: fit-content;
     overflow: hidden;
+    text-overflow: ellipsis;
     display: -webkit-box;
     -webkit-line-clamp: 2;
-    text-overflow: ellipsis;
     -webkit-box-orient: vertical;
+    -webkit-box-pack: center;
     text-align: start;
   }
 `;
-
 
 export const ListRight = styled.div`
   width: 20%;
@@ -47,7 +57,7 @@ export const ListRight = styled.div`
 `;
 
 export const NoData = styled.div`
-  height: 500px;
+  height: 200px;
   display: flex;
   align-items: center;
   color: #7f8386;
