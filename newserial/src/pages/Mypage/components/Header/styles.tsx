@@ -22,6 +22,8 @@ export const Container = styled.div`
 export const Left = styled.div`
   label: left;
   visibility: hidden;
+  cursor: pointer;
+
   ${mediaQuery} {
     visibility: visible;
     color: #ff6f4f;
@@ -35,4 +37,5 @@ export const Right = styled.div`
   font-family: Noto Sans KR;
   color: white;
   font-size: 1.5rem;
+  cursor: pointer;
 `;
