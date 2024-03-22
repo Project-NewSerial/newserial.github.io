@@ -4,7 +4,6 @@ import Header from "./components/Header/index";
 import DailyQuiz from "./components/DailyQuiz/index";
 import CustomNews from "./components/CustomNews/index";
 import NewSerial from "./components/NewSerial/index";
-import axios from "axios";
 import { useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import api from "../../api";
@@ -68,6 +67,7 @@ const Home = () => {
 
   const [newSerialNews, setNewSerialNews] = useState<NewSerialNews>();
   const [newSerialNewsCategory, setNewSerialNewsCategory] = useState<number>(0);
+
   /**
    * 한 입 퀴즈 get 하는 함수
    * @return {Array.<{wordIs: number, question : string}>}
@@ -142,16 +142,15 @@ const Home = () => {
           },
         });
         if (data !== undefined) {
-          setNewSerialNews(data)
+          setNewSerialNews(data);
         } else {
-          return
+          return;
         }
       } catch (error) {
         console.log("에러가 발생했습니다.", error);
       }
     }
   };
-
 
   /**
    * 뉴-시리얼 기사 카테고리별 get 함수
@@ -212,7 +211,6 @@ const Home = () => {
     }
   };
 
-
   useEffect(() => {
     if (accessToken !== null && accessToken.length > 0) {
       getQuiz();
@@ -228,7 +226,11 @@ const Home = () => {
   }, [userAnswer]);
 
   useEffect(() => {
-    if (accessToken !== null && accessToken.length > 0 && newSerialNewsCategory === 0) {
+    if (
+      accessToken !== null &&
+      accessToken.length > 0 &&
+      newSerialNewsCategory === 0
+    ) {
       getNews();
     } else {
       getCategoryNews();
@@ -238,34 +240,37 @@ const Home = () => {
   return (
     <Container>
       <Header />
-      {accessToken && <>
-        <DailyQuizTitle>한 입 퀴즈</DailyQuizTitle>
+      {accessToken && (
+        <>
+          <DailyQuizTitle>한 입 퀴즈</DailyQuizTitle>
 
-        {question !== undefined && question !== null && (
-          <DailyQuiz
+          {question !== undefined && question !== null && (
+            <DailyQuiz
+              question={question}
+              userAnswerWordsId={userAnswerWordsId}
+              setUserAnswerWordsId={setUserAnswerWordsId}
+              userAnswer={userAnswer}
+              setUserAnswer={setUserAnswer}
+            />
+          )}
+
+          {mainQuizNews ? <CustomNews mainQuizNews={mainQuizNews} /> : null}
+          <NewSerial
             question={question}
-            userAnswerWordsId={userAnswerWordsId}
-            setUserAnswerWordsId={setUserAnswerWordsId}
-            userAnswer={userAnswer}
-            setUserAnswer={setUserAnswer}
+            newSerialNews={newSerialNews}
+            newSerialNewsCategory={newSerialNewsCategory}
+            setNewSerialNewsCategory={setNewSerialNewsCategory}
           />
-        )}
-
-        {mainQuizNews ? <CustomNews mainQuizNews={mainQuizNews} /> : null}
+        </>
+      )}
+      {(!accessToken || accessToken === "") && (
         <NewSerial
           question={question}
           newSerialNews={newSerialNews}
           newSerialNewsCategory={newSerialNewsCategory}
           setNewSerialNewsCategory={setNewSerialNewsCategory}
         />
-      </>
-      }
-      {!accessToken && <NewSerial
-        question={question}
-        newSerialNews={newSerialNews}
-        newSerialNewsCategory={newSerialNewsCategory}
-        setNewSerialNewsCategory={setNewSerialNewsCategory}
-      />}
+      )}
     </Container>
   );
 };

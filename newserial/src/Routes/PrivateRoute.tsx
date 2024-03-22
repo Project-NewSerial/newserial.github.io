@@ -27,8 +27,13 @@ const PrivateRoute = () => {
       withCredentials: true,
     });
 
-    if (data) dispatch(setToken(data.accessToken));
-    else alert("로그인이 필요합니다.");
+    if (data) {
+      dispatch(setToken(data.accessToken));
+      return data.accessToken;
+    } else {
+      alert("로그인이 필요합니다.");
+      return null;
+    }
   };
 
   const { isLoading } = useQuery({

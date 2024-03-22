@@ -27,7 +27,10 @@ const PublicRoute = () => {
       withCredentials: true,
     });
 
-    if (data) dispatch(setToken(data.accessToken));
+    if (data) {
+      dispatch(setToken(data.accessToken));
+      return data.accessToken;
+    } else return null;
   };
 
   const { isLoading } = useQuery({
@@ -41,11 +44,7 @@ const PublicRoute = () => {
   else if (accessToken !== null) return <Navigate to={"/"} />;
   if (isLoading) return null;
 
-  return accessToken !== null ? (
-    <Navigate to={"/"} />
-  ) : (
-    <Outlet />
-  );
+  return accessToken !== null ? <Navigate to={"/"} /> : <Outlet />;
 };
 
 export default PublicRoute;
