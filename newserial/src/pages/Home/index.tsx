@@ -57,10 +57,10 @@ interface NewSerialNews {
  * @author 김민지
  */
 const Home = () => {
+  const location = useLocation();
   const accessToken = useSelector((state: RootState) => state.auth.accessToken);
   const [question, setQuestion] = useState<Quiz[]>();
   const [mainQuizNews, setMainQuizNews] = useState<MainQuizNews>();
-
   const [userAnswerWordsId, setUserAnswerWordsId] = useState<
     number | undefined
   >();
@@ -212,8 +212,9 @@ const Home = () => {
     }
   };
 
+
   useEffect(() => {
-    if (accessToken!==null && accessToken.length > 0) {
+    if (accessToken !== null && accessToken.length > 0) {
       getQuiz();
       getMainQuizNews();
       getNews();
@@ -227,7 +228,7 @@ const Home = () => {
   }, [userAnswer]);
 
   useEffect(() => {
-    if (accessToken!==null && accessToken.length > 0 &&newSerialNewsCategory === 0) {
+    if (accessToken !== null && accessToken.length > 0 && newSerialNewsCategory === 0) {
       getNews();
     } else {
       getCategoryNews();
@@ -237,25 +238,34 @@ const Home = () => {
   return (
     <Container>
       <Header />
-      <DailyQuizTitle>한 입 퀴즈</DailyQuizTitle>
+      {accessToken && <>
+        <DailyQuizTitle>한 입 퀴즈</DailyQuizTitle>
 
-      {question !== undefined && question !== null && (
-        <DailyQuiz
+        {question !== undefined && question !== null && (
+          <DailyQuiz
+            question={question}
+            userAnswerWordsId={userAnswerWordsId}
+            setUserAnswerWordsId={setUserAnswerWordsId}
+            userAnswer={userAnswer}
+            setUserAnswer={setUserAnswer}
+          />
+        )}
+
+        {mainQuizNews ? <CustomNews mainQuizNews={mainQuizNews} /> : null}
+        <NewSerial
           question={question}
-          userAnswerWordsId={userAnswerWordsId}
-          setUserAnswerWordsId={setUserAnswerWordsId}
-          userAnswer={userAnswer}
-          setUserAnswer={setUserAnswer}
+          newSerialNews={newSerialNews}
+          newSerialNewsCategory={newSerialNewsCategory}
+          setNewSerialNewsCategory={setNewSerialNewsCategory}
         />
-      )}
-
-      {mainQuizNews ? <CustomNews mainQuizNews={mainQuizNews} /> : null}
-      <NewSerial
+      </>
+      }
+      {!accessToken && <NewSerial
         question={question}
         newSerialNews={newSerialNews}
         newSerialNewsCategory={newSerialNewsCategory}
         setNewSerialNewsCategory={setNewSerialNewsCategory}
-      />
+      />}
     </Container>
   );
 };

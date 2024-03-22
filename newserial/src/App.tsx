@@ -14,6 +14,7 @@ import NotFound from "./pages/NotFound";
 import SearchResult from "./pages/SearchResult";
 import PrivateRoute from "./Routes/PrivateRoute";
 import PublicRoute from "./Routes/PublicRoute";
+import HomeRoute from "./Routes/HomeRoute";
 
 function App() {
   const queryClient = new QueryClient();
@@ -22,7 +23,9 @@ function App() {
       <div className="App">
         <BrowserRouter basename={process.env.PUBLIC_URL}>
           <Routes>
-            <Route path="/" element={<Home />} />
+            <Route element={<HomeRoute />}>
+              <Route path="/" element={<Home />} />
+            </Route>
             <Route element={<PublicRoute />}>
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
