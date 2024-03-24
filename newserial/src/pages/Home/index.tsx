@@ -91,7 +91,6 @@ const Home = () => {
    * @return {Array.<{wordIs: number, question : string}>}
    */
   const getQuiz = async () => {
-    if (accessToken !== undefined && accessToken !== null) {
       try {
         const { data } = await api.post(
           `/main-quiz`,
@@ -125,7 +124,7 @@ const Home = () => {
       } catch (error) {
         console.log("에러가 발생했습니다.kk", error);
       }
-    }
+    
   };
 
   /**
@@ -133,7 +132,6 @@ const Home = () => {
    * @return {Array.<{id: number, title : string}>}
    */
   const getMainQuizNews = async () => {
-    if (accessToken !== undefined) {
       try {
         const { data } = await api.get(`/main-quiz/news`, {
           headers: {
@@ -146,7 +144,7 @@ const Home = () => {
       } catch (error) {
         console.log("에러가 발생했습니다.", error);
       }
-    }
+    
   };
 
   /**
@@ -224,7 +222,7 @@ const Home = () => {
   useEffect(() => {
     getNews();
 
-    if (accessToken !== null && accessToken.length > 0) {
+    if (accessToken !== null) {
       getQuiz();
       getMainQuizNews();
     } else {

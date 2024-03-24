@@ -21,6 +21,7 @@ const PublicRoute = () => {
 
   /**
    * refresh Token이 유효하면 accessToken 발급하는 api 호출
+   * @return {boolean} 유효하면 true 아니면 false
    */
   const refreshLogin = async () => {
     const { data } = await api.get(`/reissue`, {
@@ -29,22 +30,37 @@ const PublicRoute = () => {
 
     if (data) {
       dispatch(setToken(data.accessToken));
-      return data.accessToken;
-    } else return null;
+      return true;
+    } else return false;
   };
 
-  const { isLoading } = useQuery({
-    queryKey: ["refresh-login"],
-    queryFn: refreshLogin,
-    enabled: accessToken === null,
+  /**
+   * accessToken이 유효한지 확인하는 api
+   * @return {boolean} 유효하면 true 아니면 false
+   */
+  const checkAccessToken = async () => {
+    const { data } = await api.get(`/logoutCheck`, {
+      headers: { Authorization: `Bearer ${accessToken}` },
+    });
+
+    return data;
+  };
+
+  const { data: isValid } = useQuery({
+    queryKey: ["access-token"],
+    queryFn: checkAccessToken,
   });
 
-  //logout한 상태
-  if (accessToken === "") return <Outlet />;
-  else if (accessToken !== null) return <Navigate to={"/"} />;
+  const { data: isLogin, isLoading } = useQuery({
+    queryKey: ["refresh-login"],
+    queryFn: refreshLogin,
+    enabled: !isValid,
+  });
+
+  if (isValid) return <Navigate to="/" />;
   if (isLoading) return null;
 
-  return accessToken !== null ? <Navigate to={"/"} /> : <Outlet />;
+  return isLogin ? <Navigate to="/" /> : <Outlet />;
 };
 
 export default PublicRoute;

@@ -18,36 +18,51 @@ interface RootState {
 const HomeRoute = () => {
   const dispatch = useDispatch();
   const accessToken = useSelector((state: RootState) => state.auth.accessToken);
-  console.log("rount",accessToken);
+
   /**
    * refresh Token이 유효하면 accessToken 발급하는 api 호출
+   * @return {boolean} 유효하면 true 아니면 false
    */
   const refreshLogin = async () => {
-    try {
-      const { data } = await api.get(`/reissue`, {
-        withCredentials: true,
-      });
-      if (data) {
-        dispatch(setToken(data.accessToken));
-        return data.accessToken;
-      } else {
-        dispatch(setToken(null));
-        return null;
-      }
-    } catch (error) {
-      console.error("토큰 재발급 중 에러가 발생했습니다:", error);
+    const { data } = await api.get(`/reissue`, {
+      withCredentials: true,
+    });
+
+    if (data) {
+      dispatch(setToken(data.accessToken));
+      return true;
+    } else {
+      return false;
     }
   };
 
-  const { isLoading } = useQuery({
-    queryKey: ["refresh-login"],
-    queryFn: refreshLogin,
-    enabled: accessToken === null || accessToken === "",
+  /**
+   * accessToken이 유효한지 확인하는 api
+   * @return {boolean} 유효하면 true 아니면 false
+   */
+  const checkAccessToken = async () => {
+    const { data } = await api.get(`/logoutCheck`, {
+      headers: { Authorization: `Bearer ${accessToken}` },
+    });
+
+    return data;
+  };
+
+  const { data: isValid, isLoading: accessTokenLoading } = useQuery({
+    queryKey: ["access-token"],
+    queryFn: checkAccessToken,
   });
 
-  if (accessToken !== null && accessToken !== "") return <Outlet />;
+  const { isLoading: refreshLoginLoading } = useQuery({
+    queryKey: ["refresh-login"],
+    queryFn: refreshLogin,
+    enabled: !isValid,
+  });
 
-  return !isLoading ? <Outlet /> : null;
+  if (accessTokenLoading) return null;
+  if (isValid) return <Outlet />;
+  if (refreshLoginLoading) return null;
+  else return <Outlet />;
 };
 
 export default HomeRoute;
