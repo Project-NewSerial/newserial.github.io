@@ -13,13 +13,19 @@ type Breakpoints = keyof typeof breakpoints;
 
 // 미디어 쿼리 유틸리티 함수 정의
 const mediaQuery = () => `@media (min-width: ${breakpoint})`;
+interface Quiz {
+  wordsId: number;
+  question: string;
+  userAnswer: string;
+  quizAnswer: string;
+  result: string;
+  explanation: string;
+}
 
-
-export const NewSerialArea = styled.div`
+export const NewSerialArea = styled.div<{question:Quiz[]|undefined}>`
   label: new-serial-area;
-  margin-top: 55px;
+  margin-top: ${(props)=>props?.question===undefined||props?.question.length===0 ? "40px":"55px"};
   margin-bottom: 100px;
-
 
 
   ${mediaQuery()}{
@@ -27,7 +33,7 @@ export const NewSerialArea = styled.div`
     width:60.75%;
     flex-direction: column;
     height: 104px;
-    margin-top: 330px;
+    margin-top:  ${(props)=>props?.question===undefined||props?.question.length===0 ? "40px":"330px"};
     margin-left:auto;
     margin-right:auto;
     margin-bottom: 200px;
