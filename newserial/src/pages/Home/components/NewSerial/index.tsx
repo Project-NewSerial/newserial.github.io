@@ -60,7 +60,8 @@ const NewSerial = (props: {
 
 
   return (
-    <NewSerialArea style={{marginTop: (accessToken!==null && accessToken?.length>0) ?"340px":"0px"}}>
+    // <NewSerialArea style={{marginTop: (accessToken!==null && accessToken?.length>0) ?"340px":"0px"}}>
+    <NewSerialArea>
       <AreaTitleArea>
         <AreaTitle>뉴-시리얼</AreaTitle>
         <ToolTip message={"뉴-시리얼은 하루에 ~~~~~~~~~~~~~~~~~~~~~~~~~~~"} />
