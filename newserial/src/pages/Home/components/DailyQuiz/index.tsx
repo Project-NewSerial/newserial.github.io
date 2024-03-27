@@ -12,6 +12,7 @@ import {
 } from "./styles";
 import axios from "axios";
 import Slider from 'react-slick';
+import LoadingImage from "../../../../components/LoadingImage";
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
@@ -28,6 +29,7 @@ interface Quiz {
 
 
 const DailyQuiz = (props: {
+  isLoading: boolean,
   question: Quiz[] | undefined,
   userAnswerWordsId: number | undefined,
   setUserAnswerWordsId: React.Dispatch<React.SetStateAction<number | undefined>>,
@@ -50,14 +52,17 @@ const DailyQuiz = (props: {
 
   return (
     <DailyQuizArea  >
+      {props?.isLoading && 
+      <div style={{padding: "0px 50px"}}>
+        <DailyQuizCard ><LoadingImage /></DailyQuizCard></div>
+        }
       <Slider {...settings} >
         {props?.question && props?.question.map((el) => {
-
           if (el?.userAnswer !== "") {
             return (
               <div key={el?.wordsId} style={{ width: "100%", padding: "auto" }}>
                 <DailyQuizCard>
-                  <QuestionRow style={{fontSize:"1.2rem"}}>Q. {el.question}</QuestionRow>
+                  <QuestionRow style={{ fontSize: "1.2rem" }}>Q. {el.question}</QuestionRow>
                   <AnsweredQuizAnswer>A. {el?.quizAnswer}</AnsweredQuizAnswer>
                   <AnsweredExplanation>{el?.explanation}</AnsweredExplanation>
 
@@ -67,7 +72,7 @@ const DailyQuiz = (props: {
                         backgroundColor: el?.userAnswer === "O"
                           ? el?.quizAnswer === "O"
                             ? "#3AB93F" : "#F85252" : "#FFFFFF",
-                            marginBottom: "10px"
+                        marginBottom: "10px"
 
                       }}
                     >O</AnsweredAnswerRow>
@@ -76,7 +81,7 @@ const DailyQuiz = (props: {
                         backgroundColor: el?.userAnswer === "X"
                           ? el?.quizAnswer === "X"
                             ? "#3AB93F" : "#F85252" : "#FFFFFF",
-                            marginBottom: 'auto',
+                        marginBottom: 'auto',
                       }}
                     >
                       X</AnsweredAnswerRow>
@@ -86,7 +91,7 @@ const DailyQuiz = (props: {
 
             );
           } else {
-            return (  
+            return (
               <div key={el?.wordsId} style={{ width: "100%", padding: "auto" }}>
                 <DailyQuizCard>
                   <DailyQuizTitle>한 입 퀴즈</DailyQuizTitle>

@@ -25,18 +25,23 @@ import {
   MobileQuizButton,
 } from "./styles";
 import ToggleSlide from "./components/ToggleSlide";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import Modal from "../../components/Modal";
 import QuizModal from "./components/QuizModal";
+import LoadingImage from "../../components/LoadingImage";
 import api from "../../api";
 import axios from "axios";
 import { useLocation } from "react-router-dom";
 import { getSpeech } from "./utils/getSpeech";
+import { setDoneLoading, setLoading } from "../../redux/modules/loading";
 
 interface RootState {
   auth: {
     accessToken: null | string;
   };
+  loading: {
+    loading: boolean;
+  }
 }
 
 interface ShortNews {
@@ -86,15 +91,24 @@ const NewsDetail = () => {
   const newsId = location.state.newsId;
   const newsCategoryId = location.state.newsCategoryId;
 
+  const isLoading = useSelector((state: RootState) => state.loading.loading);
+  const dispatch = useDispatch();
+
+  const onGetData = () => {
+    dispatch(setDoneLoading());
+  }
+
+
 
   /**
    * 뉴스 paraphase post 함수
    * @param {string} question paraphrase하고자 하는 문장
    * @returns {question: string}
    */
-  const postParaphrase = async (paraphraseQuestion: string) => {
-    if (accessToken !== null && paraphraseQuestion) {
-      const { data } = await api.post(`/paraphrasing`, paraphraseQuestion, {
+  const postParaphrase = async (question: string) => {
+    setParaphraseQuestion(question);
+    if (accessToken !== null && question.length > 0) {
+      const { data } = await api.post(`/paraphrasing`, question, {
         headers: {
           withCredentials: true,
           "Content-Type": "application/json",
@@ -103,6 +117,7 @@ const NewsDetail = () => {
       })
       if (data !== undefined) {
         setParaphraseResult(data);
+        onGetData();
       }
     }
   };
@@ -113,6 +128,7 @@ const NewsDetail = () => {
   const postBookmark = async () => {
     if (accessToken !== null) {
       try {
+
         const { data } = await api.post(`/bookmark/` + newsId, {}, {
           headers: {
             Authorization: accessToken,
@@ -226,16 +242,23 @@ const NewsDetail = () => {
     }
   }
 
+
+  const handleParaphraseQuestion = (el: string) => {
+    dispatch(setLoading());
+    if (!paraphraseQuestion && el.length > 0) {
+      postParaphrase(el);
+    } else if (el !== paraphraseQuestion) {
+      postParaphrase(el);
+    }
+  }
+
+
+
   useEffect(() => {
     getNewsDetail();
     window.speechSynthesis.getVoices()
   }, [accessToken]);
 
-  useEffect(() => {
-    if (paraphraseQuestion) {
-      postParaphrase(paraphraseQuestion);
-    }
-  }, [paraphraseQuestion]);
 
   useEffect(() => {
     if (isToggleOn === false) {
@@ -331,17 +354,20 @@ const NewsDetail = () => {
         <NewsContent>
           {shortNews?.body?.map((el, index) =>
             el === paraphraseQuestion ? (
-              <>
-                <ParaphraseQuestionSentence key={index}>{el}</ParaphraseQuestionSentence>
+              <div key={'question_'+index} style={{width:"100%"}}>
+                <ParaphraseQuestionSentence >{el}</ParaphraseQuestionSentence>
                 <ParaphraseQuestionResult>
-                  {paraphraseResult}
+                  {isLoading ?
+                   <LoadingImage/> 
+                   : paraphraseResult}
+
                 </ParaphraseQuestionResult>
-              </>
+              </div>
             ) : (
               <NewsSentence
-                key={index}
+                key={'news_'+index}
                 isToggleOn={isToggleOn}
-                onClick={() => setParaphraseQuestion(el)}
+                onClick={() => handleParaphraseQuestion(el)}
               >
                 {el}
               </NewsSentence>

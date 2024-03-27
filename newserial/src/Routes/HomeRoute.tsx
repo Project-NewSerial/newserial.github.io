@@ -12,10 +12,10 @@ interface RootState {
 }
 
 /**
- * 비로그인 상태에서만 특정 페이지에 접근 가능
- * @author 신정은
+ * 한입퀴즈는 로그인 했을 경우에만, 뉴시리얼은 비로그인 시에도 사용 가능
+ * @author 김민지
  */
-const PublicRoute = () => {
+const HomeRoute = () => {
   const dispatch = useDispatch();
   const accessToken = useSelector((state: RootState) => state.auth.accessToken);
 
@@ -31,7 +31,9 @@ const PublicRoute = () => {
     if (data) {
       dispatch(setToken(data.accessToken));
       return true;
-    } else return false;
+    } else {
+      return false;
+    }
   };
 
   /**
@@ -46,21 +48,21 @@ const PublicRoute = () => {
     return data;
   };
 
-  const { data: isValid } = useQuery({
+  const { data: isValid, isLoading: accessTokenLoading } = useQuery({
     queryKey: ["access-token"],
     queryFn: checkAccessToken,
   });
 
-  const { data: isLogin, isLoading } = useQuery({
+  const { isLoading: refreshLoginLoading } = useQuery({
     queryKey: ["refresh-login"],
     queryFn: refreshLogin,
     enabled: !isValid,
   });
 
-  if (isValid) return <Navigate to="/" />;
-  if (isLoading) return null;
-
-  return isLogin ? <Navigate to="/" /> : <Outlet />;
+  if (accessTokenLoading) return null;
+  if (isValid) return <Outlet />;
+  if (refreshLoginLoading) return null;
+  else return <Outlet />;
 };
 
-export default PublicRoute;
+export default HomeRoute;
