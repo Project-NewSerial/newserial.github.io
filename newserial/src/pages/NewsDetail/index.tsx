@@ -6,7 +6,6 @@ import {
   Logo,
   SearchButton,
   MyPageButton,
-  MobileNewsTitleArea,
   NewsTitleArea,
   Genre,
   Title,
@@ -32,7 +31,7 @@ import QuizModal from "./components/QuizModal";
 import LoadingImage from "../../components/LoadingImage";
 import api from "../../api";
 import axios from "axios";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { getSpeech } from "./utils/getSpeech";
 import { setDoneLoading, setLoading } from "../../redux/modules/loading";
 
@@ -90,13 +89,10 @@ const NewsDetail = () => {
 
   const location = useLocation();
   const newsId = location.state.newsId;
-  // const newsCategoryId = location.state.newsCategoryId;
+  const newsCategoryId = location.state.newsCategoryId;
 
   const isLoading = useSelector((state: RootState) => state.loading.loading);
   const dispatch = useDispatch();
-
-  const navigate = useNavigate();
-
 
   const onGetData = () => {
     dispatch(setDoneLoading());
@@ -303,14 +299,8 @@ const NewsDetail = () => {
       <HeaderArea>
         <HeaderBox>
           <Logo>NEWSERIAL</Logo>
-          <SearchButton
-            onClick={() => navigate("/search-result")}
-            src="/assets/icons/icon_search.svg"
-          />
-          <MyPageButton
-            onClick={() => navigate("/mypage")}
-            src="/assets/icons/icon_mypage.svg"
-          />
+          <SearchButton src="/assets/icons/icon_search.svg" />
+          <MyPageButton src="/assets/icons/icon_mypage.svg" />
         </HeaderBox>
       </HeaderArea>
 
@@ -323,20 +313,16 @@ const NewsDetail = () => {
               setUserQuizAnswer={setUserQuizAnswer}
               newSerialAnswered={newSerialAnswered}
               newSerialNotAnswered={newSerialNotAnswered}
-            />}
-          colorSelected="#F7F7F7"
+            />
+          }
         />
       )}
-      <NewsTitleArea>
-        <Genre>{shortNews?.category_name}</Genre>
-        <Title style={{ marginBottom: "18px" }}>{shortNews?.title}</Title>
-      </NewsTitleArea>
 
       <NewsArea>
-        <MobileNewsTitleArea>
+        <NewsTitleArea>
           <Genre>{shortNews?.category_name}</Genre>
           <Title>{shortNews?.title}</Title>
-        </MobileNewsTitleArea>
+        </NewsTitleArea>
         <BookmarkIcon
           onClick={bookmark !== true ? postBookmark : deleteBookmark}
           src={
@@ -365,22 +351,21 @@ const NewsDetail = () => {
             />
           </ParaphraseArea>
         </MenuArea>
-
         <NewsContent>
           {shortNews?.body?.map((el, index) =>
             el === paraphraseQuestion ? (
-              <div key={'question_' + index} style={{ width: "100%" }}>
+              <div key={'question_'+index} style={{width:"100%"}}>
                 <ParaphraseQuestionSentence >{el}</ParaphraseQuestionSentence>
                 <ParaphraseQuestionResult>
                   {isLoading ?
-                    <LoadingImage />
-                    : paraphraseResult}
+                   <LoadingImage/> 
+                   : paraphraseResult}
 
                 </ParaphraseQuestionResult>
               </div>
             ) : (
               <NewsSentence
-                key={'news_' + index}
+                key={'news_'+index}
                 isToggleOn={isToggleOn}
                 onClick={() => handleParaphraseQuestion(el)}
               >

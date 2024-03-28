@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from "react";
+import { useEffect } from "react";
 import {
   DailyQuizArea,
   DailyQuizCard,
   DailyQuizTitle,
   QuestionRow,
   AnsweredQuizAnswer,
-  SeeExplanationButton,
   AnsweredExplanation,
   AnsweredAnswerRow,
   AnswerRow,
@@ -16,11 +15,12 @@ import Slider from 'react-slick';
 import LoadingImage from "../../../../components/LoadingImage";
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import Modal from "../../../../components/Modal";
 
 interface Quiz {
   wordsId: number,
   question: string,
+
+
   userAnswer: string;
   quizAnswer: string;
   result: string;
@@ -28,7 +28,7 @@ interface Quiz {
 }
 
 
-const DailyQuiz = React.memo((props: {
+const DailyQuiz = (props: {
   isLoading: boolean,
   question: Quiz[] | undefined,
   userAnswerWordsId: number | undefined,
@@ -36,8 +36,8 @@ const DailyQuiz = React.memo((props: {
   userAnswer: string | undefined,
   setUserAnswer: React.Dispatch<React.SetStateAction<string | undefined>>,
 }) => {
-  const [modalToggle, setModalToggle] = useState(false);
-  // const [explanation, setExplanation]= useState<string>();
+
+
   const settings = {
     dots: false,
     infinite: false,
@@ -52,61 +52,42 @@ const DailyQuiz = React.memo((props: {
 
   return (
     <DailyQuizArea  >
-      {props?.isLoading &&
-        <div style={{ padding: "0px 50px" }}>
-          <DailyQuizCard ><LoadingImage /></DailyQuizCard></div>
-      }
-
-
-
+      {props?.isLoading && 
+      <div style={{padding: "0px 50px"}}>
+        <DailyQuizCard ><LoadingImage /></DailyQuizCard></div>
+        }
       <Slider {...settings} >
         {props?.question && props?.question.map((el) => {
           if (el?.userAnswer !== "") {
             return (
               <div key={el?.wordsId} style={{ width: "100%", padding: "auto" }}>
-                {modalToggle ? (
-                  <DailyQuizCard style={{ backgroundColor: "#ff6f4f"  }}>
-                    <img
-                      src="/assets/icons/icon_cancel.svg"
-                      onClick={() => setModalToggle(false)}
-                    />
-                    <AnsweredExplanation>
-                      해설 : {el?.explanation}
-                    </AnsweredExplanation>
-                  </DailyQuizCard>
+                <DailyQuizCard>
+                  <QuestionRow style={{ fontSize: "1.2rem" }}>Q. {el.question}</QuestionRow>
+                  <AnsweredQuizAnswer>A. {el?.quizAnswer}</AnsweredQuizAnswer>
+                  <AnsweredExplanation>{el?.explanation}</AnsweredExplanation>
 
-                ) :
-                  <DailyQuizCard>
-                    <QuestionRow>Q. {el.question}</QuestionRow>
-                    <AnsweredQuizAnswer>A. {el?.quizAnswer}</AnsweredQuizAnswer>
-                    <SeeExplanationButton onClick={() => setModalToggle(true)}>
-                      해설 보기</SeeExplanationButton>
-                    {/* <AnsweredExplanation>{el?.explanation}</AnsweredExplanation> */}
-                    <AnswerRow>
-                      <AnsweredAnswerRow
-                        style={{
-                          backgroundColor: el?.userAnswer === "O"
-                            ? el?.quizAnswer === "O"
-                              ? "#3AB93F" : "#F85252" : "#FFFFFF",
-                          marginBottom: "10px"
+                  <AnswerRow>
+                    <AnsweredAnswerRow
+                      style={{
+                        backgroundColor: el?.userAnswer === "O"
+                          ? el?.quizAnswer === "O"
+                            ? "#3AB93F" : "#F85252" : "#FFFFFF",
+                        marginBottom: "10px"
 
-                        }}
-                      >O</AnsweredAnswerRow>
-                      <AnsweredAnswerRow
-                        style={{
-                          backgroundColor: el?.userAnswer === "X"
-                            ? el?.quizAnswer === "X"
-                              ? "#3AB93F" : "#F85252" : "#FFFFFF",
-                          marginBottom: 'auto',
-                        }}
-                      >
-                        X</AnsweredAnswerRow>
-                    </AnswerRow>
-
-                  </DailyQuizCard>
-                }
+                      }}
+                    >O</AnsweredAnswerRow>
+                    <AnsweredAnswerRow
+                      style={{
+                        backgroundColor: el?.userAnswer === "X"
+                          ? el?.quizAnswer === "X"
+                            ? "#3AB93F" : "#F85252" : "#FFFFFF",
+                        marginBottom: 'auto',
+                      }}
+                    >
+                      X</AnsweredAnswerRow>
+                  </AnswerRow>
+                </DailyQuizCard>
               </div>
-
 
             );
           } else {
@@ -170,7 +151,6 @@ const DailyQuiz = React.memo((props: {
 
 
   );
-}
-);
+};
 
 export default DailyQuiz;
