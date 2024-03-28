@@ -11,6 +11,7 @@ export const Content = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  align-items:center;
 `;
 
 export const Lists = styled.div`
@@ -30,7 +31,7 @@ export const List = styled.div<{ border: boolean }>`
   padding: 10px;
   box-sizing: border-box;
   border-bottom: ${(props) => (props.border ? "1px solid #e0e0e0" : "none")};
-
+  background-color:white;
   ${mediaQuery} {
     width: 92%;
     border-top: none;

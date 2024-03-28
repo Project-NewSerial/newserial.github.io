@@ -52,9 +52,9 @@ const QuizList = () => {
 
   if (isLoading)
     return (
-      <Container>
+      <Content>
         <LoadingImage width={50} />
-      </Container>
+      </Content>
     );
 
   const { myQuizDtoList, totalQuizCount } = data;
