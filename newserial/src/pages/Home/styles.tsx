@@ -23,7 +23,9 @@ export const DailyQuizTitle = styled.div`
   position:absolute;
   color: #2E2E2E;
   font-size:1.6rem;
-  top:157px;
+  font-family: NanumSquareNeo;
+  font-weight: 500;
+  top:145px;
   left:35%;
   right:35%;
 

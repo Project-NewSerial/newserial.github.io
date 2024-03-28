@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 // 미디어 쿼리에 사용할 디바이스 크기 정의
 const breakpoints = {
   desktop: '768px',
-  // desktop: '951px',
+  // desktop: '565px',
 };
 
 // 타입 정의
@@ -21,7 +21,7 @@ export const DailyQuizArea = styled.div`
 
   ${mediaQuery('desktop')}{
     position: absolute;
-    top: 260px;
+    top: 200px;
     
   }
 `
@@ -33,8 +33,8 @@ export const DailyQuizCard = styled.div`
   margin-left:auto;
   margin-right:auto;
   position:relative;
-  height: 276px;
-  margin-top:85px;
+  height: 256px;
+  margin-top:60px;
   margin-bottom: auto;
   border-radius:15px;
   display:flex;
@@ -65,8 +65,8 @@ export const DailyQuizTitle = styled.div`
   ${mediaQuery('desktop')}{
     display: block;
     color:#FFFFFF;
-    font-size:2.5rem;
-    font-family:Noto Sans KR;
+    font-size:2.2rem;
+    font-family:NanumSquareNeo;
     margin-top: auto;
   }
 `
@@ -136,7 +136,7 @@ export const AnsweredAnswerRow = styled.div`
   height: 35px;
   color: #D9D9D9;
   font-size: 2rem;
-  background-color:#FFFFFF;
+  background-color:#E3E3E3;
   border: 1px solid #E3E3E3;
   border-radius:10px;
   align-items:center;
@@ -149,7 +149,7 @@ export const AnsweredAnswerRow = styled.div`
     color: #D9D9D9;
     font-size: 2rem;
     height: 35px;
-    background-color:#FFFFFF;
+    background-color:#E3E3E3;
     margin-bottom:11px;
     border: 1px solid #D3D3D3;
     border-radius:10px;
@@ -171,7 +171,7 @@ export const AnswerRow = styled.div`
   margin-bottom:auto;
   
   ${mediaQuery('desktop')}{
-    width: 74.42%;
+    width: 81.48%%;
     margin-top:15px;
   }
 `

@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import {
   DailyQuizArea,
   DailyQuizCard,
@@ -19,8 +19,6 @@ import 'slick-carousel/slick/slick-theme.css';
 interface Quiz {
   wordsId: number,
   question: string,
-
-
   userAnswer: string;
   quizAnswer: string;
   result: string;
@@ -28,7 +26,7 @@ interface Quiz {
 }
 
 
-const DailyQuiz = (props: {
+const DailyQuiz = React.memo((props: {
   isLoading: boolean,
   question: Quiz[] | undefined,
   userAnswerWordsId: number | undefined,
@@ -52,17 +50,17 @@ const DailyQuiz = (props: {
 
   return (
     <DailyQuizArea  >
-      {props?.isLoading && 
-      <div style={{padding: "0px 50px"}}>
-        <DailyQuizCard ><LoadingImage /></DailyQuizCard></div>
-        }
+      {props?.isLoading &&
+        <div style={{ padding: "0px 50px" }}>
+          <DailyQuizCard ><LoadingImage /></DailyQuizCard></div>
+      }
       <Slider {...settings} >
         {props?.question && props?.question.map((el) => {
           if (el?.userAnswer !== "") {
             return (
               <div key={el?.wordsId} style={{ width: "100%", padding: "auto" }}>
                 <DailyQuizCard>
-                  <QuestionRow style={{ fontSize: "1.2rem" }}>Q. {el.question}</QuestionRow>
+                  <QuestionRow>Q. {el.question}</QuestionRow>
                   <AnsweredQuizAnswer>A. {el?.quizAnswer}</AnsweredQuizAnswer>
                   <AnsweredExplanation>{el?.explanation}</AnsweredExplanation>
 
@@ -151,6 +149,7 @@ const DailyQuiz = (props: {
 
 
   );
-};
+}
+);
 
 export default DailyQuiz;

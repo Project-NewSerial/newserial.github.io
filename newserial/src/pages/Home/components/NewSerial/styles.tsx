@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 // 미디어 쿼리에 사용할 디바이스 크기 정의
 const breakpoints = {
   desktop: '768px',
-  // desktop: '951px',
+  // desktop: '565px',
 };
 
 const breakpoint = "768px";
@@ -104,12 +104,13 @@ export const CategoryButton = styled.div`
   font-size: 1.5rem;
   font-family: Noto Sans KR;
   color: #787878;
-  padding: 4px 13px;
+  padding: 4px 10px;
   cursor: pointer;
 
   ${mediaQuery()}{
     font-size: 1.5rem;
     padding: 10px 15px;
+    padding: 4px 13px;
   }
 `
 

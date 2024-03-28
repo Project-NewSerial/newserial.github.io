@@ -89,7 +89,7 @@ const NewsDetail = () => {
 
   const location = useLocation();
   const newsId = location.state.newsId;
-  const newsCategoryId = location.state.newsCategoryId;
+  // const newsCategoryId = location.state.newsCategoryId;
 
   const isLoading = useSelector((state: RootState) => state.loading.loading);
   const dispatch = useDispatch();
