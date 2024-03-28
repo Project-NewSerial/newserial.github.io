@@ -35,9 +35,11 @@ export const ToggleButton=styled.div<{isToggleOn:boolean}>`
 
 export const QuizArea=styled.div`
   label: quiz-area;
+  max-width: 250px;
 
   ${mediaQuery()}{
-    
+    max-width: 500px;
+
   }
 `
 
@@ -46,7 +48,7 @@ export const Quiz=styled.div`
   color: #FF6F4F;
   font-family: Bangers;
   font-size: 3.5rem;
-  margin-top: 29px;
+  margin-top: 10px;
   ${mediaQuery()}{
     
   }
@@ -55,8 +57,9 @@ export const Quiz=styled.div`
 export const Question=styled.div`
   label: question;
   font-family: Noto Sans KR;
-  font-size: 2rem;
-  margin-bottom: 0px;
+  font-size: 1.6rem;
+  margin-bottom: 8px;
+  text-align: left;
   ${mediaQuery()}{
     
   }
@@ -76,8 +79,8 @@ export const AnswerRow=styled.div`
   border-radius: 10px;
   color: #FF6F4F;
   font-size: 2rem;
-  padding-top: 7px;
-  padding-bottom: 7px;
+  padding-top: 5px;
+  padding-bottom: 5px;
   cursor:pointer;
   ${mediaQuery()}{
       
@@ -90,7 +93,9 @@ export const AnsweredQuestion=styled.div`
   border-radius: 10px;
   color: #000000;
   font-size: 1.4rem;
-  margin-bottom: 21px;
+  font-family: Noto Sans KR;
+  margin-top: 10px;
+  margin-bottom: 10px;
   text-align: left;
 
   ${mediaQuery()}{
@@ -103,6 +108,7 @@ export const AnsweredQuizAnswer=styled.div`
   width: 100%;
   color: #FF0000;
   font-size: 1.4rem;
+  font-family: Noto Sans KR;
   text-align: left;
 
   ${mediaQuery()}{
@@ -115,6 +121,7 @@ export const AnsweredExplanation=styled.div`
   width: 100%;
   color: #FF0000;
   font-size: 1.4rem;
+  font-family: Noto Sans KR;
   text-align: left;
   margin-bottom: 15px;
   ${mediaQuery()}{
@@ -129,8 +136,8 @@ export const AnsweredAnswerRow=styled.div`
   border-radius: 10px;
   color: #D9D9D9;
   font-size: 2rem;
-  padding-top: 7px;
-  padding-bottom: 7px;
+  padding-top: 5px;
+  padding-bottom: 5px;
   cursor:auto;
   ${mediaQuery()}{
       

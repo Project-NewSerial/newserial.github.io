@@ -33,7 +33,7 @@ export const NewSerialArea = styled.div<{question:Quiz[]|undefined}>`
     width:60.75%;
     flex-direction: column;
     height: 104px;
-    margin-top:  ${(props)=>props?.question===undefined||props?.question.length===0 ? "40px":"330px"};
+    margin-top:  ${(props)=>props?.question===undefined||props?.question.length===0 ? "40px":"270px"};
     margin-left:auto;
     margin-right:auto;
     margin-bottom: 200px;
@@ -101,10 +101,10 @@ export const CategoryArea = styled.div`
 
 export const CategoryButton = styled.div`
   label: category-button;
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   font-family: Noto Sans KR;
   color: #787878;
-  padding: 4px 10px;
+  padding: 4px 7.5px;
   cursor: pointer;
 
   ${mediaQuery()}{

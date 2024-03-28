@@ -313,8 +313,8 @@ const NewsDetail = () => {
               setUserQuizAnswer={setUserQuizAnswer}
               newSerialAnswered={newSerialAnswered}
               newSerialNotAnswered={newSerialNotAnswered}
-            />
-          }
+            />}
+          colorSelected="#F7F7F7"
         />
       )}
 
@@ -354,18 +354,18 @@ const NewsDetail = () => {
         <NewsContent>
           {shortNews?.body?.map((el, index) =>
             el === paraphraseQuestion ? (
-              <div key={'question_'+index} style={{width:"100%"}}>
+              <div key={'question_' + index} style={{ width: "100%" }}>
                 <ParaphraseQuestionSentence >{el}</ParaphraseQuestionSentence>
                 <ParaphraseQuestionResult>
                   {isLoading ?
-                   <LoadingImage/> 
-                   : paraphraseResult}
+                    <LoadingImage />
+                    : paraphraseResult}
 
                 </ParaphraseQuestionResult>
               </div>
             ) : (
               <NewsSentence
-                key={'news_'+index}
+                key={'news_' + index}
                 isToggleOn={isToggleOn}
                 onClick={() => handleParaphraseQuestion(el)}
               >
