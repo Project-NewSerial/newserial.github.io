@@ -10,7 +10,12 @@ import {
   ListTextAnswer,
   ListRight,
   NoData,
+  Lists,
+  Content,
 } from "./styles";
+import LoadingImage from "../../../../components/LoadingImage";
+import { Container } from "../../styles";
+import Pagination from "../../../../components/Pagination";
 
 interface RootState {
   auth: {
@@ -27,10 +32,11 @@ interface QuizList {
 
 const QuizList = () => {
   const accessToken = useSelector((state: RootState) => state.auth.accessToken);
+  const [page, setPage] = useState(0);
 
   //퀴즈 목록
   const getQuizList = async () => {
-    const { data } = await api.get(`/mypage/quiz`, {
+    const { data } = await api.get(`/mypage/quiz?page=${page}`, {
       headers: {
         Authorization: `${accessToken}`,
       },
@@ -39,34 +45,52 @@ const QuizList = () => {
     return data;
   };
 
-  const { data: quizData } = useQuery({
-    queryKey: ["quiz"],
+  const { isLoading, data } = useQuery({
+    queryKey: ["quiz", accessToken, page],
     queryFn: getQuizList,
   });
 
-  if (quizData?.length !== 0) {
+  if (isLoading)
     return (
-      <>
-        {quizData?.map((el: QuizList, index: number) => (
-          <List border={quizData.length === index + 1}>
-            <ListLeft>
-              <img src="/assets/icons/icon_Q.svg" />
-              <ListText>
-                <ListTextQuiz>{el.quizQuestion}</ListTextQuiz>
-                <ListTextAnswer>
-                  <div>나의 답 : {el.userAnswer}</div>
-                  <div>질문 답 : {el.quizAnswer}</div>
-                </ListTextAnswer>
-              </ListText>
-            </ListLeft>
-            <ListRight>{el.createdTime}</ListRight>
-          </List>
-        ))}
-      </>
+      <Container>
+        <LoadingImage width={50} />
+      </Container>
     );
-  } else {
-    return <NoData>퀴즈 기록이 없습니다.</NoData>;
-  }
+
+  const { myQuizDtoList, totalQuizCount } = data;
+
+  return (
+    <Container>
+      {totalQuizCount !== 0 ? (
+        <Content>
+          <Lists>
+            {myQuizDtoList.map((el: QuizList, index: number) => (
+              <List border={myQuizDtoList.length !== index + 1}>
+                <ListLeft>
+                  <img src="/assets/icons/icon_Q.svg" />
+                  <ListText>
+                    <ListTextQuiz>{el.quizQuestion}</ListTextQuiz>
+                    <ListTextAnswer>
+                      <div>나의 답 : {el.userAnswer}</div>
+                      <div>질문 답 : {el.quizAnswer}</div>
+                    </ListTextAnswer>
+                  </ListText>
+                </ListLeft>
+                <ListRight>{el.createdTime}</ListRight>
+              </List>
+            ))}
+          </Lists>
+          <Pagination
+            count={Math.floor(totalQuizCount / 10) + 1}
+            page={page}
+            setPage={setPage}
+          />
+        </Content>
+      ) : (
+        <NoData>퀴즈 기록이 없습니다.</NoData>
+      )}
+    </Container>
+  );
 };
 
 export default QuizList;
