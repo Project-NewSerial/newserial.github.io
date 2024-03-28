@@ -4,6 +4,21 @@ const breakpoint = "768px";
 
 const mediaQuery = () => `@media(min-width:${breakpoint})`;
 
+export const Content = styled.div`
+  width: 100%;
+  height: fit-content;
+  min-height: 250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+`;
+
+export const Lists = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+`;
+
 export const List = styled.div<{ border: boolean }>`
   width: 100%;
   height: 60px;
@@ -65,9 +80,16 @@ export const ListRight = styled.div`
 `;
 
 export const NoData = styled.div`
-  height: 200px;
+  width: 100%;
+  height: 150px;
   display: flex;
   align-items: center;
+  justify-content: center;
   color: #7f8386;
-  font-size: 2.5rem;
+  font-size: 1.5rem;
+
+  ${mediaQuery} {
+    height: 200px;
+    font-size: 2.2rem;
+  }
 `;

@@ -3,17 +3,22 @@ import { useSelector } from "react-redux";
 import { useQuery } from "@tanstack/react-query";
 import api from "../../../../api";
 import Pagination from "../../../../components/Pagination";
-import { Container, List, ListLeft, ListRight, Lists, NoData } from "./styles";
+import LoadingImage from "../../../../components/LoadingImage";
+import {
+  Container,
+  Content,
+  Lists,
+  List,
+  ListLeft,
+  ListRight,
+  NoData,
+} from "./styles";
 interface RootState {
   auth: {
     accessToken: null | string;
   };
 }
 
-interface Bookmark {
-  totalBookmarkCount: number;
-  myBookmarkDtoList: Array<BookmarkList>;
-}
 interface BookmarkList {
   title: string;
   createdTime: string;
@@ -35,20 +40,26 @@ const BookmarkList = () => {
   };
 
   const { isLoading, data } = useQuery({
-    queryKey: ["bookmark", accessToken],
+    queryKey: ["bookmark", accessToken, page],
     queryFn: getBookmarkList,
   });
 
-  if (isLoading) return null;
+  if (isLoading)
+    return (
+      <Content>
+        <LoadingImage width={50} />
+      </Content>
+    );
 
   const { myBookmarkDtoList, totalBookmarkCount } = data;
+
   return (
     <Container>
       {totalBookmarkCount !== 0 ? (
-        <>
+        <Content>
           <Lists>
             {myBookmarkDtoList.map((el: BookmarkList, index: number) => (
-              <List border={myBookmarkDtoList.length === index + 1}>
+              <List border={myBookmarkDtoList.length !== index + 1}>
                 <ListLeft>
                   <img src="/assets/icons/icon_bookmark_Y.svg" />
                   <div className="list-left__bookmark">{el.title}</div>
@@ -58,11 +69,11 @@ const BookmarkList = () => {
             ))}
           </Lists>
           <Pagination
-            count={totalBookmarkCount}
+            count={Math.floor(totalBookmarkCount / 10) + 1}
             page={page}
             setPage={setPage}
           />
-        </>
+        </Content>
       ) : (
         <NoData>북마크한 기사가 없습니다.</NoData>
       )}

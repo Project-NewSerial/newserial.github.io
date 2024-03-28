@@ -5,7 +5,7 @@ export const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 80px 0;
+  margin: 10px 0;
   img {
     margin: 0 10px;
     cursor: pointer;

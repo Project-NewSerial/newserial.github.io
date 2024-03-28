@@ -11,10 +11,19 @@ export const Container = styled.div`
   flex-direction: column;
 `;
 
-export const Lists = styled.div`
+export const Content = styled.div`
   width: 100%;
   height: fit-content;
   min-height: 250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+`;
+
+export const Lists = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
 `;
 
 export const List = styled.div<{ border: boolean }>`
