@@ -188,6 +188,8 @@ const Home = () => {
    * @param {string} userAnswer 사용자 답변
    * @returns {wordsId: number, question: string, userAnswer:string, quizAnswer:string, result: string, explanation: string}
    */
+
+
   const postMainQuizAnswer = async () => {
     if (accessToken !== null && userAnswer && userAnswerWordsId) {
       let sendData = {
@@ -200,14 +202,12 @@ const Home = () => {
             Authorization: `${accessToken}`,
           },
         });
-
         if (data !== undefined) {
           setQuestion((prevState) => {
             return prevState?.map((question) => {
               if (question.wordsId === userAnswerWordsId) {
                 return { ...question, ...data };
               }
-              setUserAnswer('');
               return question;
             });
           });
