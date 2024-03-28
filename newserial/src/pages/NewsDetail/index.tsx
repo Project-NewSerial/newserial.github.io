@@ -6,6 +6,7 @@ import {
   Logo,
   SearchButton,
   MyPageButton,
+  MobileNewsTitleArea,
   NewsTitleArea,
   Genre,
   Title,
@@ -31,7 +32,7 @@ import QuizModal from "./components/QuizModal";
 import LoadingImage from "../../components/LoadingImage";
 import api from "../../api";
 import axios from "axios";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { getSpeech } from "./utils/getSpeech";
 import { setDoneLoading, setLoading } from "../../redux/modules/loading";
 
@@ -93,6 +94,9 @@ const NewsDetail = () => {
 
   const isLoading = useSelector((state: RootState) => state.loading.loading);
   const dispatch = useDispatch();
+
+  const navigate = useNavigate();
+
 
   const onGetData = () => {
     dispatch(setDoneLoading());
@@ -299,8 +303,14 @@ const NewsDetail = () => {
       <HeaderArea>
         <HeaderBox>
           <Logo>NEWSERIAL</Logo>
-          <SearchButton src="/assets/icons/icon_search.svg" />
-          <MyPageButton src="/assets/icons/icon_mypage.svg" />
+          <SearchButton
+            onClick={() => navigate("/search-result")}
+            src="/assets/icons/icon_search.svg"
+          />
+          <MyPageButton
+            onClick={() => navigate("/mypage")}
+            src="/assets/icons/icon_mypage.svg"
+          />
         </HeaderBox>
       </HeaderArea>
 
@@ -317,12 +327,16 @@ const NewsDetail = () => {
           colorSelected="#F7F7F7"
         />
       )}
+      <NewsTitleArea>
+        <Genre>{shortNews?.category_name}</Genre>
+        <Title style={{ marginBottom: "18px" }}>{shortNews?.title}</Title>
+      </NewsTitleArea>
 
       <NewsArea>
-        <NewsTitleArea>
+        <MobileNewsTitleArea>
           <Genre>{shortNews?.category_name}</Genre>
           <Title>{shortNews?.title}</Title>
-        </NewsTitleArea>
+        </MobileNewsTitleArea>
         <BookmarkIcon
           onClick={bookmark !== true ? postBookmark : deleteBookmark}
           src={
@@ -351,6 +365,7 @@ const NewsDetail = () => {
             />
           </ParaphraseArea>
         </MenuArea>
+
         <NewsContent>
           {shortNews?.body?.map((el, index) =>
             el === paraphraseQuestion ? (
