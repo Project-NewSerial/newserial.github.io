@@ -55,6 +55,7 @@ export const Tab = styled.div<{ selected: boolean }>`
   font-weight: ${(props) => (props.selected ? "700" : "400")};
   opacity: ${(props) => (props.selected ? "100%" : "50%")};
   position: relative;
+  cursor: pointer;
 
   ${mediaQuery} {
     width: 20%;

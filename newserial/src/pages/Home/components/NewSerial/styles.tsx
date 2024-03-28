@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 // 미디어 쿼리에 사용할 디바이스 크기 정의
 const breakpoints = {
   desktop: '768px',
-  // desktop: '951px',
+  // desktop: '565px',
 };
 
 const breakpoint = "768px";
@@ -13,13 +13,19 @@ type Breakpoints = keyof typeof breakpoints;
 
 // 미디어 쿼리 유틸리티 함수 정의
 const mediaQuery = () => `@media (min-width: ${breakpoint})`;
+interface Quiz {
+  wordsId: number;
+  question: string;
+  userAnswer: string;
+  quizAnswer: string;
+  result: string;
+  explanation: string;
+}
 
-
-export const NewSerialArea = styled.div`
+export const NewSerialArea = styled.div<{question:Quiz[]|undefined}>`
   label: new-serial-area;
-  margin-top: 55px;
+  margin-top: ${(props)=>props?.question===undefined||props?.question.length===0 ? "40px":"55px"};
   margin-bottom: 100px;
-
 
 
   ${mediaQuery()}{
@@ -27,7 +33,7 @@ export const NewSerialArea = styled.div`
     width:60.75%;
     flex-direction: column;
     height: 104px;
-    margin-top: 330px;
+    margin-top:  ${(props)=>props?.question===undefined||props?.question.length===0 ? "40px":"270px"};
     margin-left:auto;
     margin-right:auto;
     margin-bottom: 200px;
@@ -95,15 +101,16 @@ export const CategoryArea = styled.div`
 
 export const CategoryButton = styled.div`
   label: category-button;
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   font-family: Noto Sans KR;
   color: #787878;
-  padding: 4px 13px;
+  padding: 4px 7.5px;
   cursor: pointer;
 
   ${mediaQuery()}{
     font-size: 1.5rem;
     padding: 10px 15px;
+    padding: 4px 13px;
   }
 `
 

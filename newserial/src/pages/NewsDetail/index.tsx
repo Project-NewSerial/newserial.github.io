@@ -6,6 +6,7 @@ import {
   Logo,
   SearchButton,
   MyPageButton,
+  MobileNewsTitleArea,
   NewsTitleArea,
   Genre,
   Title,
@@ -25,18 +26,23 @@ import {
   MobileQuizButton,
 } from "./styles";
 import ToggleSlide from "./components/ToggleSlide";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import Modal from "../../components/Modal";
 import QuizModal from "./components/QuizModal";
+import LoadingImage from "../../components/LoadingImage";
 import api from "../../api";
 import axios from "axios";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { getSpeech } from "./utils/getSpeech";
+import { setDoneLoading, setLoading } from "../../redux/modules/loading";
 
 interface RootState {
   auth: {
     accessToken: null | string;
   };
+  loading: {
+    loading: boolean;
+  }
 }
 
 interface ShortNews {
@@ -84,7 +90,18 @@ const NewsDetail = () => {
 
   const location = useLocation();
   const newsId = location.state.newsId;
-  const newsCategoryId = location.state.newsCategoryId;
+  // const newsCategoryId = location.state.newsCategoryId;
+
+  const isLoading = useSelector((state: RootState) => state.loading.loading);
+  const dispatch = useDispatch();
+
+  const navigate = useNavigate();
+
+
+  const onGetData = () => {
+    dispatch(setDoneLoading());
+  }
+
 
 
   /**
@@ -92,9 +109,10 @@ const NewsDetail = () => {
    * @param {string} question paraphrase하고자 하는 문장
    * @returns {question: string}
    */
-  const postParaphrase = async (paraphraseQuestion: string) => {
-    if (accessToken !== null && paraphraseQuestion) {
-      const { data } = await api.post(`/paraphrasing`, paraphraseQuestion, {
+  const postParaphrase = async (question: string) => {
+    setParaphraseQuestion(question);
+    if (accessToken !== null && question.length > 0) {
+      const { data } = await api.post(`/paraphrasing`, question, {
         headers: {
           withCredentials: true,
           "Content-Type": "application/json",
@@ -103,6 +121,7 @@ const NewsDetail = () => {
       })
       if (data !== undefined) {
         setParaphraseResult(data);
+        onGetData();
       }
     }
   };
@@ -113,6 +132,7 @@ const NewsDetail = () => {
   const postBookmark = async () => {
     if (accessToken !== null) {
       try {
+
         const { data } = await api.post(`/bookmark/` + newsId, {}, {
           headers: {
             Authorization: accessToken,
@@ -226,16 +246,23 @@ const NewsDetail = () => {
     }
   }
 
+
+  const handleParaphraseQuestion = (el: string) => {
+    dispatch(setLoading());
+    if (!paraphraseQuestion && el.length > 0) {
+      postParaphrase(el);
+    } else if (el !== paraphraseQuestion) {
+      postParaphrase(el);
+    }
+  }
+
+
+
   useEffect(() => {
     getNewsDetail();
     window.speechSynthesis.getVoices()
   }, [accessToken]);
 
-  useEffect(() => {
-    if (paraphraseQuestion) {
-      postParaphrase(paraphraseQuestion);
-    }
-  }, [paraphraseQuestion]);
 
   useEffect(() => {
     if (isToggleOn === false) {
@@ -276,8 +303,14 @@ const NewsDetail = () => {
       <HeaderArea>
         <HeaderBox>
           <Logo>NEWSERIAL</Logo>
-          <SearchButton src="/assets/icons/icon_search.svg" />
-          <MyPageButton src="/assets/icons/icon_mypage.svg" />
+          <SearchButton
+            onClick={() => navigate("/search-result")}
+            src="/assets/icons/icon_search.svg"
+          />
+          <MyPageButton
+            onClick={() => navigate("/mypage")}
+            src="/assets/icons/icon_mypage.svg"
+          />
         </HeaderBox>
       </HeaderArea>
 
@@ -290,16 +323,20 @@ const NewsDetail = () => {
               setUserQuizAnswer={setUserQuizAnswer}
               newSerialAnswered={newSerialAnswered}
               newSerialNotAnswered={newSerialNotAnswered}
-            />
-          }
+            />}
+          colorSelected="#F7F7F7"
         />
       )}
+      <NewsTitleArea>
+        <Genre>{shortNews?.category_name}</Genre>
+        <Title style={{ marginBottom: "18px" }}>{shortNews?.title}</Title>
+      </NewsTitleArea>
 
       <NewsArea>
-        <NewsTitleArea>
+        <MobileNewsTitleArea>
           <Genre>{shortNews?.category_name}</Genre>
           <Title>{shortNews?.title}</Title>
-        </NewsTitleArea>
+        </MobileNewsTitleArea>
         <BookmarkIcon
           onClick={bookmark !== true ? postBookmark : deleteBookmark}
           src={
@@ -328,20 +365,24 @@ const NewsDetail = () => {
             />
           </ParaphraseArea>
         </MenuArea>
+
         <NewsContent>
           {shortNews?.body?.map((el, index) =>
             el === paraphraseQuestion ? (
-              <>
-                <ParaphraseQuestionSentence key={index}>{el}</ParaphraseQuestionSentence>
+              <div key={'question_' + index} style={{ width: "100%" }}>
+                <ParaphraseQuestionSentence >{el}</ParaphraseQuestionSentence>
                 <ParaphraseQuestionResult>
-                  {paraphraseResult}
+                  {isLoading ?
+                    <LoadingImage />
+                    : paraphraseResult}
+
                 </ParaphraseQuestionResult>
-              </>
+              </div>
             ) : (
               <NewsSentence
-                key={index}
+                key={'news_' + index}
                 isToggleOn={isToggleOn}
-                onClick={() => setParaphraseQuestion(el)}
+                onClick={() => handleParaphraseQuestion(el)}
               >
                 {el}
               </NewsSentence>
