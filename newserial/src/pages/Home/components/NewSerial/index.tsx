@@ -58,8 +58,9 @@ const NewSerial = (props: {
   const accessToken = useSelector((state: RootState) => state.auth.accessToken);
 
 
+
   return (
-    <NewSerialArea question={props?.question}>
+    <NewSerialArea style={{marginTop: (accessToken!==null && accessToken?.length>0) ?"340px":"0px"}}>
       <AreaTitleArea>
         <AreaTitle>뉴-시리얼</AreaTitle>
         <ToolTip message={"뉴-시리얼은 하루에 ~~~~~~~~~~~~~~~~~~~~~~~~~~~"} />

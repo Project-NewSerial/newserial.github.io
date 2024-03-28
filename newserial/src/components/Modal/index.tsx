@@ -11,14 +11,13 @@ import { Container, Overlay, Box } from "./styles";
 interface Modal {
   setToggle: React.Dispatch<React.SetStateAction<boolean>>;
   content: ReactNode;
-  colorSelected?: string;
 }
 
-const Modal = ({ setToggle, content, colorSelected }: Modal) => {
+const Modal = ({ setToggle, content }: Modal) => {
   return (
-    <Container >
+    <Container>
       <Overlay onClick={() => setToggle(false)}>
-        <Box onClick={(e) => e.stopPropagation()} style={{backgroundColor:colorSelected ? colorSelected : "white"}}>
+        <Box onClick={(e) => e.stopPropagation()}>
           <img
             src="/assets/icons/icon_cancel.svg"
             onClick={() => setToggle(false)}

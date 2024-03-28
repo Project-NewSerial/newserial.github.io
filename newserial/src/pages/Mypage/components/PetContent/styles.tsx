@@ -39,7 +39,6 @@ export const Container = styled.div`
 `;
 
 export const Top = styled.div`
-  label: top;
   width: 100%;
   height: auto;
   display: flex;
@@ -59,13 +58,11 @@ export const Top = styled.div`
 `;
 
 export const Info = styled.div`
-  label: info;
   width: 15px;
   height: 15px;
   background-color: #939d9e;
   color: white;
   border-radius: 50%;
-  cursor: pointer;
 `;
 
 export const Title = styled.div`

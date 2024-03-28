@@ -7,7 +7,6 @@ export const Container = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: #000000;
 `;
 
 export const Content = styled.div`
@@ -57,8 +56,6 @@ export const InputBox = styled.div`
     top: 17px;
     line-height: 5px;
     background-color: #000000;
-    cursor: pointer;
-
     &:disabled {
       border-color: #a8a7a7;
       color: #a8a7a7;
@@ -108,8 +105,6 @@ export const Button = styled.button`
   justify-content: center;
   margin: 15px 0;
   font-family: NanumSquareNeo;
-  cursor: pointer;
-
   &:disabled {
     opacity: 50%;
   }
@@ -147,5 +142,4 @@ export const ModalButton = styled.div`
   font-size: 1.2rem;
   text-align: center;
   margin-top: 10px;
-  cursor: pointer;
 `;

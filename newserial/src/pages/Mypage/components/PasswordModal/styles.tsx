@@ -1,29 +1,20 @@
 import styled from "@emotion/styled";
 
-const breakpoint = "768px";
-
-const mediaQuery = () => `@media(min-width:${breakpoint})`;
-
 export const Title = styled.div`
   label: title;
   font-family: Noto Sans KR;
-  font-size: 1.8rem;
+  font-size: 1.6rem;
   font-weight: 600;
 `;
 
 export const Main = styled.div`
   label: main;
-  width: 250px;
-  height: 200px;
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   margin-top: 10px;
-
-  ${mediaQuery} {
-    width: 300px;
-  }
 `;
 
 export const InputContent = styled.div`
@@ -44,20 +35,18 @@ export const InputBox = styled.div`
 export const InputText = styled.div`
   label: input-text;
   color: #242424;
-  font-size: 1.4rem;
 `;
 
 export const Input = styled.input`
   label: input;
   width: 100%;
-  height: 30px;
+  height: 20px;
   border: none;
   border-bottom: 1px solid #242424;
   font-family: NanumSquareNeo;
   font-size: 1.2rem;
-
   &::placeholder {
-    font-size: 1.2rem;
+    font-size: 1rem;
   }
   &:focus {
     outline: none;
@@ -67,7 +56,7 @@ export const Input = styled.input`
 export const WarningText = styled.div`
   label: warning-text;
   color: red;
-  font-size: 1.2rem;
+  font-size: 1rem;
 `;
 
 export const Button = styled.button`
@@ -82,9 +71,6 @@ export const Button = styled.button`
   background-color: #ff6f4f;
   font-family: Noto Sans Kr;
   font-size: 1.4rem;
-  margin-top: 20px;
-  cursor: pointer;
-
   &:disabled {
     opacity: 50%;
   }

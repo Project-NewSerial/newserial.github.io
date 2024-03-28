@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 // 미디어 쿼리에 사용할 디바이스 크기 정의
 const breakpoints = {
   desktop: '768px',
-  // desktop: '565px',
+  // desktop: '951px',
 };
 
 // 타입 정의
@@ -21,7 +21,7 @@ export const DailyQuizArea = styled.div`
 
   ${mediaQuery('desktop')}{
     position: absolute;
-    top: 200px;
+    top: 260px;
     
   }
 `
@@ -33,27 +33,20 @@ export const DailyQuizCard = styled.div`
   margin-left:auto;
   margin-right:auto;
   position:relative;
-  height: 256px;
-  margin-top:60px;
+  height: 276px;
+  margin-top:85px;
   margin-bottom: auto;
   border-radius:15px;
   display:flex;
   flex-direction:column;
   box-shadow: 4px 4px 4px 4px #E0E0E0;
 
-  img {
-    position: absolute;
-    right: 30px;
-    top: 30px;
-    cursor: pointer;
-  }
-  
   ${mediaQuery('desktop')}{
     display:flex;
     width:65.75%;
     flex-direction:column;
     background-color:#FF6F4F;
-    height: 300px;
+    height: 317px;
     margin-top: auto;
     border-top-left-radius:60px;
     border-top-right-radius:60px;
@@ -61,12 +54,6 @@ export const DailyQuizCard = styled.div`
     border-bottom-right-radius: 15px;
     align-items:center;
     box-shadow: none;
-    img {
-      position: absolute;
-      right: 40px;
-      top: 40px;
-      cursor: pointer;
-    }
   }
 `;
 
@@ -78,8 +65,8 @@ export const DailyQuizTitle = styled.div`
   ${mediaQuery('desktop')}{
     display: block;
     color:#FFFFFF;
-    font-size:2.2rem;
-    font-family:NanumSquareNeo;
+    font-size:2.5rem;
+    font-family:Noto Sans KR;
     margin-top: auto;
   }
 `
@@ -108,7 +95,7 @@ export const QuestionRow = styled.div`
 export const AnsweredQuizAnswer = styled.div`
   label: answered-quiz-answer;
   width: 81.48%;
-  color: #060000;
+  color: ##060000;
   font-size: 1.4rem;
   font-family: Noto Sans KR;
   margin-top: 12px;
@@ -117,48 +104,25 @@ export const AnsweredQuizAnswer = styled.div`
   text-align: left;
 
   ${mediaQuery('desktop')}{
-    color: #060000;
+    color: ##060000;
     font-size:1.5rem;
     font-family:Noto Sans KR;
     
   }
 `
 
-export const SeeExplanationButton = styled.div`
-  label: see-explanation-button;
-  width:81.48%;
-  height: fit-content;
-  color: #efefef;
-  font-family: Noto Sans KR;
-  font-size: 1.2em;
-  text-decoration: underline;
-  margin-top: 4px;
-  margin-left: auto;
-  margin-right: auto;
-  text-align: left;
-  cursor:pointer;
-
-  ${mediaQuery('desktop')}{
-  
-    
-  }
-  
-`
-
 export const AnsweredExplanation = styled.div`
   label: answered-explanation;
   width: 81.48%;
-  color: #2e2e2e;
-  font-size: 1.5rem;
+  color: #060000;
+  font-size: 1.2rem;
   font-family: Noto Sans KR;
   margin-left:auto;
   margin-right:auto;
   text-align: left;
-  margin-top: auto;
-  margin-bottom: auto;
-  line-height: 2.5rem;
 
   ${mediaQuery('desktop')}{
+    color: ##060000;
     font-size:1.5rem;
     font-family:Noto Sans KR;
     
@@ -172,7 +136,7 @@ export const AnsweredAnswerRow = styled.div`
   height: 35px;
   color: #D9D9D9;
   font-size: 2rem;
-  background-color:#E3E3E3;
+  background-color:#FFFFFF;
   border: 1px solid #E3E3E3;
   border-radius:10px;
   align-items:center;
@@ -185,7 +149,7 @@ export const AnsweredAnswerRow = styled.div`
     color: #D9D9D9;
     font-size: 2rem;
     height: 35px;
-    background-color:#E3E3E3;
+    background-color:#FFFFFF;
     margin-bottom:11px;
     border: 1px solid #D3D3D3;
     border-radius:10px;
@@ -201,13 +165,13 @@ export const AnswerRow = styled.div`
   display:flex;
   width: 81.48%;
   flex-direction:column;
-  margin-top: 10px;
+  margin-top: 15px;
   margin-left:auto;
   margin-right:auto;
   margin-bottom:auto;
   
   ${mediaQuery('desktop')}{
-    width: 81.48%%;
+    width: 74.42%;
     margin-top:15px;
   }
 `

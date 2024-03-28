@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useQuery } from "@tanstack/react-query";
 import api from "../../../../api";
-import { List, ListLeft, ListRight, NoData } from "./styles";
+import { List, ListMid, ListRight, NoData } from "./styles";
 
 interface RootState {
   auth: {
@@ -26,7 +26,13 @@ const BookmarkList = () => {
       },
     });
 
-    return data;
+    return [
+      {
+        title: "해외 법인 망했는데 5300억 '세금 폭탄' 골병드는 건설사ddddddddd",
+        createdTime: "2023/11/01",
+      },
+    ];
+    //return data
   };
 
   const { data: bookmarkData } = useQuery({
@@ -37,12 +43,14 @@ const BookmarkList = () => {
   if (bookmarkData?.length !== 0) {
     return (
       <>
-        {bookmarkData?.map((el: BookmarkList, index: number) => (
+        {bookmarkData?.map((el, index) => (
           <List border={bookmarkData.length === index + 1}>
-            <ListLeft>
-              <img src="/assets/icons/icon_bookmark_Y.svg" />
-              <div className="list-left__bookmark">{el.title}</div>
-            </ListLeft>
+            <img src="/assets/icons/icon_bookmark.svg" />
+            <ListMid>
+              <div className="list-mid__bookmark">
+                {(el as BookmarkList).title}
+              </div>
+            </ListMid>
             <ListRight>{el.createdTime}</ListRight>
           </List>
         ))}

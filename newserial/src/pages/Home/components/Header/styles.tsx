@@ -4,7 +4,6 @@ import styled from "@emotion/styled";
 // 미디어 쿼리에 사용할 디바이스 크기 정의
 const breakpoints = {
   desktop: '768px',
-  // desktop: '565px',
 };
 
 // 타입 정의
@@ -26,7 +25,7 @@ export const HeaderArea = styled.div`
 
   ${mediaQuery('desktop')}{
     height: 165px;
-    padding-top: 102px;
+    padding-top: 152px;
   }
 `;
 
@@ -42,7 +41,7 @@ export const Logo = styled.div`
     font-size: 55px;
     margin-left:auto;
     margin-right:auto;
-    border-bottom: 2px solid #FFCD29;
+    border-bottom: 4px solid #FFCD29;
   }
 `
 

@@ -18,7 +18,7 @@ const SocialLoginCallback = () => {
 
   useEffect(() => {
     if (token) dispatch(setToken(JSON.stringify(token).split('"')[1]));
-    else navigate("*");
+    else navigate("/not-found");
   }, []);
   /**
    * 쿠키 가져오는 함수

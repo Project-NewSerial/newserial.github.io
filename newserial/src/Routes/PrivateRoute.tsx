@@ -18,52 +18,33 @@ interface RootState {
 const PrivateRoute = () => {
   const dispatch = useDispatch();
   const accessToken = useSelector((state: RootState) => state.auth.accessToken);
+  
+  useEffect(() => {
+    if (accessToken === "") dispatch(setToken(null));
+  }, []);
 
   /**
    * refresh Token이 유효하면 accessToken 발급하는 api 호출
-   * @return {boolean} 유효하면 true 아니면 false
    */
   const refreshLogin = async () => {
     const { data } = await api.get(`/reissue`, {
       withCredentials: true,
     });
 
-    if (data) {
-      dispatch(setToken(data.accessToken));
-      return true;
-    } else {
-      alert("로그인이 필요합니다.");
-      return false;
-    }
+    if (data) dispatch(setToken(data.accessToken));
+    else alert("로그인이 필요합니다.");
   };
 
-  /**
-   * accessToken이 유효한지 확인하는 api
-   * @return {boolean} 유효하면 true 아니면 false
-   */
-  const checkAccessToken = async () => {
-    const { data } = await api.get(`/logoutCheck`, {
-      headers: { Authorization: `Bearer ${accessToken}` },
-    });
-
-    return data;
-  };
-
-  const { data: isValid } = useQuery({
-    queryKey: ["access-token"],
-    queryFn: checkAccessToken,
-  });
-
-  const { data: isLogin, isLoading } = useQuery({
+  const { isLoading } = useQuery({
     queryKey: ["refresh-login"],
     queryFn: refreshLogin,
-    enabled: !isValid,
+    enabled: accessToken === null,
   });
 
-  if (isValid) return <Outlet />;
+  if (accessToken !== null) return <Outlet />;
   if (isLoading) return null;
 
-  return isLogin ? <Outlet /> : <Navigate to="/login" />;
+  return accessToken ? <Outlet /> : <Navigate to={"/login"} />;
 };
 
 export default PrivateRoute;

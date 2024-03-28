@@ -103,8 +103,6 @@ export const Button = styled.button`
   justify-content: center;
   margin: 15px 0;
   font-family: NanumSquareNeo;
-  cursor: pointer;
-  
   &:disabled {
     opacity: 50%;
   }

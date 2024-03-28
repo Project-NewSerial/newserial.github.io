@@ -5,7 +5,6 @@ const breakpoint = "768px";
 const mediaQuery = () => `@media(min-width:${breakpoint})`;
 
 export const Container = styled.div`
-  label: container;
   width: 100%;
   height: auto;
   display: flex;
@@ -55,13 +54,11 @@ export const User = styled.div`
 `;
 
 export const Underline = styled.div`
-  label: underline;
   font-family: Noto Sans Kr;
   text-decoration: underline;
   font-size: 1.2rem;
   color: white;
   margin-bottom: 20px;
-  cursor: pointer;
 `;
 
 export const Main = styled.div`
@@ -99,7 +96,6 @@ export const Main = styled.div`
 `;
 
 export const MainTop = styled.div`
-  label: main-top;
   width: 100%;
   height: auto;
   display: flex;
@@ -114,7 +110,7 @@ export const MainTop = styled.div`
   }
 
   ${mediaQuery} {
-    width: fit-content;
+    width:  fit-content;
     margin-bottom: 10px;
     background-color: #d9d9d9;
     justify-content: center;
@@ -123,3 +119,6 @@ export const MainTop = styled.div`
     padding: 2px 10px;
   }
 `;
+
+
+

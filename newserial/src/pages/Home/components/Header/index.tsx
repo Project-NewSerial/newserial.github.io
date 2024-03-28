@@ -8,6 +8,7 @@ import {
   LoginButton,
   SignupButton,
 } from "./styles";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
@@ -25,25 +26,15 @@ const Header = () => {
   return (
     <HeaderArea>
       <Logo>NEWSERIAL</Logo>
-      {accessToken !== null ? (
+      {accessToken ?
         <>
-          <SearchIcon
-            onClick={() => navigate("/search-result")}
-            src={"/assets/icons/icon_search.svg"}
-          />
-          <MyPageIcon
-            onClick={() => navigate("/mypage")}
-            src={"/assets/icons/icon_mypage.svg"}
-          />
+          <SearchIcon onClick={() => navigate("/search-result")} src={"/assets/icons/icon_search.svg"} />
+          <MyPageIcon onClick={() => navigate("/mypage")} src={"/assets/icons/icon_mypage.svg"} />
         </>
-      ) : (
-        <LoginSignup>
+        : <LoginSignup>
           <LoginButton onClick={() => navigate("/login")}>로그인</LoginButton>
-          <SignupButton onClick={() => navigate("/signup")}>
-            회원가입
-          </SignupButton>
-        </LoginSignup>
-      )}
+          <SignupButton onClick={() => navigate("/signup")}>회원가입</SignupButton>
+        </LoginSignup>}
     </HeaderArea>
   );
 };

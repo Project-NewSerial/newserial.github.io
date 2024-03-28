@@ -33,7 +33,7 @@ const PetContent = () => {
 
   return (
     <Container>
-      {toggle && <InfoModal setToggle={setToggle} />}
+      {/* {toggle && <InfoModal setToggle={setToggle} />} */}
       <Top>
         <Info onClick={() => setToggle(!toggle)}>i</Info>
       </Top>

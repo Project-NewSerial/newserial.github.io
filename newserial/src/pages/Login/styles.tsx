@@ -27,10 +27,6 @@ export const Content = styled.div`
   box-sizing: border-box;
   font-family: NanumSquareNeo;
   font-size: 1.4rem;
-
-  img {
-    cursor: pointer;
-  }
 `;
 
 export const Logo = styled.div`
@@ -87,9 +83,7 @@ export const ColorText = styled.div`
   display: flex;
   justify-content: end;
   margin-top: 5px;
-  cursor: pointer;
 `;
-
 export const Button = styled.div`
   label: button;
   width: 75px;
@@ -101,7 +95,6 @@ export const Button = styled.div`
   align-items: center;
   justify-content: center;
   margin: 30px 0;
-  cursor: pointer;
 `;
 
 export const BottomText = styled.div`
@@ -112,8 +105,7 @@ export const BottomText = styled.div`
   font-size: 1.2rem;
   display: flex;
   margin-bottom: 30px;
-  span {
+  span{
     text-decoration: underline;
-    cursor: pointer;
   }
 `;
