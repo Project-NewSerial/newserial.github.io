@@ -6,10 +6,16 @@ import { LoadingImageStyle } from "./styles";
  * @author 김민지
  */
 
+interface Props {
+  width?: number;
+}
 
-const LoadingImage = () => {
+const LoadingImage = ({ width }: Props) => {
   return (
-    <LoadingImageStyle src="/assets/icons/icon_loading.svg"/>
+    <LoadingImageStyle
+      src="/assets/icons/icon_loading.svg"
+      width={width ? width : 20}
+    />
   );
 };
 
