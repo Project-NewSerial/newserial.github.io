@@ -173,7 +173,7 @@ const SearchResult = () => {
           <ResultTitle><ResultWord>'&nbsp;&nbsp;{searchWord}&nbsp;'</ResultWord>검색 결과입니다.</ResultTitle>
           <ResultRowArea>
             {searchResult?.content.map((el, index) => (
-              <ResultRow key={el?.id} onClick={() => navigate('/news-detail')}>
+              <ResultRow key={el?.id} onClick={() => navigate('/newsdetail', { state: { newsId: el.id } })}>
                 <NewsImage src="/assets/dummyImages/dummyImage.jpg" />
                 <NewsInformation>
                   <NewsPress>[조선비즈]</NewsPress>

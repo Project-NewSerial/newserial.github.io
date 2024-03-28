@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 
-const breakpoint="768px";
+const breakpoint = "768px";
 
 // 미디어 쿼리 유틸리티 함수 정의
 const mediaQuery = () => `@media (min-width: ${breakpoint})`;
@@ -26,7 +26,7 @@ export const Container = styled.div`
   }
 `;
 
-export const HeaderArea=styled.div`
+export const HeaderArea = styled.div`
   label: header-area;
   display:block;
   padding-top: 57px;
@@ -34,12 +34,12 @@ export const HeaderArea=styled.div`
     display:flex;
     width:91.25%;
     flex-direction:column;
-    margin-bottom: 133px;
+    margin-bottom: 23px;
   }
 
 `
 
-export const HeaderBox=styled.div`
+export const HeaderBox = styled.div`
   label: header-box;
   display:none;
   flex-direction: row;
@@ -48,12 +48,12 @@ export const HeaderBox=styled.div`
     width:100%;
     display:flex;
     flex-direction: row;  
-    padding-bottom: 32px;
+    padding-bottom: 12px;
     border-bottom: 1px solid #D4D4D4;
   }
 `
 
-export const Logo=styled.div`
+export const Logo = styled.div`
   label: logo;
 
   ${mediaQuery()}{
@@ -63,48 +63,62 @@ export const Logo=styled.div`
   }
 `
 
-export const SearchButton=styled.img`
+export const SearchButton = styled.img`
   label: search-button;
 
   ${mediaQuery()}{
-    width: 30px;
+    width: 20px;
+    height: 20px;
     margin-left:auto;
   }
 `
 
-export const MyPageButton=styled.img`
+export const MyPageButton = styled.img`
   label: mypage-button;
 
   ${mediaQuery()}{
-    width: 30px;
+    width: 20px;
+    height: 20px;
     margin-left:22.44px; 
   }
 `
 
-export const NewsTitleArea=styled.div`
-  label: news-title-area;
+export const MobileNewsTitleArea = styled.div`
+  label: mobile-news-title-area;
   width: 82%;
   position: absolute;
   top:57px;
   text-align: -webkit-left;
 
   ${mediaQuery()}{
-    position:absolute;
-    top:186px;
+    display:none;
+  }
+`
+
+
+export const NewsTitleArea = styled.div`
+  label: news-title-area;
+  display:none;
+
+  ${mediaQuery()}{
+    // position:absolute;
+    width: 60%;
+    // top:156px;
     display:flex;
     flex-direction:column;
+    text-align: left;
   }
 
 `
 
-export const BookmarkButton=styled.img`
+export const BookmarkButton = styled.img`
   label: bookmark-button;
   width:50px;
   margin-left:auto;
   margin-bottom:20px;
 `
 
-export const Genre=styled.div`
+export const Genre = styled.div`
   label: genre;
   margin-right:auto;
   color: #FF6F4F;
@@ -115,7 +129,7 @@ export const Genre=styled.div`
   }
 `
 
-export const Title=styled.div`
+export const Title = styled.div`
   label: title; 
   margin-right:auto;
   color:#FFFFFF;
@@ -126,7 +140,7 @@ export const Title=styled.div`
   }
 `
 
-export const BookmarkIcon=styled.img`
+export const BookmarkIcon = styled.img`
   label: bookmark-icon;
   width: 20px;
   height: auto;
@@ -144,7 +158,7 @@ export const BookmarkIcon=styled.img`
 
 `
 
-export const NewsArea=styled.div` 
+export const NewsArea = styled.div` 
   label: news-area;
   width: 82%;
   background-color:#FFFFFF;
@@ -162,7 +176,7 @@ export const NewsArea=styled.div`
   }
 `
 
-export const MenuArea=styled.div`
+export const MenuArea = styled.div`
   label: menu-area;
   display:flex;
   flex-direction:row;
@@ -181,7 +195,7 @@ export const MenuArea=styled.div`
   }
 `
 
-export const Speaker=styled.img`
+export const Speaker = styled.img`
   label: speaker;
   width:18px;
   height:18px;
@@ -191,7 +205,7 @@ export const Speaker=styled.img`
   cursor:pointer;
 `
 
-export const ParaphraseArea=styled.div`
+export const ParaphraseArea = styled.div`
   label: paraphrase-area;
   display:flex;
   height: 25px;
@@ -203,7 +217,7 @@ export const ParaphraseArea=styled.div`
   }
 `
 
-export const Paraphrase=styled.div`
+export const Paraphrase = styled.div`
   label: paraphrase;
   font-family: Noto Sans KR;
   margin-top:auto;
@@ -218,7 +232,7 @@ export const Paraphrase=styled.div`
   }
 `
 
-export const ParaphraseButton=styled.img`
+export const ParaphraseButton = styled.img`
   label: paraphrase-button;
   margin-top:auto;
   margin-bottom: auto;
@@ -227,7 +241,7 @@ export const ParaphraseButton=styled.img`
   }
 `
 
-export const ParaphraseQuestionSentence=styled.span`
+export const ParaphraseQuestionSentence = styled.span`
   label: paraphrase-question-sentence;
   background-color: #FFD4CA;
 
@@ -237,7 +251,7 @@ export const ParaphraseQuestionSentence=styled.span`
 `
 
 
-export const ParaphraseQuestionResult=styled.div`
+export const ParaphraseQuestionResult = styled.div`
   label: paraphrase-question-result;
   background-color:#FF9A84;
   border-radius:5px;
@@ -253,10 +267,10 @@ export const ParaphraseQuestionResult=styled.div`
   }
 `
 
-export const NewsSentence=styled.span<{isToggleOn: boolean}>`
+export const NewsSentence = styled.span<{ isToggleOn: boolean }>`
   label: news-sentence;
-  pointer-events: ${(props)=>props.isToggleOn === true? "auto" : "none"};
-  cursor: ${(props)=>props.isToggleOn === true ? "pointer" : "none"};
+  pointer-events: ${(props) => props.isToggleOn === true ? "auto" : "none"};
+  cursor: ${(props) => props.isToggleOn === true ? "pointer" : "none"};
 
 
   ${mediaQuery()}{   
@@ -265,7 +279,7 @@ export const NewsSentence=styled.span<{isToggleOn: boolean}>`
 
 
 
-export const NewsContent=styled.div`
+export const NewsContent = styled.div`
   label: news-content;
   line-height:25px;
   text-align:left;
@@ -279,7 +293,7 @@ export const NewsContent=styled.div`
   }
 `
 
-export const Source=styled.span`
+export const Source = styled.span`
   label: source;
   margin-top:35px;
   color:#979797;
@@ -297,7 +311,7 @@ export const Source=styled.span`
   }
 `
 
-export const ClipButton=styled.div`
+export const ClipButton = styled.div`
   label: clip-button;
   background-image:url("/assets/icons/icon_clip.svg");
   background-repeat:no-repeat;
@@ -311,7 +325,7 @@ export const ClipButton=styled.div`
   }
 `
 
-export const PCQuizButton=styled.div`
+export const PCQuizButton = styled.div`
   label: pc-quiz-button;
   margin-bottom:25px;
   margin-left: 20px;
@@ -336,7 +350,7 @@ export const PCQuizButton=styled.div`
   }
 `
 
-export const MobileQuizButton=styled.div`
+export const MobileQuizButton = styled.div`
   label: mobile-quiz-button;
   width: fit-content;
   font-size: 2rem;

@@ -41,7 +41,7 @@ const QuizList = () => {
         Authorization: `${accessToken}`,
       },
     });
-
+    console.log('quiz', data)
     return data;
   };
 
