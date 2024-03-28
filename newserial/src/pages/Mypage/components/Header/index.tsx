@@ -34,8 +34,8 @@ const Header = () => {
           withCredentials: true,
         }
       );
-      if (data === "logout success\n") {
-        dispatch(setToken(""));
+      if (data === "logout success\r\n") {
+        dispatch(setToken(null));
         alert("로그아웃 되었습니다.");
         navigate("/");
       }
