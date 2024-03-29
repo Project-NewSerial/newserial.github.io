@@ -84,12 +84,6 @@ export const Main = styled.div`
     font-weight: 700;
   }
 
-  & > img {
-    width: 50%;
-    height: 200px;
-    margin: 20px 0;
-  }
-
   ${mediaQuery} {
     width: 60%;
     margin-top: 0;
