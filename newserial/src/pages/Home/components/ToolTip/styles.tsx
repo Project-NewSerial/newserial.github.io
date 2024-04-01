@@ -35,7 +35,7 @@ export const ToolTipContainer = styled.div`
     display: none;
     width: 200px;
     position: absolute;
-    bottom: -48px;
+    bottom: -56px;
     right: 20px;
     background-color: black;
     border: #black solid 1px;
@@ -74,6 +74,36 @@ export const ToolTipContainer = styled.div`
   }
 
   ${mediaQuery('desktop')}{
+    .tooltip {
+      white-space: pre-line;
+      display: none;
+      width: 200px;
+      position: absolute;
+      bottom: -56px;
+      right: -180px;
+      background-color: black;
+      border: #black solid 1px;
+      border-radius: 5px;
+      color: #FF6F4F;
+      font-size: 1.2rem;
+      font-family: Noto Sans KR;
+      height: auto;
+      letter-spacing: -0.25px;
+      padding: 8px 11px;
+      z-index: 100;
+    }
 
+    .tooltip::after{
+      border-color: black transparent;
+      border-style: solid;
+      border-width:0 6px 11px 6px;
+      content: "";
+      display: block;
+      right: 202px;
+      position: absolute;
+      top: -7px;
+      width: 0;
+      z-index: 1;
+    }
   }
 `;
