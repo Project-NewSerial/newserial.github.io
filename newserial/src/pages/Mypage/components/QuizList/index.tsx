@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { useQuery } from "@tanstack/react-query";
 import api from "../../../../api";
 import {
+  Container,
   List,
   ListLeft,
   ListText,
@@ -14,7 +15,6 @@ import {
   Content,
 } from "./styles";
 import LoadingImage from "../../../../components/LoadingImage";
-import { Container } from "../../styles";
 import Pagination from "../../../../components/Pagination";
 
 interface RootState {
@@ -41,7 +41,7 @@ const QuizList = () => {
         Authorization: `${accessToken}`,
       },
     });
-    console.log('quiz', data)
+
     return data;
   };
 
@@ -65,7 +65,7 @@ const QuizList = () => {
         <Content>
           <Lists>
             {myQuizDtoList.map((el: QuizList, index: number) => (
-              <List border={myQuizDtoList.length !== index + 1}>
+              <List border={myQuizDtoList.length === index + 1}>
                 <ListLeft>
                   <img src="/assets/icons/icon_Q.svg" />
                   <ListText>

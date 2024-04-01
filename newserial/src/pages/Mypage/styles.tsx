@@ -85,10 +85,10 @@ export const Main = styled.div`
   }
 
   ${mediaQuery} {
-    width: 60%;
+    width: 50%;
     margin-top: 0;
     border-radius: 0;
-    padding: 40px 25px;
+    padding: 40px 0px;
   }
 `;
 

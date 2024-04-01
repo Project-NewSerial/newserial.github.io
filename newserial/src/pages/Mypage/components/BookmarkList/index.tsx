@@ -59,7 +59,7 @@ const BookmarkList = () => {
         <Content>
           <Lists>
             {myBookmarkDtoList.map((el: BookmarkList, index: number) => (
-              <List border={myBookmarkDtoList.length !== index + 1}>
+              <List border={myBookmarkDtoList.length === index + 1}>
                 <ListLeft>
                   <img src="/assets/icons/icon_bookmark_Y.svg" />
                   <div className="list-left__bookmark">{el.title}</div>
