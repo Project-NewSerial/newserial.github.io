@@ -37,6 +37,8 @@ export const Logo = styled.div`
   color:#FF6F4F;
   font-size:30px;
   font-family: Bangers;
+  margin-top: auto;
+  margin-bottom: 20px;
 
   ${mediaQuery('desktop')}{
     font-size: 55px;
@@ -79,6 +81,8 @@ export const LoginSignup = styled.div`
   margin-left: auto;
   display:flex;
   flex-direction:row;
+  margin-top: auto;
+  margin-bottom: 27px;
 
   ${mediaQuery('desktop')}{
     display:flex;
