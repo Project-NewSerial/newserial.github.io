@@ -4,6 +4,10 @@ const breakpoint = "768px";
 
 const mediaQuery = () => `@media(min-width:${breakpoint})`;
 
+export const Container = styled.div`
+  width: 100%;
+`;
+
 export const Content = styled.div`
   width: 100%;
   height: fit-content;
@@ -11,7 +15,7 @@ export const Content = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  align-items:center;
+  align-items: center;
 `;
 
 export const Lists = styled.div`
@@ -28,13 +32,12 @@ export const List = styled.div<{ border: boolean }>`
   align-items: center;
   border-top: 1px solid #e0e0e0;
   font-family: Noto Sans KR;
-  padding: 10px;
   box-sizing: border-box;
   border-bottom: ${(props) => (props.border ? "1px solid #e0e0e0" : "none")};
-  background-color:white;
+
   ${mediaQuery} {
-    width: 92%;
     border-top: none;
+    border-bottom: 1px solid #e0e0e0;
   }
 `;
 
