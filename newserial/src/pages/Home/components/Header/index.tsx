@@ -24,7 +24,7 @@ const Header = () => {
 
   return (
     <HeaderArea>
-      <Logo>NEWSERIAL</Logo>
+      <Logo onClick={()=>navigate('/')}>NEWSERIAL</Logo>
       {accessToken !== null ? (
         <>
           <SearchIcon

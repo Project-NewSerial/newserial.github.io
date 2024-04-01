@@ -17,7 +17,7 @@ const mediaQuery = (breakpoint: Breakpoints) => `@media (min-width: ${breakpoint
 export const HeaderArea = styled.div`
   label: header-area;
   background-color:#000000;
-  padding-top:61px;
+  padding-top:31px;
   padding-left:20px;
   padding-right:20px;
   height: 51px;
