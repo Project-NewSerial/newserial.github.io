@@ -8,13 +8,16 @@ import { LoadingImageStyle } from "./styles";
 
 interface Props {
   width?: number;
+  marginTop?: string;
+  white?: boolean;
 }
 
-const LoadingImage = ({ width }: Props) => {
+const LoadingImage = ({ width, marginTop, white }: Props) => {
   return (
     <LoadingImageStyle
-      src="/assets/icons/icon_loading.svg"
+      src={ white ? "/assets/icons/icon_loading _white.svg" : "/assets/icons/icon_loading.svg"}
       width={width ? width : 20}
+      style={{marginTop : marginTop? marginTop : "auto"}}
     />
   );
 };

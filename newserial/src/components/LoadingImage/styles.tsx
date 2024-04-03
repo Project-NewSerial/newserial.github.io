@@ -4,5 +4,6 @@ export const LoadingImageStyle = styled.img`
   label: loading-image-style;
   display: block;
   margin:auto;
+  
 
 `;

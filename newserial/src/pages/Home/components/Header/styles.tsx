@@ -42,6 +42,7 @@ export const Logo = styled.div`
 
   ${mediaQuery('desktop')}{
     font-size: 55px;
+    margin-bottom:80px;
     margin-left:auto;
     margin-right:auto;
     border-bottom: 2px solid #FFCD29;
