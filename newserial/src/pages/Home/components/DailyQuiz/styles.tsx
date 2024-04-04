@@ -61,12 +61,14 @@ export const DailyQuizCard = styled.div<{loading:boolean}>`
     border-bottom-right-radius: 15px;
     align-items:center;
     box-shadow: none;
+
     img {
-      position: absolute;
-      right: 40px;
-      top: 40px;
-      cursor: pointer;
+      position: ${(props)=>props?.loading === true ? "static" : "absolute"};
+      right: ${(props)=>props?.loading === true ? "0" : "40px"};
+      top: ${(props)=>props?.loading === true ? "0" : "40px"};
+      cursor: ${(props)=>props?.loading === true ? "default" : "pointer"};
     }
+
   }
 `;
 
