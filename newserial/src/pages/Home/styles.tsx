@@ -14,22 +14,23 @@ const mediaQuery = (breakpoint: Breakpoints) => `@media (min-width: ${breakpoint
 
 export const Container = styled.div`
   label: container;
-
+  margin-bottom: 200px;
 `;
 
 
 export const DailyQuizTitle = styled.div`
   label: daily-quiz-title;
-  position:absolute;
   color: #2E2E2E;
   font-size:1.6rem;
   font-family: NanumSquareNeo;
   font-weight: 500;
-  top:145px;
-  left:35%;
-  right:35%;
+  margin-left:auto;
+  margin-right:auto;
+  margin-top:25px;
+
 
   ${mediaQuery('desktop')}{
     display:none;
   }
 `
+

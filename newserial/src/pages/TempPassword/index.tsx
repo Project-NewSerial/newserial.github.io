@@ -71,7 +71,7 @@ const TempPassword = () => {
     <>
       <Container>
         <Content>
-          <Logo>NEWSERIAL</Logo>
+          <Logo onClick={()=>navigate('/')}>NEWSERIAL</Logo>
           <Text>
             입력하신 이메일로
             <br /> 임시 비밀번호가 발급됩니다.

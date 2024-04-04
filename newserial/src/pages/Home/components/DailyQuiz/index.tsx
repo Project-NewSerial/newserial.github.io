@@ -53,7 +53,9 @@ const DailyQuiz = React.memo((props: {
     <DailyQuizArea  >
       {props?.isLoading &&
         <div style={{ padding: "0px 50px" }}>
-          <DailyQuizCard ><LoadingImage /></DailyQuizCard></div>
+          <DailyQuizCard loading={true} >
+            <LoadingImage white={true}/>
+            </DailyQuizCard></div>
       }
 
 
@@ -64,7 +66,7 @@ const DailyQuiz = React.memo((props: {
             return (
               <div key={el?.wordsId} style={{ width: "100%", padding: "auto" }}>
                 {modalToggle ? (
-                  <DailyQuizCard style={{ backgroundColor: "#ff6f4f"  }}>
+                  <DailyQuizCard loading={false} style={{ backgroundColor: "#ff6f4f"  }}>
                     <img
                       src="/assets/icons/icon_cancel.svg"
                       onClick={() => setModalToggle(false)}
@@ -75,7 +77,7 @@ const DailyQuiz = React.memo((props: {
                   </DailyQuizCard>
 
                 ) :
-                  <DailyQuizCard>
+                  <DailyQuizCard loading={false}>
                     <QuestionRow>Q. {el.question}</QuestionRow>
                     <AnsweredQuizAnswer>A. {el?.quizAnswer}</AnsweredQuizAnswer>
                     <SeeExplanationButton onClick={() => setModalToggle(true)}>
@@ -111,7 +113,7 @@ const DailyQuiz = React.memo((props: {
           } else {
             return (
               <div key={el?.wordsId} style={{ width: "100%", padding: "auto" }}>
-                <DailyQuizCard>
+                <DailyQuizCard loading={false}>
                   <DailyQuizTitle>한 입 퀴즈</DailyQuizTitle>
                   <QuestionRow>{el.question}</QuestionRow>
 

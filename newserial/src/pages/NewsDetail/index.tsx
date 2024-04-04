@@ -301,7 +301,7 @@ const NewsDetail = () => {
     <Container>
       <HeaderArea>
         <HeaderBox>
-          <Logo>NEWSERIAL</Logo>
+          <Logo onClick={()=>navigate('/')}>NEWSERIAL</Logo>
           <SearchButton
             onClick={() => navigate("/search-result")}
             src="/assets/icons/icon_search.svg"
@@ -391,7 +391,7 @@ const NewsDetail = () => {
         <Source>
           <a
             style={{ textDecoration: "none", color: "#979797" }}
-            href={'https://www.' + shortNews?.url}
+            href={shortNews?.url}
             target="_blank"
           >
             출처: {shortNews?.title}
