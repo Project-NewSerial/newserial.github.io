@@ -24,7 +24,7 @@ interface Quiz {
 
 export const NewSerialArea = styled.div<{question:Quiz[]|undefined}>`
   label: new-serial-area;
-  margin-top: ${(props)=>props?.question===undefined||props?.question.length===0 ? "40px":"55px"};
+  margin-top: ${(props)=>props?.question===undefined||props?.question.length===0 ? "40px":"45px"};
   margin-bottom: 100px;
 
 

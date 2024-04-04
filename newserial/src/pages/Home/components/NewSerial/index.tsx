@@ -49,21 +49,20 @@ interface Quiz {
 }
 
 const NewSerial = (props: {
+  latestUpdate: string | undefined,
   question: Quiz[] | undefined,
   newSerialNews: NewSerialNews | undefined,
   newSerialNewsCategory: number,
   setNewSerialNewsCategory: React.Dispatch<React.SetStateAction<number>>
 }) => {
   const navigate = useNavigate();
-  const accessToken = useSelector((state: RootState) => state.auth.accessToken);
 
 
   return (
     <NewSerialArea question={props?.question}>
       <AreaTitleArea>
         <AreaTitle>뉴-시리얼</AreaTitle>
-        <ToolTip message={"뉴-시리얼은 하루에 ~~~~~~~~~~~~~~~~~~~~~~~~~~~"} />
-        {/* <TitleToolTip src="/assets/icons/icon_tooltip.svg" /> */}
+        <ToolTip message={props?.latestUpdate ? '마지막 업데이트 \n'+props?.latestUpdate : "뉴-시리얼 기사는\n네이버 뉴스 탭에서 받아오고 있습니다"} />
       </AreaTitleArea>
       <CategoryArea>
         <CategoryButton onClick={() => props?.setNewSerialNewsCategory(0)}

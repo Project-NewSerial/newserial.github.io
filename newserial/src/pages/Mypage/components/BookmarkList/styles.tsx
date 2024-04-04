@@ -1,4 +1,3 @@
-import { keyframes } from "@emotion/react";
 import styled from "@emotion/styled";
 
 const breakpoint = "768px";
@@ -7,8 +6,6 @@ const mediaQuery = () => `@media(min-width:${breakpoint})`;
 
 export const Container = styled.div`
   width: 100%;
-  display: flex;
-  flex-direction: column;
 `;
 
 export const Content = styled.div`
@@ -35,13 +32,12 @@ export const List = styled.div<{ border: boolean }>`
   align-items: center;
   border-top: 1px solid #e0e0e0;
   font-family: Noto Sans KR;
-  padding: 10px;
   box-sizing: border-box;
   border-bottom: ${(props) => (props.border ? "1px solid #e0e0e0" : "none")};
 
   ${mediaQuery} {
-    width: 92%;
     border-top: none;
+    border-bottom: 1px solid #e0e0e0;
   }
 `;
 

@@ -64,67 +64,60 @@ interface NewSerialNews {
  */
 const Home = () => {
   const location = useLocation();
+  const dispatch = useDispatch();
   const accessToken = useSelector((state: RootState) => state.auth.accessToken);
   const isLoading = useSelector((state: RootState) => state.loading.loading);
-  const dispatch = useDispatch();
+  const [question, setQuestion] = useState<Quiz[]>();
+  const [latestUpdate, setLatestUpdate]=useState<string>();
+  const [mainQuizNews, setMainQuizNews] = useState<MainQuizNews>();
+  const [userAnswerWordsId, setUserAnswerWordsId] = useState<number | undefined>();
+  const [userAnswer, setUserAnswer] = useState<string | undefined>();
+  const [newSerialNews, setNewSerialNews] = useState<NewSerialNews>();
+  const [newSerialNewsCategory, setNewSerialNewsCategory] = useState<number>(0);
 
   const onGetData = () => {
     dispatch(setDoneLoading());
   }
-
-
-
-  const [question, setQuestion] = useState<Quiz[]>();
-  const [mainQuizNews, setMainQuizNews] = useState<MainQuizNews>();
-  const [userAnswerWordsId, setUserAnswerWordsId] = useState<
-    number | undefined
-  >();
-  const [userAnswer, setUserAnswer] = useState<string | undefined>();
-
-  const [newSerialNews, setNewSerialNews] = useState<NewSerialNews>();
-  const [newSerialNewsCategory, setNewSerialNewsCategory] = useState<number>(0);
-
-
 
   /**
    * 한 입 퀴즈 get 하는 함수
    * @return {Array.<{wordIs: number, question : string}>}
    */
   const getQuiz = async () => {
-      try {
-        const { data } = await api.post(
-          `/main-quiz`,
-          {},
-          {
-            headers: {
-              Authorization: accessToken,
-            },
+    try {
+      const { data } = await api.post(
+        `/main-quiz`,
+        {},
+        {
+          headers: {
+            Authorization: accessToken,
+          },
+        }
+      );
+      if (data !== undefined && data.length > 0) {
+        data.map(
+          (el: {
+            userAnswer: string;
+            quizAnswer: string;
+            result: string;
+            explanation: string;
+          }) => {
+            if (!userAnswer) {
+              el.userAnswer = "";
+              el.quizAnswer = "";
+              el.result = "";
+              el.explanation = "";
+            }
           }
         );
-        if (data !== undefined && data.length > 0) {
-          data.map(
-            (el: {
-              userAnswer: string;
-              quizAnswer: string;
-              result: string;
-              explanation: string;
-            }) => {
-              if (!userAnswer) {
-                el.userAnswer = "";
-                el.quizAnswer = "";
-                el.result = "";
-                el.explanation = "";
-              }
-            }
-          );
-          setQuestion(data);
-          onGetData();
+        setQuestion(data);
+        onGetData();
 
-        }
-      } catch (error) {
-        console.log("에러가 발생했습니다.kk", error);
       }
-    
+    } catch (error) {
+      console.log("에러가 발생했습니다.kk", error);
+    }
+
   };
 
   /**
@@ -132,19 +125,37 @@ const Home = () => {
    * @return {Array.<{id: number, title : string}>}
    */
   const getMainQuizNews = async () => {
-      try {
-        const { data } = await api.get(`/main-quiz/news`, {
-          headers: {
-            Authorization: accessToken,
-          },
-        });
-        if (data !== undefined) {
-          setMainQuizNews(data);
-        }
-      } catch (error) {
-        console.log("에러가 발생했습니다.", error);
+    try {
+      const { data } = await api.get(`/main-quiz/news`, {
+        headers: {
+          Authorization: accessToken,
+        },
+      });
+      if (data !== undefined) {
+        setMainQuizNews(data);
       }
-    
+    } catch (error) {
+      console.log("에러가 발생했습니다.", error);
+    }
+
+  };
+
+  /**
+    * 뉴-시리얼 기사 전체 get 함수
+    * @return {Array.<{id: number, title : string}>}
+    */
+  const getLatestUpdate = async () => {
+    try {
+      const { data } = await api.get(`/latestNews`, {
+      });
+      if (data !== undefined) {
+        setLatestUpdate(data.time);
+      } else {
+        return;
+      }
+    }
+    catch (error) {
+    }
   };
 
   /**
@@ -160,7 +171,7 @@ const Home = () => {
       } else {
         return;
       }
-    } 
+    }
     catch (error) {
     }
   };
@@ -221,7 +232,7 @@ const Home = () => {
 
   useEffect(() => {
     getNews();
-
+    getLatestUpdate();
     if (accessToken !== null) {
       getQuiz();
       getMainQuizNews();
@@ -237,7 +248,7 @@ const Home = () => {
   }, [userAnswer]);
 
   useEffect(() => {
-    if ( newSerialNewsCategory === 0) {
+    if (newSerialNewsCategory === 0) {
       getNews();
     } else {
       getCategoryNews();
@@ -274,6 +285,7 @@ const Home = () => {
       }
       {isLoading === true ? <LoadingImage /> :
         <NewSerial
+          latestUpdate={latestUpdate}
           question={question}
           newSerialNews={newSerialNews}
           newSerialNewsCategory={newSerialNewsCategory}
