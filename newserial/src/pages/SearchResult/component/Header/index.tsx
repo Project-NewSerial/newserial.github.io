@@ -10,7 +10,6 @@ import {
   SearchIcon,
 
 } from "./styles";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 interface RelatedWord {

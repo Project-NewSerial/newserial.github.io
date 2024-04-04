@@ -18,7 +18,6 @@ import {
 } from "./styles";
 import Header from "./component/Header";
 import NewSerial from "./component/NewSerial/index";
-import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import api from "../../api";

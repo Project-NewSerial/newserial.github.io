@@ -11,7 +11,6 @@ import {
   AnswerRow,
   AnswerButton,
 } from "./styles";
-import axios from "axios";
 import Slider from 'react-slick';
 import LoadingImage from "../../../../components/LoadingImage";
 import 'slick-carousel/slick/slick.css';
