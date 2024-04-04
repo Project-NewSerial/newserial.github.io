@@ -260,8 +260,6 @@ const Home = () => {
       <Header />
       {accessToken && question !== null && <>
         <DailyQuizTitle>한 입 퀴즈</DailyQuizTitle>
-        {/* {isLoading === true ? <LoadingImage />
-            : ( */}
         <DailyQuiz
           isLoading={isLoading}
           question={question}
@@ -270,27 +268,17 @@ const Home = () => {
           userAnswer={userAnswer}
           setUserAnswer={setUserAnswer}
         />
-        {/* )} */}
-
-
 
         {mainQuizNews ? <CustomNews mainQuizNews={mainQuizNews} /> : null}
-        {/* <NewSerial
-          question={question}
-          newSerialNews={newSerialNews}
-          newSerialNewsCategory={newSerialNewsCategory}
-          setNewSerialNewsCategory={setNewSerialNewsCategory}
-        /> */}
       </>
       }
-      {isLoading === true ? <LoadingImage /> :
         <NewSerial
           latestUpdate={latestUpdate}
           question={question}
           newSerialNews={newSerialNews}
           newSerialNewsCategory={newSerialNewsCategory}
           setNewSerialNewsCategory={setNewSerialNewsCategory}
-        />}
+        />
     </Container>
   );
 };
