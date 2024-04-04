@@ -21,12 +21,12 @@ export const DailyQuizArea = styled.div`
 
   ${mediaQuery('desktop')}{
     position: absolute;
-    top: 200px;
+    top: 210px;
     
   }
 `
 
-export const DailyQuizCard = styled.div`
+export const DailyQuizCard = styled.div<{loading:boolean}>`
   label: daily-quiz-card;
   width:90.75%;
   background-color:#FF6F4F;
@@ -34,7 +34,7 @@ export const DailyQuizCard = styled.div`
   margin-right:auto;
   position:relative;
   height: 256px;
-  margin-top:60px;
+  margin-top:15px;
   margin-bottom: auto;
   border-radius:15px;
   display:flex;
@@ -42,10 +42,10 @@ export const DailyQuizCard = styled.div`
   box-shadow: 4px 4px 4px 4px #E0E0E0;
 
   img {
-    position: absolute;
-    right: 30px;
-    top: 30px;
-    cursor: pointer;
+    position: ${(props)=>props?.loading === true ? "static" : "absolute"};
+    right: ${(props)=>props?.loading === true ? "0" : "30px"};
+    top: ${(props)=>props?.loading === true ? "0" : "30px"};
+    cursor: ${(props)=>props?.loading === true ? "default" : "pointer"};
   }
   
   ${mediaQuery('desktop')}{

@@ -211,7 +211,7 @@ const Signup = () => {
       )}
       <Container>
         <Content>
-          <Logo>NEWSERIAL</Logo>
+          <Logo onClick={()=>navigate('/')}>NEWSERIAL</Logo>
           <InputContent>
             <InputBox>
               <InputText>이메일</InputText>

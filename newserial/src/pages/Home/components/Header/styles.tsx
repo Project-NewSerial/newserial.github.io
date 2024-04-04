@@ -17,7 +17,7 @@ const mediaQuery = (breakpoint: Breakpoints) => `@media (min-width: ${breakpoint
 export const HeaderArea = styled.div`
   label: header-area;
   background-color:#000000;
-  padding-top:61px;
+  padding-top:31px;
   padding-left:20px;
   padding-right:20px;
   height: 51px;
@@ -37,9 +37,12 @@ export const Logo = styled.div`
   color:#FF6F4F;
   font-size:30px;
   font-family: Bangers;
+  margin-top: auto;
+  margin-bottom: 20px;
 
   ${mediaQuery('desktop')}{
     font-size: 55px;
+    margin-bottom:80px;
     margin-left:auto;
     margin-right:auto;
     border-bottom: 2px solid #FFCD29;
@@ -79,6 +82,8 @@ export const LoginSignup = styled.div`
   margin-left: auto;
   display:flex;
   flex-direction:row;
+  margin-top: auto;
+  margin-bottom: 27px;
 
   ${mediaQuery('desktop')}{
     display:flex;
