@@ -3,7 +3,6 @@ import {
   CustomNewsArea,
   NewsTitle,
 } from "./styles";
-import axios from "axios";
 
 interface MainQuizNews {
   id: number,

@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import {
   ToolTipContainer,
 } from "./styles";
-import axios from "axios";
 
 const ToolTip = (props:{message:string}) => {
   return (

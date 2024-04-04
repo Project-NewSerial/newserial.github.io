@@ -3,7 +3,7 @@ import { useNavigate } from "react-router";
 import { useDispatch } from "react-redux";
 import { setToken } from "../../redux/modules/auth";
 import { useState } from "react";
-import axios from "axios";
+import api from "../../api";
 import {
   Container,
   Logo,
@@ -36,8 +36,8 @@ const Login = () => {
    */
   const login = async () => {
     try {
-      const { data } = await axios.post(
-        `${process.env.REACT_APP_API}/login`,
+      const { data } = await api.post(
+        `/login`,
         {
           email: email,
           password: password,
