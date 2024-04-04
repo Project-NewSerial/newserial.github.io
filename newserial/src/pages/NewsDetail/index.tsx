@@ -392,7 +392,7 @@ const NewsDetail = () => {
         <Source>
           <a
             style={{ textDecoration: "none", color: "#979797" }}
-            href={'https://www.' + shortNews?.url}
+            href={shortNews?.url}
             target="_blank"
           >
             출처: {shortNews?.title}
