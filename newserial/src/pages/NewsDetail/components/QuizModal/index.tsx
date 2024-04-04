@@ -11,7 +11,6 @@ import {
   AnsweredAnswerRow,
 
 } from "./styles";
-import axios from "axios";
 
 interface NewSerialAnswered {
   question: string,

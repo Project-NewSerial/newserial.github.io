@@ -4,7 +4,6 @@ import {
   CheckBox,
   ButtonLabel,
 } from "./styles";
-import axios from "axios";
 
 interface ToggleSlideProps {
   isToggleOn: boolean;

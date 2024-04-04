@@ -31,7 +31,6 @@ import Modal from "../../components/Modal";
 import QuizModal from "./components/QuizModal";
 import LoadingImage from "../../components/LoadingImage";
 import api from "../../api";
-import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
 import { getSpeech } from "./utils/getSpeech";
 import { setDoneLoading, setLoading } from "../../redux/modules/loading";

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+import api from "../../api";
 import { useMutation } from "@tanstack/react-query";
 
 import {
@@ -115,7 +115,7 @@ const Signup = () => {
    */
   const sendMail = async () => {
     setInputs({ ...inputs, code: "" });
-    const { data } = await axios.post(`${process.env.REACT_APP_API}/email`, {
+    const { data } = await api.post(`/email`, {
       email: email,
     });
 
@@ -132,8 +132,8 @@ const Signup = () => {
    * @author 신정은
    */
   const checkNumber = async () => {
-    const { data } = await axios.post(
-      `${process.env.REACT_APP_API}/email-number`,
+    const { data } = await api.post(
+      `/email-number`,
       {
         email: email,
         code: code,
@@ -158,7 +158,7 @@ const Signup = () => {
    * @param {string} password 비밀번호
    */
   const signup = async () => {
-    const { data } = await axios.post(`${process.env.REACT_APP_API}/members`, {
+    const { data } = await api.post(`/members`, {
       email: email,
       password: password,
     });

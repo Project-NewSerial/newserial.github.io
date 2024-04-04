@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+import api from "../../api";
 import { useMutation } from "@tanstack/react-query";
 
 import {
@@ -49,8 +49,8 @@ const TempPassword = () => {
    */
   const getTempPassword = async () => {
     try {
-      const { data } = await axios.post(
-        `${process.env.REACT_APP_API}/temp-password`,
+      const { data } = await api.post(
+        `/temp-password`,
         { email: email }
       );
 
