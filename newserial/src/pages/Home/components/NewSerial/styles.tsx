@@ -22,7 +22,7 @@ interface Quiz {
   explanation: string;
 }
 
-export const NewSerialArea = styled.div<{question:Quiz[]|undefined}>`
+export const NewSerialArea = styled.div<{isLoading: boolean,question:Quiz[]|undefined}>`
   label: new-serial-area;
   margin-top: ${(props)=>props?.question===undefined||props?.question.length===0 ? "40px":"45px"};
   margin-bottom: 100px;
@@ -33,7 +33,10 @@ export const NewSerialArea = styled.div<{question:Quiz[]|undefined}>`
     width:60.75%;
     flex-direction: column;
     height: 104px;
-    margin-top:  ${(props)=>props?.question===undefined||props?.question.length===0 ? "40px":"270px"};
+    margin-top:  ${(props)=> props?.question===undefined && props?.isLoading === true ? "270px"
+    : 
+      props?.question===undefined||props?.question.length===0 ? "40px":"270px"};
+
     margin-left:auto;
     margin-right:auto;
     margin-bottom: 200px;
