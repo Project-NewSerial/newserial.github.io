@@ -48,6 +48,7 @@ interface Quiz {
 }
 
 const NewSerial = (props: {
+  isLoading: boolean,
   latestUpdate: string | undefined,
   question: Quiz[] | undefined,
   newSerialNews: NewSerialNews | undefined,
@@ -55,10 +56,11 @@ const NewSerial = (props: {
   setNewSerialNewsCategory: React.Dispatch<React.SetStateAction<number>>
 }) => {
   const navigate = useNavigate();
+  
 
 
   return (
-    <NewSerialArea question={props?.question}>
+    <NewSerialArea question={props?.question} isLoading={props?.isLoading}>
       <AreaTitleArea>
         <AreaTitle>뉴-시리얼</AreaTitle>
         <ToolTip message={props?.latestUpdate ? '마지막 업데이트 \n'+props?.latestUpdate : "뉴-시리얼 기사는\n네이버 뉴스 탭에서 받아오고 있습니다"} />

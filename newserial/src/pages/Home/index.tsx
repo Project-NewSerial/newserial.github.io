@@ -273,6 +273,7 @@ const Home = () => {
       </>
       }
         <NewSerial
+          isLoading={isLoading}
           latestUpdate={latestUpdate}
           question={question}
           newSerialNews={newSerialNews}
