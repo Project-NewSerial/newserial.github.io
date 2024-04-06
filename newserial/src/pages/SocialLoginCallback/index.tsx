@@ -1,10 +1,11 @@
 import React, { useEffect } from "react";
-import { Container, Loading } from "./styles";
+import { Container } from "./styles";
 import api from "../../api";
 import { Navigate, useNavigate, useSearchParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setToken } from "../../redux/modules/auth";
 import { useQuery } from "@tanstack/react-query";
+import LoadingImage from "../../components/LoadingImage";
 
 /**
  * 소셜로그인 콜백 페이지
@@ -20,6 +21,7 @@ const SocialLoginCallback = () => {
     if (token) dispatch(setToken(JSON.stringify(token).split('"')[1]));
     else navigate("*");
   }, []);
+
   /**
    * 쿠키 가져오는 함수
    * @return {boolean} 성공시 true, 실패시 false
@@ -48,9 +50,10 @@ const SocialLoginCallback = () => {
   if (isLoading)
     return (
       <Container>
-        <Loading>LOADING...</Loading>
+        <LoadingImage width={30} />
       </Container>
     );
+
   return data ? <Navigate to="/" /> : <Navigate to={"/login"} />;
 };
 
