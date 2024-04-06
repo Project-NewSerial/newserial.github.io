@@ -26,7 +26,7 @@ export const Container = styled.div`
 
   & > img {
     width: 50%;
-    height: 200px;
+    height: auto;
     margin: 20px 0;
   }
 
@@ -104,4 +104,12 @@ export const Detail = styled.div`
   ${mediaQuery} {
     width: 50%;
   }
+`;
+
+export const LoadingContent = styled.div`
+  width: 100%;
+  height: 250px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
