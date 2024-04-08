@@ -17,8 +17,6 @@ export const HeaderArea = styled.div`
   label: header-area;
   background-color:#000000;
   padding-top:31px;
-  padding-left:20px;
-  padding-right:20px;
   height: 51px;
   display: flex;
   flex-direction:row;
@@ -38,12 +36,14 @@ export const Logo = styled.div`
   font-size:30px;
   font-family: Bangers;
   cursor: pointer;
+  margin-left: 20px;
 
   ${mediaQuery('desktop')}{
     width: 141.8px;
     height: 40px;
     font-size: 4rem;
     margin : auto;
+    margin-right:0px;
   }
 `
 
@@ -51,20 +51,22 @@ export const SearchSection = styled.div`
   label: search-section;
   display: flex;
   flex-direction: column;
+  width: fit-content;
 `
 
 export const SearchArea = styled.input`
   label: searach-area;
-  width: 60%;
+  width: 70%;
   height: 2.5rem;
   color: #D9D9D9;
-  font-size: 1.8rem;
+  font-size: 1.4rem;
   font-family: Noto Sans KR;
   background-color: transparent;
   border: none;
-  margin-left: 50px;
+  margin-left: 20px;
   resize:none;
   overflow: hidden;
+  
 
   :focus {
     outline:none;
@@ -72,6 +74,8 @@ export const SearchArea = styled.input`
 
   ${mediaQuery('desktop')}{
     margin: auto;
+    font-size: 1.8rem;
+    margin-left: 50px;
   }
 `
 
@@ -122,6 +126,7 @@ export const SearchIcon = styled.img`
   height: 20px;
   margin-left:auto;
   cursor: pointer;
+  margin-right: 20px;
 
     
   ${mediaQuery('desktop')}{
