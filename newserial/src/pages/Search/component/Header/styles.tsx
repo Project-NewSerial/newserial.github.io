@@ -45,15 +45,15 @@ export const Logo = styled.div`
 `
 
 export const SearchArea = styled.input`
-  label: searach-area;
-  width: 60%;
+  label: search-area;
+  width: 70%;
   height: 2.5rem;
   color: #D9D9D9;
-  font-size: 1.8rem;
+  font-size: 1.3rem;
   font-family: Noto Sans KR;
   background-color: transparent;
   border: none;
-  margin-left: 50px;
+  margin-left: 10px;
   resize:none;
   overflow: hidden;
   
@@ -64,6 +64,8 @@ export const SearchArea = styled.input`
 
   ${mediaQuery('desktop')}{
     margin: auto;
+    font-size: 1.8rem;
+    margin-left: 50px;
   }
 `
 
