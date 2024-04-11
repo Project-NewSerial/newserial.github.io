@@ -95,7 +95,7 @@ const NewSerial = (props: {
       <NewsList>
         {props?.newSerialNews !== undefined && props?.newSerialNews?.totalNewsCount > 0
           ? props?.newSerialNews.newsListResponseDtos.map((el) => (
-            <NewsRow key={el.id} onClick={() => navigate('/newsdetail', { state: { newsId: el.id, newsCategoryId: el.category_id } })}>
+            <NewsRow key={el.id} onClick={() => navigate('/newsdetail?newsId='+el.id)}>
               <NewsPhoto src={el.image ? el.image : "/assets/images/image_no_image.svg"} />
               <NewsDetailArea>
                 <NewsOrigin>
