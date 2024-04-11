@@ -31,7 +31,7 @@ import Modal from "../../components/Modal";
 import QuizModal from "./components/QuizModal";
 import LoadingImage from "../../components/LoadingImage";
 import api from "../../api";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { getSpeech } from "./utils/getSpeech";
 import { setDoneLoading, setLoading } from "../../redux/modules/loading";
 
@@ -67,6 +67,9 @@ interface NewSerialAnswered {
  */
 const NewsDetail = () => {
   const accessToken = useSelector((state: RootState) => state.auth.accessToken);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const [isToggleOn, setIsToggleOn] = useState<boolean>(false);
   const [shortNews, setShortNews] = useState<ShortNews>();
   const [bookmark, setBookmark] = useState<boolean>();
@@ -77,30 +80,23 @@ const NewsDetail = () => {
 
   const [paraphraseQuestion, setParaphraseQuestion] = useState<string>("");
   const [paraphraseResult, setParaphraseResult] = useState<string>("");
-  const [newSerialAnswered, setNewSerialAnswered] = useState<
-    NewSerialAnswered | undefined
-  >();
-  const [newSerialNotAnswered, setNewSerialNotAnswered] = useState<
-    string | undefined
-  >("");
+  const [newSerialAnswered, setNewSerialAnswered] = useState<NewSerialAnswered | undefined>();
+  const [newSerialNotAnswered, setNewSerialNotAnswered] = useState<string | undefined>("");
 
   const [modalToggle, setModalToggle] = useState(false);
   const [userQuizAnswer, setUserQuizAnswer] = useState<string | undefined>();
 
-  const location = useLocation();
-  const newsId = location.state.newsId;
-  // const newsCategoryId = location.state.newsCategoryId;
+  const location=useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const newsId = searchParams.get('newsId');
 
   const isLoading = useSelector((state: RootState) => state.loading.loading);
-  const dispatch = useDispatch();
 
-  const navigate = useNavigate();
 
 
   const onGetData = () => {
     dispatch(setDoneLoading());
   }
-
 
 
   /**
