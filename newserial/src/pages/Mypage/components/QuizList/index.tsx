@@ -1,7 +1,4 @@
-import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { useQuery } from "@tanstack/react-query";
-import api from "../../../../api";
+import React, { useState } from "react";
 import {
   Container,
   List,
@@ -16,12 +13,7 @@ import {
 } from "./styles";
 import LoadingImage from "../../../../components/LoadingImage";
 import Pagination from "../../../../components/Pagination";
-
-interface RootState {
-  auth: {
-    accessToken: null | string;
-  };
-}
+import useGetData from '../../../../hooks/useGetData';
 
 interface QuizList {
   quizQuestion: string;
@@ -31,24 +23,10 @@ interface QuizList {
 }
 
 const QuizList = () => {
-  const accessToken = useSelector((state: RootState) => state.auth.accessToken);
   const [page, setPage] = useState(0);
 
   //퀴즈 목록
-  const getQuizList = async () => {
-    const { data } = await api.get(`/mypage/quiz?page=${page}`, {
-      headers: {
-        Authorization: `${accessToken}`,
-      },
-    });
-
-    return data;
-  };
-
-  const { isLoading, data } = useQuery({
-    queryKey: ["quiz", accessToken, page],
-    queryFn: getQuizList,
-  });
+  const {isLoading, data} = useGetData(`/mypage/quiz?page=${page}`);
 
   if (isLoading)
     return (
