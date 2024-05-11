@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Container, Detail, Info, Title, Top, LoadingContent } from "./styles";
 import InfoModal from "../InfoModal";
 import LoadingImage from "../../../../components/LoadingImage";
-import useGetData from '../../../../hooks/useGetData';
+import useCommon from "../../../../hooks/queries/useCommon";
 
 interface RootState {
   auth: {
@@ -14,9 +14,7 @@ const PetContent = () => {
   const [toggle, setToggle] = useState(false);
 
   //펫 상태 조회
-  const {isLoading, data:petInfo} = useGetData(`/mypage/pet`);
-
-
+  const { isLoading, data: petInfo } = useCommon(`/mypage/pet`);
 
   return (
     <Container>

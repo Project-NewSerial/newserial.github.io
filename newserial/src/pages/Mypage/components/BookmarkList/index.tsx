@@ -10,8 +10,7 @@ import {
   ListRight,
   NoData,
 } from "./styles";
-import useGetData from "../../../../hooks/useGetData";
-
+import useCommon from "../../../../hooks/queries/useCommon";
 
 interface BookmarkList {
   title: string;
@@ -22,7 +21,7 @@ const BookmarkList = () => {
   const [page, setPage] = useState(0);
 
   //북마크 리스트 데이터 가져오기
-  const {isLoading, data} = useGetData(`/mypage/bookmark?page=${page}`);
+  const { isLoading, data } = useCommon(`/mypage/bookmark?page=${page}`);
 
   if (isLoading)
     return (

@@ -13,7 +13,7 @@ import {
 } from "./styles";
 import LoadingImage from "../../../../components/LoadingImage";
 import Pagination from "../../../../components/Pagination";
-import useGetData from '../../../../hooks/useGetData';
+import useCommon from "../../../../hooks/queries/useCommon";
 
 interface QuizList {
   quizQuestion: string;
@@ -26,7 +26,7 @@ const QuizList = () => {
   const [page, setPage] = useState(0);
 
   //퀴즈 목록
-  const {isLoading, data} = useGetData(`/mypage/quiz?page=${page}`);
+  const { isLoading, data } = useCommon(`/mypage/quiz?page=${page}`);
 
   if (isLoading)
     return (
