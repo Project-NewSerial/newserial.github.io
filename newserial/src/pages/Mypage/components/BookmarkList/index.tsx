@@ -1,7 +1,4 @@
-import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { useQuery } from "@tanstack/react-query";
-import api from "../../../../api";
+import React, { useState } from "react";
 import Pagination from "../../../../components/Pagination";
 import LoadingImage from "../../../../components/LoadingImage";
 import {
@@ -13,11 +10,7 @@ import {
   ListRight,
   NoData,
 } from "./styles";
-interface RootState {
-  auth: {
-    accessToken: null | string;
-  };
-}
+import useCommon from "../../../../hooks/queries/useCommon";
 
 interface BookmarkList {
   title: string;
@@ -25,24 +18,10 @@ interface BookmarkList {
 }
 
 const BookmarkList = () => {
-  const accessToken = useSelector((state: RootState) => state.auth.accessToken);
   const [page, setPage] = useState(0);
 
-  //북마크 기사 목록
-  const getBookmarkList = async () => {
-    const { data } = await api.get(`/mypage/bookmark?page=${page}`, {
-      headers: {
-        Authorization: `${accessToken}`,
-      },
-    });
-
-    return data;
-  };
-
-  const { isLoading, data } = useQuery({
-    queryKey: ["bookmark", accessToken, page],
-    queryFn: getBookmarkList,
-  });
+  //북마크 리스트 데이터 가져오기
+  const { isLoading, data } = useCommon(`/mypage/bookmark?page=${page}`);
 
   if (isLoading)
     return (

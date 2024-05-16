@@ -1,10 +1,8 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
-import { useQuery } from "@tanstack/react-query";
 import { Container, Detail, Info, Title, Top, LoadingContent } from "./styles";
-import api from "../../../../api";
 import InfoModal from "../InfoModal";
 import LoadingImage from "../../../../components/LoadingImage";
+import useCommon from "../../../../hooks/queries/useCommon";
 
 interface RootState {
   auth: {
@@ -13,24 +11,10 @@ interface RootState {
 }
 
 const PetContent = () => {
-  const accessToken = useSelector((state: RootState) => state.auth.accessToken);
   const [toggle, setToggle] = useState(false);
 
   //펫 상태 조회
-  const getPetInfo = async () => {
-    const { data } = await api.get(`/mypage/pet`, {
-      headers: {
-        Authorization: `${accessToken}`,
-      },
-    });
-
-    return data;
-  };
-
-  const { data: petInfo, isLoading } = useQuery({
-    queryKey: ["pet", accessToken],
-    queryFn: getPetInfo,
-  });
+  const { isLoading, data: petInfo } = useCommon(`/mypage/pet`);
 
   return (
     <Container>

@@ -1,7 +1,4 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
-import { useQuery } from "@tanstack/react-query";
-import api from "../../api";
 import {
   Container,
   Main,
@@ -17,19 +14,13 @@ import Tabs from "./components/Tabs";
 import PetContent from "./components/PetContent";
 import QuizList from "./components/QuizList";
 import BookmarkList from "./components/BookmarkList";
-
-interface RootState {
-  auth: {
-    accessToken: null | string;
-  };
-}
+import useCommon from "../../hooks/queries/useCommon";
 
 /**
  * 마이페이지
  * @author 신정은
  */
 const Mypage = () => {
-  const accessToken = useSelector((state: RootState) => state.auth.accessToken);
   const [selectedTab, setSelectedTab] = useState(0);
   const [passwordToggle, setPasswordToggle] = useState(false);
 
@@ -39,20 +30,7 @@ const Mypage = () => {
   ];
 
   //유저 정보 조회
-  const getUserInfo = async () => {
-    const { data } = await api.get(`/mypage`, {
-      headers: {
-        Authorization: `${accessToken}`,
-      },
-    });
-
-    return data;
-  };
-
-  const { isLoading, data: userInfo } = useQuery({
-    queryKey: ["user", accessToken, selectedTab],
-    queryFn: getUserInfo,
-  });
+  const { data: userInfo } = useCommon(`/mypage`);
 
   return (
     <Container>
