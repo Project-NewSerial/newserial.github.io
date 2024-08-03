@@ -1,9 +1,5 @@
-import React, { useEffect } from "react";
 import { useNavigate } from "react-router";
-import { useDispatch } from "react-redux";
-import { setToken } from "../../state/redux/modules/auth";
-import { useState } from "react";
-import api from "../../api/api";
+
 import {
   Container,
   Logo,
@@ -16,43 +12,22 @@ import {
   Content,
   ColorText,
 } from "./styles";
-import { useMutation } from "@tanstack/react-query";
-import useLogin from "./login.hook";
+import useLogin from "./Login.hook";
 
 /**
  * 로그인 페이지
  * @author 신정은
  */
 const Login = () => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { handleLoginButtonClick } = useLogin();
+  const {
+    handleLoginButtonClick,
+    handleNaverLoginButtonClick,
+    changeInput,
+    inputs,
+  } = useLogin();
 
-  const [inputs, setInputs] = useState({ email: "", password: "" });
   const { email, password } = inputs;
-
-  //소셜로그인 함수
-  const naverLogin = async () => {
-    const url = `${process.env.REACT_APP_API}/oauth2/authorization/naver`;
-    try {
-      window.location.href = new URL(url, window.location.origin).href;
-    } catch (error: any) {
-      console.log(error);
-    }
-  };
-
-  const { mutate: naverLoginMutate } = useMutation({
-    mutationFn: naverLogin,
-  });
-
-  /**
-   * inputs 변경 함수
-   * @param {React.ChangeEvent<HTMLInputElement>} e 이벤트
-   */
-  const changeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setInputs({ ...inputs, [name]: value });
-  };
 
   return (
     <Container>
@@ -88,7 +63,7 @@ const Login = () => {
         <img
           src="/assets/images/btnD_완성형.png"
           width={150}
-          onClick={() => naverLoginMutate()}
+          onClick={handleNaverLoginButtonClick}
         />
       </Content>
     </Container>
