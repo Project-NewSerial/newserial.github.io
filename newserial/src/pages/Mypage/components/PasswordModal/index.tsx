@@ -12,7 +12,7 @@ import {
 } from "./styles";
 import { useSelector } from "react-redux";
 import { useMutation } from "@tanstack/react-query";
-import api from '../../../../api';
+import api from "../../../../api/api";
 
 interface propsType {
   setToggle: React.Dispatch<React.SetStateAction<boolean>>;

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Container, DailyQuizTitle, } from "./styles";
+import { Container, DailyQuizTitle } from "./styles";
 import Header from "./components/Header/index";
 import LoadingImage from "../../components/LoadingImage";
 import DailyQuiz from "./components/DailyQuiz/index";
@@ -7,10 +7,9 @@ import CustomNews from "./components/CustomNews/index";
 import NewSerial from "./components/NewSerial/index";
 import { useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import api from "../../api";
+import api from "../../api/api";
 
-
-import { setLoading, setDoneLoading } from '../../redux/modules/loading';
+import { setLoading, setDoneLoading } from "../../state/redux/modules/loading";
 
 interface RootState {
   auth: {
@@ -18,7 +17,7 @@ interface RootState {
   };
   loading: {
     loading: boolean;
-  }
+  };
 }
 
 interface Quiz {
@@ -68,16 +67,18 @@ const Home = () => {
   const accessToken = useSelector((state: RootState) => state.auth.accessToken);
   const isLoading = useSelector((state: RootState) => state.loading.loading);
   const [question, setQuestion] = useState<Quiz[]>();
-  const [latestUpdate, setLatestUpdate]=useState<string>();
+  const [latestUpdate, setLatestUpdate] = useState<string>();
   const [mainQuizNews, setMainQuizNews] = useState<MainQuizNews>();
-  const [userAnswerWordsId, setUserAnswerWordsId] = useState<number | undefined>();
+  const [userAnswerWordsId, setUserAnswerWordsId] = useState<
+    number | undefined
+  >();
   const [userAnswer, setUserAnswer] = useState<string | undefined>();
   const [newSerialNews, setNewSerialNews] = useState<NewSerialNews>();
   const [newSerialNewsCategory, setNewSerialNewsCategory] = useState<number>(0);
 
   const onGetData = () => {
     dispatch(setDoneLoading());
-  }
+  };
 
   /**
    * 한 입 퀴즈 get 하는 함수
@@ -112,12 +113,10 @@ const Home = () => {
         );
         setQuestion(data);
         onGetData();
-
       }
     } catch (error) {
       console.log("에러가 발생했습니다.kk", error);
     }
-
   };
 
   /**
@@ -137,25 +136,21 @@ const Home = () => {
     } catch (error) {
       console.log("에러가 발생했습니다.", error);
     }
-
   };
 
   /**
-    * 뉴-시리얼 기사 전체 get 함수
-    * @return {Array.<{id: number, title : string}>}
-    */
+   * 뉴-시리얼 기사 전체 get 함수
+   * @return {Array.<{id: number, title : string}>}
+   */
   const getLatestUpdate = async () => {
     try {
-      const { data } = await api.get(`/latestNews`, {
-      });
+      const { data } = await api.get(`/latestNews`, {});
       if (data !== undefined) {
         setLatestUpdate(data.time);
       } else {
         return;
       }
-    }
-    catch (error) {
-    }
+    } catch (error) {}
   };
 
   /**
@@ -164,16 +159,13 @@ const Home = () => {
    */
   const getNews = async () => {
     try {
-      const { data } = await api.get(`/newserial?page=0`, {
-      });
+      const { data } = await api.get(`/newserial?page=0`, {});
       if (data !== undefined) {
         setNewSerialNews(data);
       } else {
         return;
       }
-    }
-    catch (error) {
-    }
+    } catch (error) {}
   };
 
   /**
@@ -183,7 +175,7 @@ const Home = () => {
   const getCategoryNews = async () => {
     try {
       const { data } = await api.get(
-        `/newserial/${newSerialNewsCategory}?page=0`,
+        `/newserial/${newSerialNewsCategory}?page=0`
       );
       if (data !== undefined) {
         setNewSerialNews(data);
@@ -218,7 +210,7 @@ const Home = () => {
               if (question.wordsId === userAnswerWordsId) {
                 return { ...question, ...data };
               }
-              setUserAnswer('');
+              setUserAnswer("");
               return question;
             });
           });
@@ -228,7 +220,6 @@ const Home = () => {
       }
     }
   };
-
 
   useEffect(() => {
     getNews();
@@ -258,28 +249,29 @@ const Home = () => {
   return (
     <Container>
       <Header />
-      {accessToken && question !== null && <>
-        <DailyQuizTitle>한 입 퀴즈</DailyQuizTitle>
-        <DailyQuiz
-          isLoading={isLoading}
-          question={question}
-          userAnswerWordsId={userAnswerWordsId}
-          setUserAnswerWordsId={setUserAnswerWordsId}
-          userAnswer={userAnswer}
-          setUserAnswer={setUserAnswer}
-        />
+      {accessToken && question !== null && (
+        <>
+          <DailyQuizTitle>한 입 퀴즈</DailyQuizTitle>
+          <DailyQuiz
+            isLoading={isLoading}
+            question={question}
+            userAnswerWordsId={userAnswerWordsId}
+            setUserAnswerWordsId={setUserAnswerWordsId}
+            userAnswer={userAnswer}
+            setUserAnswer={setUserAnswer}
+          />
 
-        {mainQuizNews ? <CustomNews mainQuizNews={mainQuizNews} /> : null}
-      </>
-      }
-        <NewSerial
-          isLoading={isLoading}
-          latestUpdate={latestUpdate}
-          question={question}
-          newSerialNews={newSerialNews}
-          newSerialNewsCategory={newSerialNewsCategory}
-          setNewSerialNewsCategory={setNewSerialNewsCategory}
-        />
+          {mainQuizNews ? <CustomNews mainQuizNews={mainQuizNews} /> : null}
+        </>
+      )}
+      <NewSerial
+        isLoading={isLoading}
+        latestUpdate={latestUpdate}
+        question={question}
+        newSerialNews={newSerialNews}
+        newSerialNewsCategory={newSerialNewsCategory}
+        setNewSerialNewsCategory={setNewSerialNewsCategory}
+      />
     </Container>
   );
 };

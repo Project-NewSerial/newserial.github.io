@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import { Container } from "./styles";
-import api from "../../api";
+import api from "../../api/api";
 import { Navigate, useNavigate, useSearchParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { setToken } from "../../redux/modules/auth";
+import { setToken } from "../../state/redux/modules/auth";
 import { useQuery } from "@tanstack/react-query";
 import LoadingImage from "../../components/LoadingImage";
 

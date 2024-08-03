@@ -1,6 +1,6 @@
 import axios from "axios";
-import { setToken } from "./redux/modules/auth";
-import store from "./redux/store";
+import { setToken } from "../state/redux/modules/auth";
+import store from "../state/redux/store";
 
 const { dispatch } = store;
 

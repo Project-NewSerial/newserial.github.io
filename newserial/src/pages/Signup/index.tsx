@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import api from "../../api";
+import api from "../../api/api";
 import { useMutation } from "@tanstack/react-query";
 
 import {
@@ -132,13 +132,10 @@ const Signup = () => {
    * @author 신정은
    */
   const checkNumber = async () => {
-    const { data } = await api.post(
-      `/email-number`,
-      {
-        email: email,
-        code: code,
-      }
-    );
+    const { data } = await api.post(`/email-number`, {
+      email: email,
+      code: code,
+    });
     if (data === "인증되었습니다.") {
       setIsValid({ ...isValid, emailCode: true });
       setToggle(false);
@@ -211,7 +208,7 @@ const Signup = () => {
       )}
       <Container>
         <Content>
-          <Logo onClick={()=>navigate('/')}>NEWSERIAL</Logo>
+          <Logo onClick={() => navigate("/")}>NEWSERIAL</Logo>
           <InputContent>
             <InputBox>
               <InputText>이메일</InputText>

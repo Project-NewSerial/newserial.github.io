@@ -3,8 +3,8 @@ import { useMutation } from "@tanstack/react-query";
 import { Container, Left, Right } from "./styles";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { setToken } from "../../../../redux/modules/auth";
-import api from "../../../../api";
+import { setToken } from "../../../../state/redux/modules/auth";
+import api from "../../../../api/api";
 
 /**
  * Mypage의 Header 컴포넌트

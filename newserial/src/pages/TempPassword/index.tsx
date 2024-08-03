@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import api from "../../api";
+import api from "../../api/api";
 import { useMutation } from "@tanstack/react-query";
 
 import {
@@ -49,10 +49,7 @@ const TempPassword = () => {
    */
   const getTempPassword = async () => {
     try {
-      const { data } = await api.post(
-        `/temp-password`,
-        { email: email }
-      );
+      const { data } = await api.post(`/temp-password`, { email: email });
 
       if (data) {
         alert(data);
@@ -71,7 +68,7 @@ const TempPassword = () => {
     <>
       <Container>
         <Content>
-          <Logo onClick={()=>navigate('/')}>NEWSERIAL</Logo>
+          <Logo onClick={() => navigate("/")}>NEWSERIAL</Logo>
           <Text>
             입력하신 이메일로
             <br /> 임시 비밀번호가 발급됩니다.

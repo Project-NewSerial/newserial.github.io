@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router";
 import { useDispatch } from "react-redux";
-import { setToken } from "../../redux/modules/auth";
+import { setToken } from "../../state/redux/modules/auth";
 import { useState } from "react";
-import api from "../../api";
+import api from "../../api/api";
 import {
   Container,
   Logo,
@@ -17,6 +17,7 @@ import {
   ColorText,
 } from "./styles";
 import { useMutation } from "@tanstack/react-query";
+import useLogin from "./login.hook";
 
 /**
  * 로그인 페이지
@@ -25,33 +26,10 @@ import { useMutation } from "@tanstack/react-query";
 const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { handleLoginButtonClick } = useLogin();
 
   const [inputs, setInputs] = useState({ email: "", password: "" });
   const { email, password } = inputs;
-
-  /**
-   * 로그인하는 함수
-   * @param {string} email 이메일
-   * @param {string} password 비밀전호
-   */
-  const login = async () => {
-    try {
-      const { data } = await api.post(
-        `/login`,
-        {
-          email: email,
-          password: password,
-        },
-        {
-          withCredentials: true,
-        }
-      );
-      dispatch(setToken(data.accessToken));
-      navigate("/");
-    } catch (error: any) {
-      alert("입력하신 정보를 다시 확인해주세요.");
-    }
-  };
 
   //소셜로그인 함수
   const naverLogin = async () => {
@@ -63,9 +41,6 @@ const Login = () => {
     }
   };
 
-  const { mutate: loginMutate } = useMutation({
-    mutationFn: login,
-  });
   const { mutate: naverLoginMutate } = useMutation({
     mutationFn: naverLogin,
   });
@@ -82,7 +57,7 @@ const Login = () => {
   return (
     <Container>
       <Content>
-        <Logo onClick={()=>navigate('/')}>NEWSERIAL</Logo>
+        <Logo onClick={() => navigate("/")}>NEWSERIAL</Logo>
         <InputContent>
           <InputBox>
             <InputText>이메일</InputText>
@@ -105,7 +80,7 @@ const Login = () => {
         <ColorText onClick={() => navigate("/temp-password")}>
           비밀번호를 잊어버리셨나요?
         </ColorText>
-        <Button onClick={() => loginMutate()}>로그인</Button>
+        <Button onClick={handleLoginButtonClick}>로그인</Button>
         <BottomText>
           Newserial 회원이 아니신가요? &nbsp;
           <span onClick={() => navigate("/signup")}>회원가입 하기</span>

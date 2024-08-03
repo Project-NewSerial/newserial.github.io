@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
-import api from "../../api";
+import api from "../../api/api";
 import { useDispatch } from "react-redux";
-import { setToken } from "../../redux/modules/auth";
+import { setToken } from "../../state/redux/modules/auth";
 
 /**
  * reissue api 요청 처리하는 hook

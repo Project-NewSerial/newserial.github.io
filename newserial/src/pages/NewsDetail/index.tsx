@@ -30,10 +30,10 @@ import { useSelector, useDispatch } from "react-redux";
 import Modal from "../../components/Modal";
 import QuizModal from "./components/QuizModal";
 import LoadingImage from "../../components/LoadingImage";
-import api from "../../api";
+import api from "../../api/api";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { getSpeech } from "./utils/getSpeech";
-import { setDoneLoading, setLoading } from "../../redux/modules/loading";
+import { setDoneLoading, setLoading } from "../../state/redux/modules/loading";
 
 interface RootState {
   auth: {
@@ -41,7 +41,7 @@ interface RootState {
   };
   loading: {
     loading: boolean;
-  }
+  };
 }
 
 interface ShortNews {
@@ -80,24 +80,25 @@ const NewsDetail = () => {
 
   const [paraphraseQuestion, setParaphraseQuestion] = useState<string>("");
   const [paraphraseResult, setParaphraseResult] = useState<string>("");
-  const [newSerialAnswered, setNewSerialAnswered] = useState<NewSerialAnswered | undefined>();
-  const [newSerialNotAnswered, setNewSerialNotAnswered] = useState<string | undefined>("");
+  const [newSerialAnswered, setNewSerialAnswered] = useState<
+    NewSerialAnswered | undefined
+  >();
+  const [newSerialNotAnswered, setNewSerialNotAnswered] = useState<
+    string | undefined
+  >("");
 
   const [modalToggle, setModalToggle] = useState(false);
   const [userQuizAnswer, setUserQuizAnswer] = useState<string | undefined>();
 
-  const location=useLocation();
+  const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
-  const newsId = searchParams.get('newsId');
+  const newsId = searchParams.get("newsId");
 
   const isLoading = useSelector((state: RootState) => state.loading.loading);
 
-
-
   const onGetData = () => {
     dispatch(setDoneLoading());
-  }
-
+  };
 
   /**
    * 뉴스 paraphase post 함수
@@ -113,7 +114,7 @@ const NewsDetail = () => {
           "Content-Type": "application/json",
           Authorization: accessToken,
         },
-      })
+      });
       if (data !== undefined) {
         setParaphraseResult(data);
         onGetData();
@@ -127,17 +128,20 @@ const NewsDetail = () => {
   const postBookmark = async () => {
     if (accessToken !== null) {
       try {
-
-        const { data } = await api.post(`/bookmark/` + newsId, {}, {
-          headers: {
-            Authorization: accessToken,
-          },
-        })
+        const { data } = await api.post(
+          `/bookmark/` + newsId,
+          {},
+          {
+            headers: {
+              Authorization: accessToken,
+            },
+          }
+        );
         if (data !== undefined) {
           setBookmark(true);
         }
       } catch (error) {
-        console.log('error가 발생했습니다', error)
+        console.log("error가 발생했습니다", error);
       }
     }
   };
@@ -152,12 +156,12 @@ const NewsDetail = () => {
           headers: {
             Authorization: accessToken,
           },
-        })
+        });
         if (data !== undefined) {
           setBookmark(false);
         }
       } catch (error) {
-        console.log('error가 발생했습니다.', error)
+        console.log("error가 발생했습니다.", error);
       }
     }
   };
@@ -170,20 +174,24 @@ const NewsDetail = () => {
     setModalToggle(true);
     if (accessToken !== null) {
       try {
-        const { data } = await api.post(`/newserial-quiz/` + newsId, {}, {
-          headers: {
-            Authorization: accessToken,
-          },
-        })
+        const { data } = await api.post(
+          `/newserial-quiz/` + newsId,
+          {},
+          {
+            headers: {
+              Authorization: accessToken,
+            },
+          }
+        );
         if (data !== undefined) {
           if (data.userAnswer) {
             setNewSerialAnswered(data);
           } else if (data?.question) {
-            setNewSerialNotAnswered(data.question)
+            setNewSerialNotAnswered(data.question);
           }
         }
       } catch (error) {
-        console.log('에러가 발생했습니다.', error);
+        console.log("에러가 발생했습니다.", error);
       }
     }
   };
@@ -206,22 +214,21 @@ const NewsDetail = () => {
           headers: {
             Authorization: accessToken,
           },
-        })
+        });
         if (data !== undefined) {
           setNewSerialNotAnswered("");
           setNewSerialAnswered(data);
         }
       } catch (error) {
-        console.log('에러가 발생했습니다.', error);
+        console.log("에러가 발생했습니다.", error);
       }
     }
   };
 
-
   /**
- * 뉴스 상세 get 함수
- * @returns {id: number, title : string, body: string[], category_name:string, url: string}
- */
+   * 뉴스 상세 get 함수
+   * @returns {id: number, title : string, body: string[], category_name:string, url: string}
+   */
   const getNewsDetail = async () => {
     try {
       const { data } = await api.get(`/short-news/` + newsId, {
@@ -239,8 +246,7 @@ const NewsDetail = () => {
     } catch (error) {
       console.error("API 요청 중 오류가 발생했습니다:", error);
     }
-  }
-
+  };
 
   const handleParaphraseQuestion = (el: string) => {
     dispatch(setLoading());
@@ -249,15 +255,12 @@ const NewsDetail = () => {
     } else if (el !== paraphraseQuestion) {
       postParaphrase(el);
     }
-  }
-
-
+  };
 
   useEffect(() => {
     getNewsDetail();
-    window.speechSynthesis.getVoices()
+    window.speechSynthesis.getVoices();
   }, [accessToken]);
-
 
   useEffect(() => {
     if (isToggleOn === false) {
@@ -272,7 +275,6 @@ const NewsDetail = () => {
     }
   }, [userQuizAnswer]);
 
-
   function stopSpeech() {
     if (window.speechSynthesis.speaking) {
       window.speechSynthesis.cancel();
@@ -282,22 +284,22 @@ const NewsDetail = () => {
 
   useEffect(() => {
     if (TTStext !== undefined && TTStext.length > 0) {
-      const newsBody = TTStext.join(' ');
-      const noSpace = newsBody.split(' ').join('');
+      const newsBody = TTStext.join(" ");
+      const noSpace = newsBody.split(" ").join("");
       getSpeech(newsBody);
       setTimeout(() => {
         setIsTTSOn(false);
-      }, (noSpace.length) * 206)
+      }, noSpace.length * 206);
 
       setTTStext(undefined);
     }
-  }, [TTStext])
+  }, [TTStext]);
 
   return (
     <Container>
       <HeaderArea>
         <HeaderBox>
-          <Logo onClick={()=>navigate('/')}>NEWSERIAL</Logo>
+          <Logo onClick={() => navigate("/")}>NEWSERIAL</Logo>
           <SearchButton
             onClick={() => navigate("/search-result")}
             src="/assets/icons/icon_search.svg"
@@ -318,7 +320,8 @@ const NewsDetail = () => {
               setUserQuizAnswer={setUserQuizAnswer}
               newSerialAnswered={newSerialAnswered}
               newSerialNotAnswered={newSerialNotAnswered}
-            />}
+            />
+          }
           colorSelected="#F7F7F7"
         />
       )}
@@ -341,17 +344,23 @@ const NewsDetail = () => {
           }
         />
         <MenuArea>
-          <Speaker onClick={() => {
-            if (isTTSOn === true) {
-              stopSpeech();
-            } else {
-              if (shortNews?.body !== undefined) {
-                setIsTTSOn(true);
-                setTTStext(shortNews?.body);
+          <Speaker
+            onClick={() => {
+              if (isTTSOn === true) {
+                stopSpeech();
+              } else {
+                if (shortNews?.body !== undefined) {
+                  setIsTTSOn(true);
+                  setTTStext(shortNews?.body);
+                }
               }
+            }}
+            src={
+              isTTSOn === true
+                ? "/assets/icons/icon_speaker_Y.svg"
+                : "/assets/icons/icon_speaker_N.svg"
             }
-          }}
-            src={isTTSOn === true ? "/assets/icons/icon_speaker_Y.svg" : "/assets/icons/icon_speaker_N.svg"} />
+          />
           <ParaphraseArea>
             <Paraphrase>쉬운 설명</Paraphrase>
             <ToggleSlide
@@ -364,18 +373,15 @@ const NewsDetail = () => {
         <NewsContent>
           {shortNews?.body?.map((el, index) =>
             el === paraphraseQuestion ? (
-              <div key={'question_' + index} style={{ width: "100%" }}>
-                <ParaphraseQuestionSentence >{el}</ParaphraseQuestionSentence>
+              <div key={"question_" + index} style={{ width: "100%" }}>
+                <ParaphraseQuestionSentence>{el}</ParaphraseQuestionSentence>
                 <ParaphraseQuestionResult>
-                  {isLoading ?
-                    <LoadingImage />
-                    : paraphraseResult}
-
+                  {isLoading ? <LoadingImage /> : paraphraseResult}
                 </ParaphraseQuestionResult>
               </div>
             ) : (
               <NewsSentence
-                key={'news_' + index}
+                key={"news_" + index}
                 isToggleOn={isToggleOn}
                 onClick={() => handleParaphraseQuestion(el)}
               >
