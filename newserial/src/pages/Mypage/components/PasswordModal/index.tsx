@@ -120,9 +120,13 @@ const PasswordModal = ({ setToggle }: propsType) => {
     mutationFn: resetPassword,
   });
 
+  const handleModalClose = () => {
+    setToggle(false);
+  };
+
   return (
     <Modal
-      setToggle={setToggle}
+      onModalClose={handleModalClose}
       content={
         <>
           <Title>비밀번호 재설정</Title>

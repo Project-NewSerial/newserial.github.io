@@ -295,6 +295,10 @@ const NewsDetail = () => {
     }
   }, [TTStext]);
 
+  const handleModalClose = () => {
+    setModalToggle(false);
+  };
+
   return (
     <Container>
       <HeaderArea>
@@ -313,7 +317,7 @@ const NewsDetail = () => {
 
       {modalToggle && (
         <Modal
-          setToggle={setModalToggle}
+          onModalClose={handleModalClose}
           content={
             <QuizModal
               userQuizAnswer={userQuizAnswer}

@@ -18,9 +18,13 @@ const InfoModal = ({ setToggle }: propsType) => {
     "평민견 : 11~30번",
   ];
 
+  const handleModalClose = () => {
+    setToggle(false);
+  };
+
   return (
     <Modal
-      setToggle={setToggle}
+      onModalClose={handleModalClose}
       content={
         <>
           <Title>최근 30일 기준</Title>
