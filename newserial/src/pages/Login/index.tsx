@@ -13,12 +13,13 @@ import {
   ColorText,
 } from "./styles";
 import useLogin from "./Login.hook";
+import { FC } from "react";
 
 /**
  * 로그인 페이지
  * @author 신정은
  */
-const Login = () => {
+const Login: FC = () => {
   const navigate = useNavigate();
   const {
     handleLoginButtonClick,

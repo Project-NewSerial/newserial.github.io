@@ -24,21 +24,21 @@ export const useMutationNaverLogin = () =>
     onError: () => alert("로그인에 실패했습니다."),
   });
 
-export const useMutationSeneMail = (params: SendMailParams) =>
+export const useMutationSendMail = () =>
   useMutation({
-    mutationFn: () => sendMail(params),
+    mutationFn: sendMail,
   });
 
-export const useMutationCheckNumber = (params: CheckNumberParams) =>
+export const useMutationCheckNumber = () =>
   useMutation({
-    mutationFn: () => checkNumber(params),
+    mutationFn: checkNumber,
   });
 
-export const useMutationSignup = (params: SignupParams) => {
+export const useMutationSignup = () => {
   const navigate = useNavigate();
 
   return useMutation({
-    mutationFn: () => signup(params),
+    mutationFn: signup,
     onSuccess: (res) => {
       alert(res.data.message);
       navigate("/login");

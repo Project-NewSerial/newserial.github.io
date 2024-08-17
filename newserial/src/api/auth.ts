@@ -16,7 +16,7 @@ export interface CheckNumberParams {
 
 export interface SignupParams {
   email: string;
-  code: string;
+  password: string;
 }
 
 //로그인
