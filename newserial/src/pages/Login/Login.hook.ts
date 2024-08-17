@@ -7,7 +7,7 @@ import { useState } from "react";
 const useLogin = () => {
   const [inputs, setInputs] = useState({ email: "", password: "" });
 
-  const { mutate: mutateLogin } = useMutationLogin(inputs);
+  const { mutate: mutateLogin } = useMutationLogin();
   const { mutate: mutateNaverLogin } = useMutationNaverLogin();
 
   /**
@@ -19,7 +19,7 @@ const useLogin = () => {
     setInputs({ ...inputs, [name]: value });
   };
 
-  const handleLoginButtonClick = () => mutateLogin();
+  const handleLoginButtonClick = () => mutateLogin(inputs);
 
   const handleNaverLoginButtonClick = () => mutateNaverLogin();
 

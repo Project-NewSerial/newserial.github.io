@@ -12,9 +12,9 @@ import {
 } from "../../api/auth";
 import { useNavigate } from "react-router-dom";
 
-export const useMutationLogin = (params: LoginParams) =>
+export const useMutationLogin = () =>
   useMutation({
-    mutationFn: () => login(params),
+    mutationFn: login,
     onError: () => alert("로그인에 실패했습니다."),
   });
 
