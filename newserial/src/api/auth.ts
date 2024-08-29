@@ -53,3 +53,14 @@ export const signup = async (params: SignupParams) =>
   await api.post(`/members`, {
     params,
   });
+
+//소셜 로그인 콜백
+
+export const getCookie = async (token: string | null) => {
+  await api.get(`/cookie`, {
+    headers: {
+      Authorization: `${token}`,
+    },
+    withCredentials: true,
+  });
+};

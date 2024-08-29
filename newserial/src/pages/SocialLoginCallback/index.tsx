@@ -1,51 +1,14 @@
-import React, { useEffect } from "react";
 import { Container } from "./styles";
-import api from "../../api/api";
-import { Navigate, useNavigate, useSearchParams } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { setToken } from "../../state/redux/modules/auth";
-import { useQuery } from "@tanstack/react-query";
+import { Navigate,  } from "react-router-dom";
 import LoadingImage from "../../components/LoadingImage";
+import useSocialLoginCallback from "./SocialLoginCallback.hook";
 
 /**
  * 소셜로그인 콜백 페이지
  * @author 신정은
  */
 const SocialLoginCallback = () => {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const [searchParams, setSearchParams] = useSearchParams();
-  const token = searchParams.get("token");
-
-  useEffect(() => {
-    if (token) dispatch(setToken(JSON.stringify(token).split('"')[1]));
-    else navigate("*");
-  }, []);
-
-  /**
-   * 쿠키 가져오는 함수
-   * @return {boolean} 성공시 true, 실패시 false
-   */
-  const getCookie = async () => {
-    try {
-      await api.get(`/cookie`, {
-        headers: {
-          Authorization: `${token}`,
-        },
-        withCredentials: true,
-      });
-      return true;
-    } catch (error: any) {
-      alert("로그인 실패!\n 로그인 페이지로 이동합니다.");
-      return false;
-    }
-  };
-
-  const { isLoading, data } = useQuery({
-    queryKey: ["cookie"],
-    queryFn: getCookie,
-    enabled: token !== null,
-  });
+  const { isLoading, data } = useSocialLoginCallback();
 
   if (isLoading)
     return (

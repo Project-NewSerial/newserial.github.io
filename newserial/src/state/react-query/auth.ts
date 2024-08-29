@@ -1,7 +1,8 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import {
   checkNumber,
   CheckNumberParams,
+  getCookie,
   login,
   LoginParams,
   naverLogin,
@@ -45,3 +46,10 @@ export const useMutationSignup = () => {
     },
   });
 };
+
+export const useQueryGetCookie = (token: string | null) =>
+  useQuery({
+    queryKey: ["cookie"],
+    queryFn: () => getCookie(token),
+    enabled: token !== null,
+  });
