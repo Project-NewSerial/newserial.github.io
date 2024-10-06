@@ -56,11 +56,15 @@ export const signup = async (params: SignupParams) =>
 
 //소셜 로그인 콜백
 
-export const getCookie = async (token: string | null) => {
+export const getCookie = async (token: string | null) =>
   await api.get(`/cookie`, {
     headers: {
       Authorization: `${token}`,
     },
     withCredentials: true,
   });
-};
+
+//임시 비밀번호
+
+export const setTempPassword = async (email: string) =>
+  await api.post(`/temp-password`, { email: email });

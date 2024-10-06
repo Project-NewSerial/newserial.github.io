@@ -8,6 +8,7 @@ import {
   naverLogin,
   sendMail,
   SendMailParams,
+  setTempPassword,
   signup,
   SignupParams,
 } from "../../api/auth";
@@ -53,3 +54,18 @@ export const useQueryGetCookie = (token: string | null) =>
     queryFn: () => getCookie(token),
     enabled: token !== null,
   });
+
+export const useMutationSetTempPassword = () => {
+  const navigate = useNavigate();
+
+  return useMutation({
+    mutationFn: setTempPassword,
+    onSuccess: (res) => {
+      alert(res.data);
+      navigate("/login");
+    },
+    onError: () => {
+      alert("회원정보가 존재하지 않습니다.");
+    },
+  });
+};
