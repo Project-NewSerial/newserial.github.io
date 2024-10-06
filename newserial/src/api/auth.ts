@@ -22,15 +22,9 @@ export interface SignupParams {
 //로그인
 
 export const login = async (params: LoginParams) =>
-  await api.post(
-    `/login`,
-    {
-      params,
-    },
-    {
-      withCredentials: true,
-    }
-  );
+  await api.post(`/login`, params, {
+    withCredentials: true,
+  });
 
 export const naverLogin = async () => {
   const url = `${process.env.REACT_APP_API}/oauth2/authorization/naver`;

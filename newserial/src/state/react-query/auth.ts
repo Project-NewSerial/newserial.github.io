@@ -13,12 +13,22 @@ import {
   SignupParams,
 } from "../../api/auth";
 import { useNavigate } from "react-router-dom";
+import { setToken } from "../redux/modules/auth";
+import { useDispatch } from "react-redux";
 
-export const useMutationLogin = () =>
-  useMutation({
+export const useMutationLogin = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  return useMutation({
     mutationFn: login,
     onError: () => alert("로그인에 실패했습니다."),
+    onSuccess: (res) => {
+      dispatch(setToken(res.data.accessToken));
+      navigate("/");
+    },
   });
+};
 
 export const useMutationNaverLogin = () =>
   useMutation({
