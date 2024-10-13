@@ -5,7 +5,9 @@ import {
   getCookie,
   login,
   LoginParams,
+  logoutCheck,
   naverLogin,
+  reissue,
   sendMail,
   SendMailParams,
   setTempPassword,
@@ -79,3 +81,16 @@ export const useMutationSetTempPassword = () => {
     },
   });
 };
+
+export const useQueryLogoutCheck = (accessToken: string | null) =>
+  useQuery({
+    queryKey: ["logoutCheck"],
+    queryFn: () => logoutCheck(accessToken),
+  });
+
+export const useQueryReissue = (enabled: boolean, message?: string) =>
+  useQuery({
+    queryKey: ["reissue"],
+    queryFn: () => reissue(message),
+    enabled: enabled,
+  });

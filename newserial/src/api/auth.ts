@@ -1,4 +1,6 @@
+import { useDispatch, useSelector } from "react-redux";
 import api from "./api";
+import { setToken } from "../state/redux/modules/auth";
 
 export interface LoginParams {
   email: string;
@@ -62,3 +64,31 @@ export const getCookie = async (token: string | null) =>
 
 export const setTempPassword = async (email: string) =>
   await api.post(`/temp-password`, { email: email });
+
+// accessToken 유효한지 확인
+
+export const logoutCheck = async (accessToken: string | null) => {
+  return await api.get("/logoutCheck", {
+    headers: {
+      Authorization: `${accessToken}`,
+    },
+  });
+};
+
+// refresh Token이 유효 여부 check
+
+export const reissue = async (message?: string) => {
+  const dispatch = useDispatch();
+
+  const { data } = await api.get(`/reissue`, {
+    withCredentials: true,
+  });
+
+  if (data) { // refresh token 유효
+    dispatch(setToken(data.accessToken));
+    return true;
+  } else { // refresh token 유효하지 않음
+    if (message) alert(message);
+    return false;
+  }
+};

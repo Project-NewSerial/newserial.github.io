@@ -1,25 +1,33 @@
 import React from "react";
 import { Outlet, Navigate } from "react-router-dom";
-import useCommon from "../hooks/queries/useCommon";
-import useReissue from "../hooks/queries/useReissue";
+import { useSelector } from "react-redux";
+import {
+  useQueryLogoutCheck,
+  useQueryReissue,
+} from "../state/react-query/auth";
+
+interface RootState {
+  auth: {
+    accessToken: null | string;
+  };
+}
 
 /**
  * 비로그인 상태에서만 특정 페이지에 접근 가능
  * @author 신정은
  */
 const PublicRoute = () => {
+  const accessToken = useSelector((state: RootState) => state.auth.accessToken);
 
   /**
-   * accessToken이 유효한지 확인하는 api
-   * @return {boolean} 유효하면 true 아니면 false
+   * accessToken이 유효한지 확인
    */
-  const { data: isValid } = useCommon(`/logoutCheck`);
+  const { data: isValid } = useQueryLogoutCheck(accessToken);
 
   /**
-   * refresh Token이 유효하면 accessToken 발급하는 api 호출
-   * @return {boolean} 유효하면 true 아니면 false
+   * refresh Token이 유효하면 accessToken 발급
    */
-  const { data: isLogin, isLoading } = useReissue(!isValid);
+  const { data: isLogin, isLoading } = useQueryReissue(!isValid);
 
   if (isValid) return <Navigate to="/" />;
   if (isLoading) return null;
